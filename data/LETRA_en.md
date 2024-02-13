@@ -84,7 +84,7 @@ The result means that after applying all the rules as in `order` we could potent
 
 The detail of the transformation is given below:
 
-||Rule name|Rule|Input|Output|
+||Rule name|Rule|Input|Output| 
 |-|-|-|-|-|
 |1|`remove_m`|"`m `" → "` `"|**`lítteram`**|`líttera`|
 |2|`simplify_double`|"`<double_cons=>`" → "`<double_cons>`"|`líttera`|`lítera`|
