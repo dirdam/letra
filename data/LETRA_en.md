@@ -71,7 +71,7 @@ _Example_:
 		"simplify_double", 
 		"remove_unstressed", 
 		"vowel_shift", 
-		"identity|diphthong" // only one of two will apply
+		"identity|diphthong" // only one of the two will apply
 	]
 }
 ```
