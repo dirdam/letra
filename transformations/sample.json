@@ -1,0 +1,37 @@
+{
+	"groups": {
+		// Vowels
+		"unstressed_vow": ["a", "e", "i", "o", "u"],
+		"stressed_vow": ["á", "é", "í", "ó", "ú"],
+		"vow": ["<unstressed_vow>", "<stressed_vow>"], // all vowels
+		"cons": ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z"],
+		"double_cons": ["<cons>", "!l", "!n", "!r"] // <cons> without l, n, r
+	},
+	"rules": {
+		"identity": {
+			"": "" // identity
+		},
+		"remove_m": {
+			"m ": " " // remove final m
+		},
+		"simplify_double": {
+			"<double_cons=>": "<double_cons>" // simplify double consonants
+		},
+		"remove_unstressed": {
+			"<stressed_vow><cons*><unstressed_vow><cons>": "<stressed_vow><cons*><><cons>" // remove unstressed vowel between consonants after stressed syllable
+		},
+		"vowel_shift": {
+			"<cons>í<cons>": "<cons>é<cons>" // change stressed i to stressed e
+		},
+		"diphthong": {
+			"<cons>é<cons>": "<cons>ié<cons>" // diphthong stressed e
+		}
+	},
+	"order": [
+		"remove_m", 
+		"simplify_double", 
+		"remove_unstressed", 
+		"vowel_shift", 
+		"identity|diphthong" // only one of two will apply
+	]
+}

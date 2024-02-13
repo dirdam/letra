@@ -1,0 +1,57 @@
+lang,key,value
+en,how_to_use,"# How to use"
+es,how_to_use,"# Cómo se usa"
+en,how_to_use_explain,"
+    1. Select the `json` file containing the transformation rules.
+        - For further instructions on how to create the file click the **_Project description_** tab.
+    1. Enter the term you want to transform and hit `enter`.
+    1. Click on a word to see its chain of transformations.
+        - **_Include intermediate terms_** shows all intermediate steps of the term transformation, not only the final result.
+        - If a result term can be obtained through several chains of transformations, only the transformations of the first chain found will be shown."
+es,how_to_use_explain,"
+    1. Elige el archivo `json` que contiene las reglas de las transformaciones.
+        - Para instrucciones detalladas sobre cómo crear el archivo haz clic en la pestaña **_Descripción del proyecto_**.
+    1. Introduce el término que quieras transformar y pulsa `intro`.
+    1. Haz clic en una palabra para comprobar su cadena transformaciones.
+        - **_Incluir los términos intermedios_** muestra todos los pasos intermedios de la transformación del término, no únicamente el resultado final.
+        - Si un término resultado se puede obtener a través de distintas cadenas de transformaciones, sólo se mostrarán las transformaciones de la primera cadena encontrada."
+en,tool,"⚙️ **Tool**"
+es,tool,"⚙️ **Herramienta**"
+en,pj_desc,"📄 **Project description**"
+es,pj_desc,"📄 **Descripción el proyecto**"
+en,upload_text,"### 1. Upload the transformations file or select an existing one"
+es,upload_text,"### 1. Sube el archivo de transformaciones o elige uno existente"
+en,upload_options,"Choose a give file or upload one of your own."
+es,upload_options,"Elige un archivo dado o sube el tuyo propio."
+en,upload_own,"⬆️ Upload a file..."
+es,upload_own,"⬆️ Subir un archivo..."
+en,upload_desc,"Upload the `json` file containing the transformations."
+es,upload_desc,"Sube el archivo `json` que contiene las transformaciones."
+en,enter_text,"### 2. Enter the term to transform"
+es,enter_text,"### 2. Introduce el término a transformar"
+en,text_input,"Term:"
+es,text_input,"Término:"
+en,placeholder,"my_term"
+es,placeholder,"mi_término"
+en,interm_check,"Include intermediate terms."
+es,interm_check,"Incluir los términos intermedios."
+en,trans_result,"### 3. Transformation results"
+es,trans_result,"### 3. Resultados de la transformación"
+en,chain_result,"Chain of transformations for term:"
+es,chain_result,"Cadena de transformaciones para el término:"
+en,col1,"Step"
+es,col1,"Paso"
+en,col2,"Rule name"
+es,col2,"Nombre de la regla"
+en,col3,"Rule"
+es,col3,"Regla"
+en,col4,"Input"
+es,col4,"Entrada"
+en,col5,"Output"
+es,col5,"Salida"
+en,check_json,"### (Optional) Review the `json` file content"
+es,check_json,"### (Opcional) Comprueba el contenido del archivo `json`"
+en,json_content,"Expand the content of the file "
+es,json_content,"Expandir el contenido del archivo "
+en,download_json,"Download "
+es,download_json,"Descargar "

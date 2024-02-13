@@ -1,0 +1,286 @@
+{
+	"groups": {
+		// Vowels
+		"unstressed_ei": ["e", "i"],
+		"stressed_ei": ["é", "í"],
+		"ei": ["<unstressed_ei>", "<stressed_ei>"],
+		"unstressed_aou": ["a", "o", "u"],
+		"stressed_aou": ["á", "ó", "ú"],
+		"aou": ["<unstressed_aou>", "<stressed_aou>"],
+		"unstressed_vow": ["<unstressed_ei>", "<unstressed_aou>"],
+		"stressed_vow": ["<stressed_ei>", "<stressed_aou>"],
+		"vow": ["<unstressed_vow>", "<stressed_vow>"],
+		"unstressed_oe": ["o", "e"],
+		"stressed_oe": ["ó", "é"],
+		"oe": ["<unstressed_oe>", "<stressed_oe>"],
+		"rule30_vow": ["<unstressed_vow>", "!a"],
+		"unstressed_ae": ["a", "e"],
+		"stressed_ae": ["á", "é"],
+		"ae": ["<unstressed_ae>", "<stressed_ae>"],
+		"unstressed_ou": ["o", "u"],
+		"stressed_ou": ["ó", "ú"],
+		"ou": ["<unstressed_ou>", "<stressed_ou>"],
+		// Consonants
+		"cons": ["b", "c", "d", "f", "g", "h", "j", "l", "m", "n", "p", "q", "r", "s", "t", "v", "x", "k", "z", "y"],
+		"rule2_cons": ["l", "n", "r", "s", "d", "c", "t"],
+		"ptc": ["p", "t", "c"],
+		"bdg": ["b", "d", "g"],
+		"rule13_cons": ["<cons>", "!l", "!n", "!r"], // <cons> without l, n, r
+		"pfc": ["p", "f", "c"],
+		"cch": ["c", "ch"],
+		"rule25_cons": ["<rule13_cons>", "!s"], // <rule13_cons> without s
+		"rule35_cons": ["cl", "gl", "tl"],
+		// Mixed groups
+		"rule12_group": ["<vow>", "l", "r"],
+		"rule12_group_c": ["<aou>", "l", "r"],
+		"rule31_group": ["mn", "ng", "gn", "nd", "ni", "ne"],
+		// Other
+		"iden": [""], // "nothing" (used as alternative)
+		"start": [" "],
+		"end": [" "]
+	},
+	"rules": {
+		"rule_0": {
+			"": "" // identity
+		},
+		"rule_1": {
+			" <cons*><vow*>m ": " <cons*><vow*>n ", // rule_25: monosyllables
+			"m ": " ",
+			"us ": "u "
+		},
+		"rule_2": {
+			"<rule2_cons>e ": "<rule2_cons> "
+		},
+		"rule_3": {
+			"u ": "o "
+		},
+		"rule_4": {
+			"x": "j"
+		},
+		"rule_5": {
+			"c ": "z ",
+			"<vow>sc<vow>": "<vow>c<vow>"
+		},
+		"rule_6": {
+			" s<cons>": " es<cons>"
+		},
+		"rule_7": {
+			"ae": "e",
+			"aé": "é"
+		},
+		"rule_8": {
+			"y": "i"
+		},
+		"rule_9": {
+			"ph": "f"
+		},
+		"rule_10": {
+			"th": "t"
+		},
+		"rule_11": {
+			"ch<ei>": "qu<ei>",
+			"ch<aou>": "c<aou>"
+		},
+		"rule_12": {
+			// "<vow><ptc><rule12_group>": "<vow><bdg><rule12_group>"
+			"<vow>p<rule12_group>": "<vow>b<rule12_group>",
+			"<vow>t<rule12_group>": "<vow>d<rule12_group>",
+			"<vow>c<rule12_group_c>": "<vow>g<rule12_group_c>", // only with sound k
+			"<vow>t ": "<vow>d "
+		},
+		"rule_13": {
+			"<rule13_cons=>": "<rule13_cons>" // geminated
+		},
+		"rule_14_1": {
+			"qu<aou>": "cu<aou>"
+		},
+		"rule_14_2": {
+			"<vow>qu<vow>": "<vow>gu<vow>"
+		},
+		"rule_14_3": {
+			"<vow>qu<aou>": "<vow>g<aou>"
+		},
+		"rule_14_4": {
+			" qu<vow>": " c<vow>"
+		},
+		"rule_15": {
+			"ns": "s"
+		},
+		"rule_16": {
+			"<stressed_vow><cons*><unstressed_vow><cons>": "<stressed_vow><cons*><><cons>"
+		},
+		"rule_17_1_1": {
+			"<vow|cons>ti<vow>": "<vow|cons>ci<vow>"
+		},
+		"rule_17_1_2": {
+			"<vow|cons>t<ei><aou>": "<vow|cons>z<><aou>"
+		},
+		"rule_17_2": {
+			"<vow|cons><cch><ei><aou>": "<vow|cons>z<><><aou>"
+		},
+		"rule_18": {
+			"<vow><bdg><rule12_group>": "<vow><><rule12_group>"
+		},
+		"rule_19_1": {
+			"<vow|start><pfc>l": "<vow|start><>ll"
+		},
+		"rule_19_2": {
+			"<cons><pfc>l<vow>": "<cons><>ch<vow>"
+		},
+		"rule_19_3": {
+			" fl": " l"
+		},
+		"rule_20": {
+			"<cons>ú<cons>": "<cons>ó<cons>"
+		},
+		"rule_21": {
+			"<cons>í<cons>": "<cons>é<cons>",
+			"<cons>í<unstressed_vow>": "<cons>é<unstressed_vow>"
+		},
+		"rule_22": {
+			"<cons>ó<cons>": "<cons>ué<cons>"
+		},
+		"rule_23": {
+			"nn": "ñ"
+		},
+		"rule_24": {
+			"<cons>é<cons>": "<cons>ié<cons>"
+		},
+		"rule_25": {
+			"<rule25_cons> ": "<> "
+		},
+		"rule_26": {
+			" f": " " // a;adir excepcion ue, ie, oe (y acentos) . Y revisar phoeníciam
+		},
+		"rule_27": {
+			"oe": "e",
+			"oé": "é"
+		},
+		"rule_28": {
+			"<cons>i<cons>": "<cons>e<cons>",
+			"<stressed_vow>i<cons>": "<stressed_vow>e<cons>",
+			" i<cons>": " e<cons>"
+		},
+		"rule_29_1": {
+			"ct": "ch"
+		},
+		"rule_29_2": {
+			"ct": "t"
+		},
+		"rule_30": {
+			"<vow><cons*><rule30_vow><cons*><stressed_vow>": "<vow><cons*><><cons*><stressed_vow>"
+		},
+		"rule_31": {
+			"<rule31_group><vow>": "ñ<><vow>"
+		},
+		"rule_32": {
+			"au": "o",
+			"al<cons>": "o<cons>"
+		},
+		"rule_33": {}, // can't be programmed
+		"rule_34": {
+			"<cons>u<cons>": "<cons>o<cons>"
+		},
+		"rule_35_1": {
+			"<cons><rule35_cons>": "<cons><>ch"
+		},
+		"rule_35_2": {
+			"<rule35_cons>": "<>j"
+		},
+		"rule_36": {
+			"ai": "e",
+			"aí": "é"
+		},
+		"rule_37": {}, // can't be programmed (related to entropy)
+		"rule_38": {
+			"<vow>l<ei><vow>": "<vow>j<><vow>"
+		},
+		"rule_39": {
+			"ee": "e",
+			"ii": "i",
+			"oo": "u",
+			"oi": "ui",
+			"eu": "io",
+			"ui": "ue",
+			"ée": "é",
+			"íi": "í",
+			"óo": "ú",
+			"ói": "úi",
+			"oí": "uí",
+			"éu": "ió",
+			"uí": "ué"
+		},
+		"rule_40": {
+			"éba": "ía",
+			"éll": "íll",
+			"er ": "ir ",
+			"e ": "i "
+		},
+		"rule_41": {
+			"mn": "mbr",
+			"mr": "mbr",
+			"ml": "mbl",
+			"nr": "ndr"
+		},
+		"rule_42": {
+			"st<cons>": "s<cons>",
+			"pt": "t",
+			"mt": "nd"
+		},
+		"rule_43": {}, // can't be programmed
+		"rule_44": {
+			" i<stressed_ae>": " y<stressed_ae>",
+			" i<unstressed_ae>": " <unstressed_ae>",
+			" i<ou>": " j<ou>"
+		},
+		"rule_45": {
+			" <cons>o": " <cons>u",
+			" <cons>ó": " <cons>ú"
+		}
+	},
+	"order": [
+		"rule_1", 
+		"rule_2", 
+		"rule_3", 
+		"rule_4", 
+		"rule_5", 
+		"rule_6", 
+		"rule_7", 
+		"rule_8", 
+		"rule_9", 
+		"rule_10", 
+		"rule_11", 
+		"rule_12", 
+		"rule_13", 
+		"rule_14_1|rule_14_2|rule_14_3",
+		"rule_14_4", 
+		"rule_15", 
+		"rule_0|rule_16", //*
+		"rule_17_1_1|rule_17_1_2", "rule_0|rule_17_2", //*
+		"rule_0|rule_18", //*
+		"rule_19_1|rule_0|rule_19_2|rule_19_3", 
+		"rule_20", 
+		"rule_21", 
+		"rule_0|rule_22", //*
+		"rule_23", 
+		"rule_0|rule_24", //*
+		"rule_25", 
+		"rule_26", 
+		"rule_27", 
+		"rule_0|rule_28", //*
+		"rule_29_1|rule_0|rule_29_2", 
+		"rule_0|rule_30", //*
+		"rule_0|rule_31", //*
+		"rule_32", 
+		"rule_34", 
+		"rule_35_1", "rule_35_2", 
+		"rule_36", 
+		"rule_38", 
+		"rule_39", 
+		"rule_40", 
+		"rule_41", 
+		"rule_42", 
+		"rule_44", 
+		"rule_0|rule_45"
+	]
+}
