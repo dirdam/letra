@@ -1,0 +1,29 @@
+name: Update README
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'data/LETRA_en.md'
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Copy content to README.md
+      run: |
+        cp data/LETRA_en.md README.md
+
+    - name: Commit and push if changed
+      run: |
+        git config --global user.email "gengo.shiritai@gmail.com"
+        git config --global user.name "linguister"
+        git add README.md
+        git commit -m "Update README.md" || exit 0   # Exit 0 if no changes
+        git push
