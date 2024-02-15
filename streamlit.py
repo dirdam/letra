@@ -43,11 +43,11 @@ with project_tab:
         content = file.read()
     st.markdown(content)
 
-existing_files = ['sample.json', 'LA_ES.json']
+existing_files = {'sample.json': lang_dict['use_sample'], 'LA_ES.json': lang_dict['use_la_es'], 'ES_IPA.json': lang_dict['use_es_ipa'], 'own': lang_dict['upload_own']}
 with tool_tab:
     st.markdown(lang_dict['upload_text'])
-    upload_choice = st.selectbox(lang_dict['upload_options'], existing_files + [lang_dict['upload_own']])
-    if upload_choice in existing_files:
+    upload_choice = st.selectbox(lang_dict['upload_options'], list(existing_files.keys()), format_func=lambda x: existing_files[x])
+    if upload_choice in existing_files and upload_choice != 'own':
         json_file = upload_choice
         t = letra.Transformer(json_path=json_file)
     else: # If a file is uploaded, use it
@@ -59,11 +59,16 @@ with tool_tab:
             st.stop()
 
     st.markdown(lang_dict['enter_text'])
+    if upload_choice != 'own':
+        st.markdown(lang_dict['accent_explain'])
     if json_file == 'sample.json': # Change placeholders and values for the input text
         placeholder = 'lítteram'
         value = 'lítteram'
     elif json_file == 'LA_ES.json':
         placeholder = 'lítteram, trophaéum, óperam, dóminum, quinquagínta, dígitum...'
+        value = ''
+    elif json_file == 'ES_IPA.json':
+        placeholder = 'civilización, escaqueárse, halagüéño, parrilláda, rúbio, wáter...'
         value = ''
     else:
         placeholder = lang_dict['placeholder']
