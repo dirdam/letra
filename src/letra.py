@@ -70,6 +70,7 @@ class Transformer():
         # Expand values (groups)
         expanded_groups = {}
         groups = self.json_dict['groups']
+        multiple_names_keys = {key: group_name for group_name in groups if '|' in group_name for key in group_name.split('|')}
         for group_name in groups:
             value = []
             removals = []
@@ -81,14 +82,18 @@ class Transformer():
                     value += [letter]
                 else: # Call existing group
                     key = letter[1:-1] # Remove `<` and `>`
-                    value += expanded_groups[key]
+                    value += expanded_groups[key if key not in multiple_names_keys else multiple_names_keys[key]]
             # Remove the undesired
             for letter in removals:
                 if '<' not in letter: # Fixed value
-                    value.remove(letter)
+                    try:
+                        value.remove(letter)
+                    except:
+                        print(f'"{letter}" is not in "{group_name}". No need to add "!{letter}".')
+                        pass
                 else: # Call existing group
                     key = letter[1:-1] # Remove `<` and `>`
-                    value = [v for v in value if v not in expanded_groups[key]]
+                    value = [v for v in value if v not in expanded_groups[key if key not in multiple_names_keys else multiple_names_keys[key]]]
             expanded_groups[group_name] = value
         
         self.json_dict['groups'] = expanded_groups
@@ -204,34 +209,6 @@ class Transformer():
             else: # Char
                 result += part[1]
         return result
-
-    def transform_old(self, term, allow_identity=False, verbose=False):
-        '''Applies the all the changes based on `rules` and `order`.
-        `allow_indentity` sets whether the rules are compulsory in every step or whether the term can remain as identity.'''
-        # new_terms = f' {term} ' # Set begining and end of term
-        new_terms = [f' {term} '] # Set of possible outputs
-        self.transformations = []
-        steps = 0 # Number of steps (for verbose mode)
-        for rules in self.json_dict['order']:
-            rules = [rules] if '|' not in rules else rules.split('|')
-            if allow_identity:
-                rules = ['iden'] + rules # Add identity rule
-            possible_terms = []
-            for rule in rules:
-                for middle_term in new_terms:
-                    # print(rule, middle_term)
-                    middle_term = self.apply_rule(rule, middle_term)
-                    if middle_term not in possible_terms:
-                        possible_terms.append(middle_term)
-            # print(possible_terms)
-            if possible_terms != new_terms:
-                # print(rules)
-                steps += 1
-                if verbose:
-                    print(f'{steps}.', [t[1:-1] for t in new_terms], f"--({'|'.join(rules)})->", [t[1:-1] for t in possible_terms]) # Remove begining and end of term (white spaces)
-                new_terms = possible_terms
-                self.transformations.append(('|'.join(rules), [t[1:-1] for t in new_terms]))
-        return [t[1:-1] for t in new_terms]
         
     def transform(self, term, allow_identity=False, verbose=False):
         '''Applies the all the changes based on `rules` and `order`.
