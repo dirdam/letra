@@ -1,6 +1,6 @@
 ## Objetivo
 
-**LETRA** busca convertir cualquier escritura en otra a través de un conjunto de _reglas de transformación_.
+**LETRA** (_**LanguagE Transformations**_) busca convertir cualquier escritura en otra a través de un conjunto de _reglas de transformación_.
 
 La escritura **no** tiene por qué representar ortografía o fonética; lo que represente es decisión del usuario.
 
@@ -18,6 +18,7 @@ El conjunto reglas que se usa para tranformar la escritura. Se dará como un arc
 
 - **`groups`**: lista de `caracteres` que se comportan igual, por lo tanto conviene recogerlos como un grupo.
   - Un grupo puede ser definido usando grupos previamente definidos a través de `<nombre_de_grupo>`.
+    - Se le puede asignar varios nombres al mismo grupo usando `|` como separador: `<nombre_1|nombre_2>`.
   - `!` puede usarse delante de un `caracter` o un `<nombre_de_grupo>` para excluirlo de la lista.
 - **`rules`**: reglas de transformación; qué (_lado fuente_) se transforma en qué (_lado transformado_). 
   - Cada regla debe recibir un nombre.
