@@ -152,6 +152,8 @@ class Transformer():
             search_values_list = re.findall(r'<([^>]*)>|([^<>]+)', search_values) # I don't use [^<>] to avoid escaping '<>'
             change_values_list = re.findall(r'<([^>]*)>|([^<>]+)', change_values)
             # print(search_values_list, change_values_list)
+            if len(change_values_list) == 0: # If change_values_list is empty, make it actual list
+                change_values_list = [('', '')]
             i = 0
             j = 0
             while i < len(search_values_list):
