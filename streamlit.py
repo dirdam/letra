@@ -68,7 +68,7 @@ with tool_tab:
         placeholder = 'lítteram, trophaéum, óperam, dóminum, quinquagínta, dígitum...'
         value = ''
     elif json_file == 'ES_IPA.json':
-        placeholder = 'civilización, escaqueárse, halagüéño, parrilláda, rúbio, wáter...'
+        placeholder = 'civilización, chascarríllo, halagüéño, verdád, rejuvenecér, wáter...'
         value = ''
     else:
         placeholder = lang_dict['placeholder']
