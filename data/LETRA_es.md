@@ -32,7 +32,7 @@ El conjunto reglas que se usa para tranformar la escritura. Se dará como un arc
   - Para representar el principio de un término se usa un espacio blanco inicial: `␣abc`.
   - Para representar el final de un término se usa un espacion blanco final: `xyz␣`.
 - **`order`**: lista especificando el orden en que las reglas (`rules`) se aplican.
-  - Si sólo una de múltiples reglas ha de aplicarse en cierto paso las alternativas se separan con `|`: `<regla_1|regla_2|regla_3>`.
+  - Si sólo una de múltiples reglas ha de aplicarse en cierto paso las alternativas se separan con `|`: `regla_1|regla_2|regla_3`.
 
 A diferencia de los archivos _json_ tradicionales, el archivo acepta comentarios que comiencen con dos barras (`//`).
 

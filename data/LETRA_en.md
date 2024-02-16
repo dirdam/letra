@@ -32,7 +32,7 @@ The set of rules used to transform the script. It will be given as a _json_ file
   - To represent the begining of a term use a leading white space: `␣abc`.
   - To represent the end of a term use a tailing white space: `xyz␣`.
 - **`order`**: list specifying the order in which the `rules` are applied.
-  - If only one out of multiple rules may be applied at a certain step, the alternatives are separated by `|`: `<rule_1|rule_2|rule_3>`.
+  - If only one out of multiple rules may be applied at a certain step, the alternatives are separated by `|`: `rule_1|rule_2|rule_3`.
 
 Unlike traditional _json_ files, the file accepts comments begining with two slashes (`//`).
 
