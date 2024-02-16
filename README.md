@@ -1,6 +1,6 @@
 ## Purpose
 
-**LETRA** converts any given script into an different one through a set of _transformation rules_.
+**LETRA** (_**LanguagE Transformations**_) converts any given script into an different one through a set of _transformation rules_.
 
 The script does **not** need to represent orthography or phonetics; what it represents is decision of the user.
 
@@ -18,6 +18,7 @@ The set of rules used to transform the script. It will be given as a _json_ file
 
 - **`groups`**: list of `characters` that behave the same, thus it is more convenient to pack them as a group.
   - A group can be defined using previously defined groups through `<group_name>`.
+    - Multiple names can be asigned to the same group using `|` as separator: `<name_1|name_2>`.
   - `!` can be used in front of a `character` or a `<group_name>` to exclude it from the list.
 - **`rules`**: transformation rules; what (_source side_) transforms into what (_transformed side_). 
   - Each rule must be given a name.
