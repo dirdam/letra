@@ -14,7 +14,7 @@ The script does **not** need to represent orthography or phonetics; what it repr
 
 ## Transformation rules
 
-The set of rules used to transform the script. It will be given as a _json_ file including these 3 categories:
+The set of rules used to transform the script. It will be given as a _**json** file_ including these 3 categories:
 
 - **`groups`**: list of `characters` that behave the same, thus it is more convenient to pack them as a group.
   - A group can be defined using previously defined groups through `<group_name>`.

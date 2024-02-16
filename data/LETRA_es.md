@@ -14,7 +14,7 @@ La escritura **no** tiene por qué representar ortografía o fonética; lo que r
 
 ## Reglas de transformación
 
-El conjunto reglas que se usa para tranformar la escritura. Se dará como un archivo en formato _json_ que incluirá estas 3 categorías:
+El conjunto reglas que se usa para tranformar la escritura. Se dará como un archivo en _formato **json**_ que incluirá estas 3 categorías:
 
 - **`groups`**: lista de `caracteres` que se comportan igual, por lo tanto conviene recogerlos como un grupo.
   - Un grupo puede ser definido usando grupos previamente definidos a través de `<nombre_de_grupo>`.
