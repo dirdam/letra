@@ -124,7 +124,7 @@ with tool_tab:
 
     st.markdown("---")
     st.markdown(lang_dict['check_json'])
-    chosen_file = json_file.name if json_file not in existing_files else json_file
+    chosen_file = json_file.name if upload_choice == 'own' else json_file
     aux_col1, col, aux_col2 = st.columns([1, 1, 1])
     with col:
         with open(f'transformations/{chosen_file}') as f:
