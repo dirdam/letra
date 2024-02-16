@@ -51,17 +51,6 @@
         "z": {"z": "θ"},
         "i": {"i<voc>": "j<voc>"},
         "u": {"u<voc>": "w<voc>"},
-        // Dialectología (simple introducción; para más detalles crear json aparte)
-        "seseo": {"θ": "s"},
-        "ceceo": {"s": "θ"},
-        "x_aspirada": {"x": "h"},
-        "yeismo": {"ʎ": "ʝ"},
-        "ks_elidida": {"ks": "s"},
-        "d_final_elidida": {"d ": " "},
-        "madrid": {
-            "sk": "xk",
-            "d ": "θ "
-        },
         // Alófonos
         "fricativización": {
             "<voc|r_l>b<voc|r_l>": "<voc|r_l>β<voc|r_l>",
@@ -78,7 +67,6 @@
     "order": [
         "ch", "ll", "r_fuerte", "x", "w_tradicional|w_moderna", // Primero digrafos y sonidos dobles
         "c", "g", "h", "j", "ñ", "q", "r_suave", "v", "y", "z", "i", "u",  // Luego letras
-        "iden|seseo|ceceo", "iden|x_aspirada", "iden|ks_elidida", "iden|d_final_elidida", "iden|yeismo", "iden|madrid", // Dialectología
         "fricativización", "n_asimilada", "s_sonora" // Alófonos
     ]
 }
