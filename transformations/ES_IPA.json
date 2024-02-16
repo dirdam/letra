@@ -14,7 +14,8 @@
         "labiodental|lab": ["ɱ", "f", "v"],
         "velar|vel": ["k", "g", "ŋ", "x", "ɣ"],
         "sonora|son": ["b", "d", "g", "m", "ɱ", "n", "ŋ", "r", "ɾ", "β", "v", "ð", "z", "ʝ", "ɣ", "j", "l", "ʎ"],
-        "r_no_n_s": ["<cons>", "<voc>", "!n", "!s"] // Cualquier sonido excepto n o s
+        "r_no_n_s": ["<cons>", "<voc>", "!n", "!s"], // Cualquier sonido excepto n o s
+        "r_l": ["ɾ", "l"] // r suave o l
     },
     "rules": {
         "iden": {"": ""}, // Identidad
@@ -37,8 +38,8 @@
             "qu<ei>": "k<ei>",
             "q": "k"
         },
-        "r": {"<r_no_n_s>r": "<r_no_n_s>ɾ"}, // Necesario para que no convierta las r de inicio de palabra
-        "rr": {"rr": "r"},
+        "r_suave": {"<r_no_n_s>r": "<r_no_n_s>ɾ"}, // Necesario para que no convierta las r de inicio de palabra
+        "r_fuerte": {"rr": "r"},
         "v": {"v": "b"},
         "w_tradicional": {"w": "b"},
         "w_moderna": {"w": "gw"},
@@ -50,18 +51,24 @@
         "z": {"z": "θ"},
         "i": {"i<voc>": "j<voc>"},
         "u": {"u<voc>": "w<voc>"},
-        // Dialectología
+        // Dialectología (simple introducción; para más detalles crear json aparte)
         "seseo": {"θ": "s"},
         "ceceo": {"s": "θ"},
+        "x_aspirada": {"x": "h"},
         "yeismo": {"ʎ": "ʝ"},
-        "madrid": {"sk": "xk"},
-        // Alófonos
-        "suavizado": {
-            "<voc>b": "<voc>β",
-            "<voc>d": "<voc>ð",
-            "<voc>g": "<voc>ɣ"
+        "ks_elidida": {"ks": "s"},
+        "d_final_elidida": {"d ": " "},
+        "madrid": {
+            "sk": "xk",
+            "d ": "θ "
         },
-        "ajuste_n": {
+        // Alófonos
+        "fricativización": {
+            "<voc|r_l>b<voc|r_l>": "<voc|r_l>β<voc|r_l>",
+            "<voc|r_l>d<voc|r_l>": "<voc|r_l>ð<voc|r_l>",
+            "<voc|r_l>g<voc|r_l>": "<voc|r_l>ɣ<voc|r_l>"
+        },
+        "n_asimilada": {
             "n<bil>": "m<bil>",
             "n<lab>": "ɱ<lab>",
             "n<vel>": "ŋ<vel>"
@@ -69,9 +76,9 @@
         "s_sonora": {"s<son>": "z<son>"}
     },
     "order": [
-        "ch", "ll", "rr", "x", "w_tradicional|w_moderna", // Primero digrafos y sonidos dobles
-        "c", "g", "h", "j", "ñ", "q", "r", "v", "y", "z", "i", "u",  // Luego letras
-        "iden|seseo|ceceo", "iden|yeismo", "iden|madrid", // Dialectología
-        "suavizado", "ajuste_n", "s_sonora" // Alófonos
+        "ch", "ll", "r_fuerte", "x", "w_tradicional|w_moderna", // Primero digrafos y sonidos dobles
+        "c", "g", "h", "j", "ñ", "q", "r_suave", "v", "y", "z", "i", "u",  // Luego letras
+        "iden|seseo|ceceo", "iden|x_aspirada", "iden|ks_elidida", "iden|d_final_elidida", "iden|yeismo", "iden|madrid", // Dialectología
+        "fricativización", "n_asimilada", "s_sonora" // Alófonos
     ]
 }
