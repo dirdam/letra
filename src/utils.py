@@ -21,9 +21,12 @@ def update_key(key, number=1):
 
 def get_key(key):
     # Load the total games played so far from a file
-    with open(sessions_file, 'r') as file:
-        json_file = json.load(file)
-        if key in json_file:
-            return json_file[key]
-        else:
-            return 0
+    try:
+        with open(sessions_file, 'r') as file:
+            json_file = json.load(file)
+            if key in json_file:
+                return json_file[key]
+            else:
+                return 0
+    except:
+        return 0
