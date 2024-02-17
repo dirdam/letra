@@ -14,7 +14,6 @@
         "labiodental|lab": ["ɱ", "f", "v"],
         "velar|vel": ["k", "g", "ŋ", "x", "ɣ"],
         "sonora|son": ["b", "d", "g", "m", "ɱ", "n", "ŋ", "r", "ɾ", "β", "v", "ð", "z", "ʝ", "ɣ", "j", "l", "ʎ"],
-        "r_no_n_s": ["<cons>", "<voc>", "!n", "!s"], // Cualquier sonido excepto n o s
         "r_l": ["ɾ", "l"] // r suave o l
     },
     "rules": {
@@ -38,8 +37,12 @@
             "qu<ei>": "k<ei>",
             "q": "k"
         },
-        "r_suave": {"<r_no_n_s>r": "<r_no_n_s>ɾ"}, // Necesario para que no convierta las r de inicio de palabra
-        "r_fuerte": {"rr": "r"},
+        "r": {
+            "rr": "R", // Representación temporal de r fuerte
+            " r": " R", // Representación temporal de r fuerte
+            "r": "ɾ", // r suave
+            "R": "r" // Deshacer representación temporal de r fuerte
+        },
         "v": {"v": "b"},
         "w_tradicional": {"w": "b"},
         "w_moderna": {"w": "gw"},
@@ -65,8 +68,8 @@
         "s_sonora": {"s<son>": "z<son>"}
     },
     "order": [
-        "ch", "ll", "r_fuerte", "x", "w_tradicional|w_moderna", // Primero digrafos y sonidos dobles
-        "c", "g", "h", "j", "ñ", "q", "r_suave", "v", "y", "z", "i", "u",  // Luego letras
+        "ch", "ll", "x", "w_tradicional|w_moderna", // Primero digrafos y sonidos dobles
+        "c", "g", "h", "j", "ñ", "q", "r", "v", "y", "z", "i", "u",  // Luego letras
         "fricativización", "n_asimilada", "s_sonora" // Alófonos
     ]
 }
