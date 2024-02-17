@@ -1,7 +1,9 @@
 import streamlit as st
 from io import StringIO
 import pandas as pd
+from datetime import datetime
 import src.letra as letra
+import src.utils as utils
 
 # Load language dictionary
 def load_bundle(lang):
@@ -19,8 +21,16 @@ st.set_page_config(
     initial_sidebar_state="auto",
     menu_items={
         'Get help': "https://dirdam.github.io/contact.html",
-        'About': """This app was proudly developed by [Adrián Jiménez Pascual](https://dirdam.github.io/)."""
+        'About': f"""This app was proudly developed by [Adrián Jiménez Pascual](https://dirdam.github.io/).
+        
+- This app has been used **`{utils.get_key('sessions'):,}`** times.
+- A total of **`{utils.get_key('terms'):,}`** terms have been transformed so far."""
     })
+
+# Add session count
+if 'session_registered' not in st.session_state:
+    utils.update_key('sessions')
+    st.session_state.session_registered = True
 
 # Title
 st.markdown("# LETRA: LanguagE TRAnsformations")
@@ -91,6 +101,7 @@ with tool_tab:
         return rule_name, ' & '.join(rule_field), mother_term
 
     if term:
+        utils.update_key('terms') # Add term to the count
         st.markdown(lang_dict['trans_result'])
         last_nodes = t.transform(term, verbose=False)
         transformed_terms = t.transformations
