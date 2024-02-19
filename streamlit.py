@@ -29,8 +29,6 @@ st.set_page_config(
 # Title
 st.markdown("# LETRA: LanguagE TRAnsformations")
 
-utils.remove_file() # Remove file if it exists
-
 # Sidebar
 lang_options = {
     'Español': 'es',
