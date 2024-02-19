@@ -30,3 +30,10 @@ def get_key(key):
                 return 0
     except:
         return 0
+    
+def remove_file():
+    import os
+    try:
+        os.remove(sessions_file)
+    except:
+        pass

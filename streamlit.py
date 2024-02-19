@@ -1,7 +1,6 @@
 import streamlit as st
 from io import StringIO
 import pandas as pd
-from datetime import datetime
 import src.letra as letra
 import src.utils as utils
 
@@ -27,13 +26,10 @@ st.set_page_config(
 - A total of **`{utils.get_key('terms'):,}`** terms have been transformed so far."""
     })
 
-# Add session count
-if 'session_registered' not in st.session_state:
-    utils.update_key('sessions')
-    st.session_state.session_registered = True
-
 # Title
 st.markdown("# LETRA: LanguagE TRAnsformations")
+
+utils.remove_file() # Remove file if it exists
 
 # Sidebar
 lang_options = {
@@ -69,8 +65,15 @@ with tool_tab:
             st.stop()
 
     st.markdown(lang_dict['enter_text'])
+    # If active user, add session count
+    if upload_choice != 'sample.json' and 'session_registered' not in st.session_state:
+        utils.update_key('sessions')
+        st.session_state.session_registered = True
+
     if upload_choice != 'own':
-        st.markdown(lang_dict['accent_explain'])
+        extra_ref = '' if upload_choice != 'LA_ES.json' else lang_dict['explain_ref']
+        st.markdown(lang_dict['accent_explain'] + ' ' + extra_ref)
+
     if json_file == 'sample.json': # Change placeholders and values for the input text
         placeholder = 'lítteram'
         value = 'lítteram'
@@ -101,7 +104,8 @@ with tool_tab:
         return rule_name, ' & '.join(rule_field), mother_term
 
     if term:
-        utils.update_key('terms') # Add term to the count
+        if 'session_registered' in st.session_state: # If active session
+            utils.update_key('terms') # Add term to the count
         st.markdown(lang_dict['trans_result'])
         last_nodes = t.transform(term, verbose=False)
         transformed_terms = t.transformations
