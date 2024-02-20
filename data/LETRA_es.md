@@ -1,6 +1,6 @@
 ## Objetivo
 
-**LETRA** (_**LanguagE Transformations**_) busca convertir cualquier escritura en otra a través de un conjunto de _reglas de transformación_.
+**LETRA** (_**LanguagE TRAnsformations**_) busca convertir cualquier escritura en otra a través de un conjunto de _reglas de transformación_.
 
 La escritura **no** tiene por qué representar ortografía o fonética; lo que represente es decisión del usuario.
 

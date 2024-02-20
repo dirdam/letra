@@ -1,6 +1,6 @@
 ## Purpose
 
-**LETRA** (_**LanguagE Transformations**_) converts any given script into an different one through a set of _transformation rules_.
+**LETRA** (_**LanguagE TRAnsformations**_) converts any given script into an different one through a set of _transformation rules_.
 
 The script does **not** need to represent orthography or phonetics; what it represents is decision of the user.
 
