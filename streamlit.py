@@ -90,7 +90,6 @@ with tool_tab:
         st.session_state.last_term = None # Initialize last term everytime a new term is introduced
         st.session_state.last_clicked = None # Initialize last clicked everytime a new term is introduced
         if len(term) > 0 and 'session_registered' in st.session_state: # If actual term and active session
-            print('count')
             utils.update_key('terms') # Add term to the count
 
     def line_from_term(step_term, transformed_terms, t):
