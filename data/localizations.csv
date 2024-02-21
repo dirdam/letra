@@ -43,9 +43,9 @@ latina](https://www.unex.es/organizacion/gobierno/vicerrectorados/vicealumn/func
 es,explain_LA_ES,"- Las reglas para esta transformación se han extraido de «_[Verba. Ejercicios de etimología
 latina](https://www.unex.es/organizacion/gobierno/vicerrectorados/vicealumn/funciones/car_20050411_001/coordinacion-ebau-2022-23/materias/latin-ii-1/leyes_evolucion_fonetica_modif_.pdf)_» (PDF). No obstante, no todas las reglas han sido implementadas para esta demostración.
 - Usa la tilde para denotar la vocal tónica latina."
-en,explain_ES_IPA,"- The transformation is based on the Spanish pronunciation general rules and leaves out exceptions.
+en,explain_ES_IPA,"- The transformation is based on Spanish general rules of conversion of orthography to pronunciation and does not make an exhaustive analysis of syllable division nor accounts for exceptions.
 - Allophones are included for reference."
-es,explain_ES_IPA,"- La transformación se basa en las reglas generales de pronunciación y no atiende a excepciones.
+es,explain_ES_IPA,"- La transformación se basa en reglas generales de conversión de ortografía a pronunciación y no hace un análisis exhaustivo de la división en sílabas ni atiende a excepciones.
 - Se incluyen alófonos."
 en,explain_ref,""
 es,explain_ref,""
