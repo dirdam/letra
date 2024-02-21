@@ -69,8 +69,7 @@ with tool_tab:
         st.session_state.session_registered = True
 
     if upload_choice != 'own':
-        extra_ref = '' if upload_choice != 'LA_ES.json' else lang_dict['explain_ref']
-        st.markdown(lang_dict['accent_explain'] + ' ' + extra_ref)
+        st.markdown(lang_dict[f"explain_{upload_choice.split('.')[0]}"])
 
     if json_file == 'sample.json': # Change placeholders and values for the input text
         placeholder = 'lítteram'
