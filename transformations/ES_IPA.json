@@ -71,6 +71,6 @@
     "order": [
         "ch", "ll", "x", "w_tradicional|w_moderna", // Primero digrafos y sonidos dobles
         "c", "g", "h", "j", "ñ", "q", "r", "v", "y", "z", "i", "u",  // Luego letras
-        "fricativización", "n_asimilada", "s_sonora" // Alófonos
+        "iden|fricativización", "iden|n_asimilada", "iden|s_sonora" // Alófonos
     ]
 }
