@@ -153,8 +153,8 @@ en,rb_search,"Search rules, patterns or groups"
 es,rb_search,"Buscar reglas, patrones o grupos"
 en,rb_hint,"Rules in the order they apply. Alternatives (separated by | in the rule file) branch the derivation: each one is tried on every form. Hover a ⟨group⟩ to see its members; ␣ is the word boundary. Rules marked ""Currently used"" changed the form you selected in the Evolve tab."
 es,rb_hint,"Las reglas en el orden en que se aplican. Las alternativas (separadas por | en el archivo) ramifican la derivación: cada una se prueba sobre cada forma. Pasa el cursor sobre un ⟨grupo⟩ para ver sus miembros; ␣ es el límite de palabra. Las reglas marcadas ""Usada ahora"" cambiaron la forma que elegiste en la pestaña Evolucionar."
-en,rb_alternatives,alternatives
-es,rb_alternatives,alternativas
+en,rb_alternatives,alternatives (only one applies)
+es,rb_alternatives,alternativas (solo se aplica una)
 en,rb_iden,(leave unchanged)
 es,rb_iden,(dejar sin cambios)
 en,rb_no_match,Nothing matches.
