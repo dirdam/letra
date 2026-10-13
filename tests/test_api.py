@@ -219,10 +219,9 @@ def test_uploaded_rules_are_normalised_too(client):
     assert data['final'] == [' cafX ']
 
 
-def test_case_is_ignored_unless_asked_otherwise(client):
+def test_words_are_lowercased(client):
     rules = json.dumps({'groups': {}, 'rules': {'r': {'A': 'x'}}, 'order': ['r']})
-    assert post(client, rules=rules, term='CASA').get_json()['final'] == [' casa ']          # lowercased first
-    assert post(client, rules=rules, term='CASA', match_case=True).get_json()['final'] == [' CxSx ']
+    assert post(client, rules=rules, term='CASA').get_json()['final'] == [' casa ']
 
 
 # ---------- rule book ----------

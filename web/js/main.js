@@ -150,7 +150,7 @@
         S.loading = true;
         renderStatus();
         try {
-            const res = await L.api.transform(set, all.slice(0, ST.MAX_WORDS), S.matchCase, inflight.signal);
+            const res = await L.api.transform(set, all.slice(0, ST.MAX_WORDS), inflight.signal);
             if (mine !== runSeq) return;
             if (res.ok && res.data && res.data.results) {
                 S.results = res.data.results;
@@ -275,7 +275,6 @@
 
     function applyStateToUI() {
         $('words').value = S.words;
-        $('matchCase').checked = S.matchCase;
         renderShelf();
         renderSetPanel();
         renderExamples();
@@ -299,7 +298,6 @@
             scheduleRun();
         });
         $('evolveBtn').addEventListener('click', evolveNow);
-        $('matchCase').addEventListener('change', () => { S.matchCase = $('matchCase').checked; evolveNow(); });
         $('setToRulebook').addEventListener('click', () => switchTab('rulebook'));
         $('setToEditor').addEventListener('click', () => { switchTab('editor'); if (S.setId !== 'mine') L.editor.fork(); });
         $('exportCopy').addEventListener('click', () => doExport(true));
