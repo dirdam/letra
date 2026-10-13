@@ -230,7 +230,7 @@ class Transformer():
                 for middle_term in nodes: # For each term in the last level
                     transformed_middle_term = self.apply_rule(rule, middle_term)
                     if transformed_middle_term != middle_term:
-                        self.edges.append({'step': step, 'rule': rule, 'from': middle_term, 'to': transformed_middle_term})
+                        self.edges.append({'step': step, 'rule': rule, 'from': middle_term, 'to': transformed_middle_term, 'entries': self.last_applied})
                     if transformed_middle_term not in last_nodes: # If the new term is not yet registered as a last level node
                         last_nodes.append(transformed_middle_term)
                         if transformed_middle_term != middle_term and transformed_middle_term not in self.transformations: # If the transformation is different from the original term (to avoid adding the same term overriding the original one) and not in the transformations dictionary (to avoid loops like 'sello' -> 'sillo' -> 'sello' -> ...)
@@ -243,10 +243,14 @@ class Transformer():
     def apply_rule(self, rule_name, term):
         '''Applies specific rule to term.'''
         new_term = term
+        self.last_applied = [] # Positions of the entries of the rule that changed the term (the last call's)
         changes = self.json_dict['rules'][rule_name]
-        for search_values, change_values in changes.items():
+        for position, (search_values, change_values) in enumerate(changes.items()):
             # print(search_values, change_values, new_term)
-            new_term = re.sub(search_values, change_values, new_term)
+            replaced = re.sub(search_values, change_values, new_term)
+            if replaced != new_term:
+                self.last_applied.append(position)
+            new_term = replaced
         return new_term
         
     def split_values(self, values):
