@@ -32,6 +32,9 @@ class Transformer():
         self.rename_groups()
         # # Reverse groups
         # self.reverse_groups()
+        # Keep the expanded groups (lists of values) before they are turned into regexes
+        self.groups_expanded = copy.deepcopy(self.json_dict['groups'])
+        self.edges = []
         # Convert json to regex
         self.json_to_regex()
     
@@ -216,8 +219,9 @@ class Transformer():
         `allow_indentity` sets whether the rules are compulsory in every step or whether the term can remain as identity.'''
         new_term = f' {term} ' # Set begining and end of term
         self.transformations = {new_term: {'mother': '', 'rule': ''}} # Dictionary of transformations {term: {'mother': mother_term, 'rule': rule}}
+        self.edges = [] # Every change applied: {step, rule, from, to}. Unlike `transformations`, keeps all the paths when branches meet
         nodes = [new_term] # Nodes (target words) to be transformed
-        for rules in self.json_dict['order']:
+        for step, rules in enumerate(self.json_dict['order']):
             rules = [rules] if '|' not in rules else rules.split('|')
             if allow_identity:
                 rules = ['iden'] + rules # Add identity rule
@@ -225,6 +229,8 @@ class Transformer():
             for rule in rules:
                 for middle_term in nodes: # For each term in the last level
                     transformed_middle_term = self.apply_rule(rule, middle_term)
+                    if transformed_middle_term != middle_term:
+                        self.edges.append({'step': step, 'rule': rule, 'from': middle_term, 'to': transformed_middle_term})
                     if transformed_middle_term not in last_nodes: # If the new term is not yet registered as a last level node
                         last_nodes.append(transformed_middle_term)
                         if transformed_middle_term != middle_term and transformed_middle_term not in self.transformations: # If the transformation is different from the original term (to avoid adding the same term overriding the original one) and not in the transformations dictionary (to avoid loops like 'sello' -> 'sillo' -> 'sello' -> ...)

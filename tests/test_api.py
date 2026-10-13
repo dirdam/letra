@@ -97,15 +97,19 @@ def test_strings_cover_both_languages_with_the_same_keys(client):
     data = client.get('/api/strings').get_json()
     assert set(data['raw']['en']) == set(data['raw']['es'])
     assert set(data['html']['en']) == set(data['raw']['en'])
-    assert len(data['raw']['en']) >= 42
+    assert len(data['raw']['en']) >= 130
 
 
-def test_strings_markdown_is_rendered_and_dedented(client):
+def test_strings_markdown_is_rendered(client):
     html = client.get('/api/strings').get_json()['html']['en']
-    assert '<strong>' in html['tool']
-    assert '<code>' not in html['how_to_use_explain'].split('<ol>')[0]      # not turned into a code block
-    assert '<ol>' in html['how_to_use_explain']
-    assert not html['tool'].startswith('<p>')
+    assert '<ol>' in html['howto'] and '<strong>' in html['howto']
+    assert '<ul>' in html['syntax'] and '<code>' in html['syntax']
+    assert not html['tab_evolve'].startswith('<p>')            # a single paragraph comes without its wrapper
+
+
+def test_indented_markdown_is_not_turned_into_a_code_block():
+    out = server._html('\n    1. first\n    2. second\n')
+    assert '<ol>' in out and '<code>' not in out
 
 
 @pytest.mark.parametrize('lang,word', [('en', 'Purpose'), ('es', 'Objetivo')])
@@ -152,3 +156,125 @@ def test_normal_nested_groups_are_fine(client):
     rules = {'groups': groups, 'rules': {'r': {'<vow>': 'x'}}, 'order': ['r']}
     r = post(client, rules=json.dumps(rules), term='casa')
     assert r.status_code == 200
+
+
+# ---------- edges ----------
+
+def test_transform_returns_edges_as_step_rule_from_to(client):
+    data = post(client, preset='sample', term='lítteram').get_json()
+    assert data['edges'] and all(len(e) == 4 and isinstance(e[0], int) for e in data['edges'])
+    first = data['edges'][0]
+    assert first[2] == ' lítteram ' and first[1] == 'remove_m'
+
+
+# ---------- batches ----------
+
+def test_batch_returns_one_result_per_word_in_order(client):
+    r = post(client, preset='LA_ES', terms=['lítteram', 'dóminum', 'quinquagínta'])
+    assert r.status_code == 200
+    data = r.get_json()
+    assert data['truncated'] is False
+    assert [x['term'] for x in data['results']] == ['lítteram', 'dóminum', 'quinquagínta']
+    assert len(data['results'][2]['final']) == 12
+    single = post(client, preset='LA_ES', term='dóminum').get_json()
+    assert data['results'][1] == single
+
+
+def test_batch_reports_a_bad_word_without_failing_the_others(client):
+    data = post(client, preset='sample', terms=['lítteram', '', 'x' * 65, 'a\nb']).get_json()
+    assert 'final' in data['results'][0]
+    assert [x.get('error') for x in data['results'][1:]] == ['bad_term', 'term_too_long', 'bad_term']
+
+
+def test_batch_limits(client):
+    assert post(client, preset='sample', terms=['a'] * (server.MAX_WORDS + 1)).get_json() == {'error': 'too_many_terms'}
+    assert post(client, preset='sample', terms=[]).status_code == 400
+    assert post(client, preset='sample', terms=['a', 3]).status_code == 400
+    assert post(client, preset='sample', terms='lítteram').status_code == 400
+    assert post(client, preset='sample', terms=['a'] * server.MAX_WORDS).status_code == 200
+
+
+def test_batch_stops_when_the_time_budget_is_spent(client, monkeypatch):
+    monkeypatch.setattr(server, 'TIME_BUDGET', -1)       # already over budget after the first word
+    data = post(client, preset='sample', terms=['lítteram', 'letra', 'casa']).get_json()
+    assert data['truncated'] is True and len(data['results']) == 1
+
+
+def test_batch_with_broken_rules_is_one_error(client):
+    r = post(client, rules='{"groups": {}, "rules": {"r": {"a": "b"}}, "order": ["missing"]}', terms=['a', 'b'])
+    assert r.status_code == 400 and r.get_json() == {'error': 'invalid_rules'}
+
+
+# ---------- unicode and case ----------
+
+def test_decomposed_input_gives_the_same_result_as_composed(client):
+    composed = post(client, preset='sample', term='lítteram').get_json()
+    decomposed = post(client, preset='sample', term='lítteram').get_json()
+    assert decomposed == composed and decomposed['term'] == 'lítteram'
+
+
+def test_uploaded_rules_are_normalised_too(client):
+    rules = {'groups': {}, 'rules': {'r': {'é': 'X'}}, 'order': ['r']}       # decomposed é in the rule
+    data = post(client, rules=json.dumps(rules, ensure_ascii=False), term='café').get_json()   # composed é typed
+    assert data['final'] == [' cafX ']
+
+
+def test_case_is_ignored_unless_asked_otherwise(client):
+    rules = json.dumps({'groups': {}, 'rules': {'r': {'A': 'x'}}, 'order': ['r']})
+    assert post(client, rules=rules, term='CASA').get_json()['final'] == [' casa ']          # lowercased first
+    assert post(client, rules=rules, term='CASA', match_case=True).get_json()['final'] == [' CxSx ']
+
+
+# ---------- rule book ----------
+
+def test_rulebook_lists_steps_rules_and_groups(client):
+    data = client.post('/api/rulebook', json={'preset': 'LA_ES'}).get_json()
+    assert data['order'][0] and isinstance(data['order'], list)
+    assert any('|' in step for step in data['order'])                  # branching steps keep their alternatives
+    name, entries = next(iter(data['rules'].items()))
+    assert entries and all(len(e) == 2 for e in entries)
+    g = next(iter(data['groups'].values()))
+    assert g['total'] == len(g['members']) or len(g['members']) == server.GROUP_MEMBERS_SHOWN
+
+
+def test_rulebook_for_uploaded_rules_and_errors(client):
+    ok = client.post('/api/rulebook', json={'rules': json.dumps({'groups': {'v': ['a', 'e']}, 'rules': {'r': {'<v>': 'x'}}, 'order': ['r']})})
+    assert ok.status_code == 200 and ok.get_json()['groups']['v'] == {'members': ['a', 'e'], 'total': 2}
+    assert client.post('/api/rulebook', json={'rules': 'nope'}).get_json() == {'error': 'invalid_json'}
+    assert client.post('/api/rulebook', json={'preset': 'zzz'}).status_code == 404
+    assert client.post('/api/rulebook', json={}).status_code == 400
+
+
+# ---------- validate ----------
+
+def test_validate_endpoint_reports_positions(client):
+    text = '{\n "groups": {},\n "rules": {"a": {"x": "y"}},\n "order": ["a",\n "ghost"]\n}'
+    data = client.post('/api/validate', json={'rules': text}).get_json()
+    assert data['ok'] is False
+    bad = [i for i in data['issues'] if i['code'] == 'unknown_rule_in_order'][0]
+    assert bad['line'] == 5 and bad['severity'] == 'error'
+
+
+def test_validate_endpoint_inputs(client):
+    assert client.post('/api/validate', json={'rules': GOOD_RULES}).get_json() == {'ok': True, 'issues': []}
+    assert client.post('/api/validate', json={}).status_code == 400
+    assert client.post('/api/validate', json={'rules': 3}).status_code == 400
+    assert client.post('/api/validate', data=b'x' * (server.MAX_BODY_BYTES + 5), content_type='application/json').status_code == 413
+
+
+GOOD_RULES = '{"groups": {"v": ["a"]}, "rules": {"r": {"<v>": "<v>"}}, "order": ["r"]}'
+
+
+# ---------- page assets ----------
+
+def test_version_changes_when_any_page_file_changes(tmp_path, monkeypatch):
+    web = tmp_path / 'web'
+    (web / 'fonts').mkdir(parents=True)
+    (web / 'app.js').write_text('a')
+    (web / 'fonts' / 'f.woff2').write_text('font')
+    monkeypatch.setattr(server, 'WEB', str(web))
+    v1 = server._version()
+    (web / 'fonts' / 'f.woff2').write_text('other font')          # fonts are cached by name: not part of the hash
+    assert server._version() == v1
+    (web / 'app.js').write_text('b')
+    assert server._version() != v1

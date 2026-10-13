@@ -1,0 +1,364 @@
+/* Starts the page and ties the parts together: tabs, the rule-set shelf, evolving the words, the rule book,
+   the editor, export and sharing. */
+(function () {
+    'use strict';
+    const L = (window.Letra = window.Letra || {});
+    const I = L.i18n;
+    const ST = L.state;
+    const S = ST.s;
+
+    const $ = (id) => document.getElementById(id);
+    const TABS = ['evolve', 'rulebook', 'editor', 'about'];
+    const SETS = ['sample', 'LA_ES', 'ES_IPA', 'mine'];
+    const SET_LABEL = { sample: 'set_sample', LA_ES: 'set_la_es', ES_IPA: 'set_es_ipa', mine: 'set_mine' };
+    const setLabel = (id) => I.t(SET_LABEL[id]);
+
+    let runTimer = null;
+    let inflight = null;
+    let runSeq = 0;
+    let toastTimer = null;
+    let rulebookSeq = 0;
+    let rulebookError = '';
+    const aboutCache = {};
+
+    function el(tag, cls, text) {
+        const e = document.createElement(tag);
+        if (cls) e.className = cls;
+        if (text !== undefined) e.textContent = text;
+        return e;
+    }
+
+    function toast(message) {
+        const t = $('toast');
+        t.textContent = message;
+        t.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+    }
+
+    // ---------- rule sets ----------
+
+    function renderShelf() {
+        const box = $('shelfSets');
+        box.textContent = '';
+        SETS.forEach((id) => {
+            const b = el('button', 'book' + (id === 'mine' && !S.mine.trim() ? ' empty' : ''), setLabel(id));
+            b.type = 'button';
+            b.setAttribute('role', 'radio');
+            b.setAttribute('aria-checked', String(S.setId === id));
+            if (id === 'mine') b.title = S.mine.trim() ? S.mineName : I.t('mine_empty_hint');
+            b.addEventListener('click', () => selectSet(id));
+            box.appendChild(b);
+        });
+    }
+
+    function renderSetPanel() {
+        $('setTitle').textContent = setLabel(S.setId);
+        $('setExplain').innerHTML = I.h(S.setId === 'mine' ? 'explain_mine' : 'explain_' + S.setId);
+        $('setToEditor').textContent = S.setId === 'mine' ? I.t('edit_mine') : I.t('edit_copy');
+        const st = L.rulebook.stats();
+        $('setStats').textContent = rulebookError ? I.t('err_' + rulebookError) : st ? I.fmt('set_stats', st) : '…';
+        $('setStats').className = 'set-stats' + (rulebookError ? ' error' : '');
+        const names = S.setId === 'mine' ? S.mineName : '';
+        $('setTitle').title = names;
+    }
+
+    function renderExamples() {
+        const box = $('examples');
+        box.textContent = '';
+        const list = ST.EXAMPLES[S.setId] || [];
+        if (!list.length) return;
+        box.appendChild(el('span', 'examples-label', I.t('examples')));
+        list.forEach((w) => {
+            const b = el('button', 'example', w);
+            b.type = 'button';
+            b.addEventListener('click', () => {
+                const area = $('words');
+                const have = ST.parseWords(area.value);
+                if (!have.includes(w)) area.value = (area.value.trim() ? area.value.replace(/\s+$/, '') + '\n' : '') + w + '\n';
+                evolveNow();
+            });
+            box.appendChild(b);
+        });
+    }
+
+    async function loadRulebook() {
+        const set = ST.currentSet();
+        const mine = ++rulebookSeq;
+        rulebookError = '';
+        if (!set) { renderSetPanel(); renderRulebookTab(); return; }
+        const data = await L.rulebook.load(set);
+        if (mine !== rulebookSeq) return;
+        rulebookError = data && data.error ? data.error : '';
+        renderSetPanel();
+        renderRulebookTab();
+        if (S.results.length) renderResults();          // chains can now show the rules' entries
+    }
+
+    function selectSet(id) {
+        if (id === 'mine' && !S.mine.trim()) {
+            switchTab('editor');
+            toast(I.t('mine_empty_toast'));
+            return;
+        }
+        S.setId = id;
+        S.results = [];
+        S.selected = {};
+        S.error = '';
+        ST.save();
+        renderShelf();
+        renderSetPanel();
+        renderExamples();
+        L.editor.refresh();
+        loadRulebook();
+        evolveNow();
+    }
+
+    // ---------- evolving ----------
+
+    function updateWordCount(n) {
+        const e = $('wordCount');
+        const tooMany = n > ST.MAX_WORDS;
+        e.hidden = !tooMany;
+        e.textContent = tooMany ? I.fmt('words_too_many', { max: ST.MAX_WORDS, n }) : '';
+    }
+
+    function scheduleRun() {
+        clearTimeout(runTimer);
+        runTimer = setTimeout(evolveNow, 500);
+    }
+
+    async function evolveNow() {
+        clearTimeout(runTimer);
+        const set = ST.currentSet();
+        const all = ST.parseWords($('words').value);
+        S.words = $('words').value;
+        ST.save();
+        ST.writeHash();
+        updateWordCount(all.length);
+        if (inflight) inflight.abort();
+        if (!set || !all.length) {
+            S.results = [];
+            S.truncated = false;
+            S.error = '';
+            S.loading = false;
+            renderResults();
+            return;
+        }
+        inflight = new AbortController();
+        const mine = ++runSeq;
+        S.loading = true;
+        renderStatus();
+        try {
+            const res = await L.api.transform(set, all.slice(0, ST.MAX_WORDS), S.matchCase, inflight.signal);
+            if (mine !== runSeq) return;
+            if (res.ok && res.data && res.data.results) {
+                S.results = res.data.results;
+                S.truncated = !!res.data.truncated;
+                S.error = '';
+            } else {
+                S.results = [];
+                S.error = (res.data && res.data.error) || (res.status >= 500 ? 'timeout' : 'server');
+            }
+        } catch (e) {
+            if ((e && e.name === 'AbortError') || mine !== runSeq) return;
+            S.results = [];
+            S.error = 'server';
+        }
+        S.loading = false;
+        renderResults();
+    }
+
+    function renderStatus() {
+        const s = $('status');
+        s.className = 'status';
+        if (S.loading) { s.textContent = I.t('status_loading'); return; }
+        if (S.error) { s.textContent = I.t('err_' + S.error); s.classList.add('error'); return; }
+        if (!S.results.length) { s.textContent = ''; return; }
+        const ok = S.results.filter((r) => !r.error);
+        const forms = ok.reduce((n, r) => n + r.final.length, 0);
+        let text = I.count('n_words', S.results.length) + ' → ' + I.count('n_forms', forms);
+        if (S.truncated) { text += ' ' + I.t('status_truncated'); s.classList.add('warn'); }
+        s.textContent = text;
+    }
+
+    function renderResults() {
+        const box = $('results');
+        renderStatus();
+        $('toolbar').hidden = !S.results.length;
+        document.querySelectorAll('[data-view]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.view === S.view)));
+        document.querySelectorAll('[data-deriv]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.deriv === S.deriv)));
+        box.classList.toggle('loading', S.loading);
+        if (S.loading && S.results.length) return;
+        if (!S.results.length) {
+            box.textContent = '';
+            if (!S.error && !S.loading) {
+                const empty = el('div', 'empty-state');
+                empty.appendChild(el('h3', '', I.t(ST.currentSet() ? 'empty_title' : 'empty_no_rules_title')));
+                empty.appendChild(el('p', '', I.t(ST.currentSet() ? 'empty_body' : 'empty_no_rules_body')));
+                box.appendChild(empty);
+            }
+            L.rulebook.mark($('rbBody'), new Set());
+            return;
+        }
+        L.entries.renderAll(box, (word) => {
+            S.view = 'cards';
+            ST.save();
+            ST.writeHash();
+            renderResults();
+            L.entries.focusWord(box, word);
+        });
+    }
+
+    // ---------- tabs ----------
+
+    function switchTab(name) {
+        if (!TABS.includes(name)) name = 'evolve';
+        S.tab = name;
+        TABS.forEach((t) => {
+            const on = t === name;
+            $('panel-' + t).hidden = !on;
+            const b = $('tab-' + t);
+            b.setAttribute('aria-selected', String(on));
+            b.tabIndex = on ? 0 : -1;
+        });
+        if (name === 'rulebook') renderRulebookTab();
+        if (name === 'about') renderAbout();
+        if (name === 'editor') L.editor.refresh();
+        ST.writeHash();
+    }
+
+    function renderRulebookTab() {
+        $('rbTitle').textContent = I.fmt('rb_title', { set: setLabel(S.setId) });
+        if (S.tab !== 'rulebook' && !$('rbBody').children.length && !L.rulebook.info()) return;
+        if (rulebookError) {
+            $('rbBody').textContent = '';
+            $('rbBody').appendChild(el('p', 'error', I.t('err_' + rulebookError)));
+            return;
+        }
+        L.rulebook.render($('rbBody'), $('rbSearch').value, L.entries.used());
+    }
+
+    async function renderAbout() {
+        $('aboutHowto').innerHTML = I.h('howto');
+        $('aboutSyntax').innerHTML = I.h('syntax');
+        const lang = I.lang;
+        if (aboutCache[lang]) { $('aboutContent').innerHTML = aboutCache[lang]; return; }
+        const res = await L.api.about(lang);
+        if (res.ok && res.data) {
+            aboutCache[lang] = res.data.html;
+            if (lang === I.lang) $('aboutContent').innerHTML = res.data.html;
+        }
+    }
+
+    function goToRule(rule) {
+        switchTab('rulebook');
+        const target = Array.from(document.querySelectorAll('#rbBody .rb-rule')).find((e) => e.dataset.rule === rule);
+        if (!target) return;
+        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        target.classList.add('flash');
+        setTimeout(() => target.classList.remove('flash'), 1600);
+    }
+
+    // ---------- export and share ----------
+
+    async function doExport(copy) {
+        const kind = $('exportKind').value;
+        const format = $('exportFormat').value;
+        const out = L.exporter.build(kind, format);
+        if (copy) toast((await L.exporter.copy(out.text)) ? I.t('copied') : I.t('copy_failed'));
+        else L.exporter.download(out.text, out.mime, L.exporter.filename(S.setId, kind, out.ext));
+        $('exportMenu').open = false;
+    }
+
+    async function share() {
+        ST.writeHash();
+        const ok = await L.exporter.copy(location.href);
+        toast(ok ? I.t(S.setId === 'mine' ? 'share_copied_mine' : 'share_copied') : I.t('copy_failed'));
+    }
+
+    // ---------- start ----------
+
+    function applyStateToUI() {
+        $('words').value = S.words;
+        $('matchCase').checked = S.matchCase;
+        renderShelf();
+        renderSetPanel();
+        renderExamples();
+        switchTab(S.tab);
+    }
+
+    function bind() {
+        $('words').addEventListener('input', scheduleRun);
+        $('words').addEventListener('keydown', (e) => { if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { e.preventDefault(); evolveNow(); } });
+        $('evolveBtn').addEventListener('click', evolveNow);
+        $('matchCase').addEventListener('change', () => { S.matchCase = $('matchCase').checked; evolveNow(); });
+        $('setToRulebook').addEventListener('click', () => switchTab('rulebook'));
+        $('setToEditor').addEventListener('click', () => { switchTab('editor'); if (S.setId !== 'mine') L.editor.fork(); });
+        document.querySelectorAll('[data-view]').forEach((b) => b.addEventListener('click', () => { S.view = b.dataset.view; ST.save(); ST.writeHash(); renderResults(); }));
+        document.querySelectorAll('[data-deriv]').forEach((b) => b.addEventListener('click', () => { S.deriv = b.dataset.deriv; ST.save(); ST.writeHash(); renderResults(); }));
+        $('exportCopy').addEventListener('click', () => doExport(true));
+        $('exportDownload').addEventListener('click', () => doExport(false));
+        $('shareBtn').addEventListener('click', share);
+        $('rbSearch').addEventListener('input', renderRulebookTab);
+        document.querySelectorAll('.tab').forEach((b) => {
+            b.addEventListener('click', () => switchTab(b.dataset.tab));
+            b.addEventListener('keydown', (e) => {
+                const i = TABS.indexOf(b.dataset.tab);
+                const to = e.key === 'ArrowRight' ? (i + 1) % TABS.length : e.key === 'ArrowLeft' ? (i + TABS.length - 1) % TABS.length : e.key === 'Home' ? 0 : e.key === 'End' ? TABS.length - 1 : -1;
+                if (to < 0) return;
+                e.preventDefault();
+                switchTab(TABS[to]);
+                $('tab-' + TABS[to]).focus();
+            });
+        });
+        window.addEventListener('hashchange', () => { ST.load(); applyStateToUI(); loadRulebook(); evolveNow(); });
+        I.onChange(() => {
+            renderShelf();
+            renderSetPanel();
+            renderExamples();
+            renderRulebookTab();
+            renderResults();
+            updateWordCount(ST.parseWords($('words').value).length);
+            L.editor.refresh();
+            if (S.tab === 'about') renderAbout();
+        });
+        L.entries.handlers.onRule = goToRule;
+        L.entries.handlers.onUsedChange = (set) => L.rulebook.mark($('rbBody'), set);
+        L.editor.hooks.setLabel = setLabel;
+        L.editor.hooks.onDraftChange = renderShelf;
+        L.editor.hooks.onRun = () => {
+            S.setId = 'mine';
+            S.results = [];
+            S.selected = {};
+            ST.save();
+            renderShelf();
+            renderSetPanel();
+            renderExamples();
+            loadRulebook();
+            switchTab('evolve');
+            evolveNow();
+        };
+    }
+
+    async function init() {
+        ST.load();
+        try {
+            await I.load();
+        } catch (e) {
+            document.getElementById('status').textContent = 'Could not load the page texts. Please reload.';
+            return;
+        }
+        I.apply();
+        I.renderToggle($('langToggle'));
+        $('footerYear').textContent = new Date().getFullYear();
+        L.editor.init();
+        bind();
+        applyStateToUI();
+        loadRulebook();
+        evolveNow();
+        L.hero.start();
+    }
+
+    init();
+})();

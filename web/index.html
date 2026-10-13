@@ -4,103 +4,178 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LETRA: LanguagE TRAnsformations</title>
-    <meta name="description" content="LETRA applies sets of rewrite rules to a word and shows every possible result and the step-by-step derivation.">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔀</text></svg>">
+    <meta name="description" content="LETRA applies sets of rewrite rules to words and shows every possible result with its step-by-step derivation.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📜</text></svg>">
     <link rel="apple-touch-icon" sizes="180x180" href="https://dirdam.squadro.app/assets/images/lasso-touch-180.png">
     <meta name="apple-mobile-web-app-title" content="LETRA">
+    <meta name="theme-color" content="#f1e6c8">
+    <link rel="preload" as="font" type="font/woff2" href="static/fonts/Gentium-Regular.woff2" crossorigin>
     <link rel="stylesheet" href="static/styles.css?v={{VERSION}}">
 </head>
 <body>
-    <header class="hero">
-        <h1>LETRA</h1>
-        <p class="hero-name">LanguagE TRAnsformations</p>
-        <p class="hero-tagline" data-i18n="tagline"></p>
+    <a class="skip" href="#main" data-i18n="skip"></a>
+
+    <header class="hero" id="hero">
+        <div class="hero-inner">
+            <h1 class="logo" aria-label="LETRA"><span class="initial" aria-hidden="true">L</span><span class="logo-rest" aria-hidden="true">ETRA</span></h1>
+            <p class="acronym" aria-label="LanguagE TRAnsformations"><b>L</b>anguag<b>E</b> <b>TRA</b>nsformations</p>
+            <p class="tagline" data-i18n="tagline"></p>
+            <div class="strip" id="strip" aria-hidden="true">
+                <div class="strip-stage"><span class="strip-form" id="stripForm"></span></div>
+                <div class="strip-rule" id="stripRule"></div>
+                <div class="strip-trail" id="stripTrail"></div>
+            </div>
+        </div>
     </header>
 
-    <div class="container">
-        <div class="tabs" role="tablist">
-            <button type="button" role="tab" id="tabTool" class="tab" aria-selected="true" aria-controls="panelTool" data-i18n-html="tool"></button>
-            <button type="button" role="tab" id="tabAbout" class="tab" aria-selected="false" aria-controls="panelAbout" data-i18n-html="pj_desc"></button>
-        </div>
+    <nav class="shelf" aria-label="Rule sets">
+        <span class="shelf-label" data-i18n="shelf_label"></span>
+        <div class="shelf-sets" id="shelfSets" role="radiogroup"></div>
+    </nav>
 
-        <main>
-            <section id="panelTool" role="tabpanel" aria-labelledby="tabTool">
-                <div class="card howto">
-                    <div data-i18n-html="how_to_use"></div>
-                    <div data-i18n-html="how_to_use_explain"></div>
-                </div>
-
-                <div class="card">
-                    <div data-i18n-html="upload_text"></div>
-                    <label class="label" for="preset" data-i18n="upload_options"></label>
-                    <select id="preset" class="field"></select>
-                    <div id="uploadRow" class="upload-row" hidden>
-                        <label class="label" for="fileInput" data-i18n-html="upload_desc"></label>
-                        <input id="fileInput" class="field" type="file" accept=".json,application/json">
-                        <p id="fileError" class="error" role="alert" hidden></p>
-                    </div>
-                    <div id="presetExplain" class="explain"></div>
-                </div>
-
-                <div id="afterRules" hidden>
-                    <div class="card">
-                        <div data-i18n-html="enter_text"></div>
-                        <label class="label" for="term" data-i18n="text_input"></label>
-                        <input id="term" class="field" type="text" maxlength="64" autocomplete="off" autocapitalize="off" spellcheck="false">
-                        <p id="error" class="error" role="alert" hidden></p>
-                    </div>
-
-                    <div id="results" class="card" hidden>
-                        <div data-i18n-html="trans_result"></div>
-                        <label class="check"><input id="interm" type="checkbox"> <span data-i18n="interm_check"></span></label>
-                        <div id="chips" class="chips"></div>
-                        <div id="chain" hidden>
-                            <p class="chain-title"><span data-i18n="chain_result"></span> <code id="chainTerm"></code></p>
-                            <div class="table-wrap">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th data-i18n="col1"></th>
-                                            <th data-i18n="col2"></th>
-                                            <th data-i18n="col3"></th>
-                                            <th data-i18n="col4"></th>
-                                            <th data-i18n="col5"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="chainBody"></tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div data-i18n-html="check_json"></div>
-                        <a id="download" class="button"><span data-i18n="download_json"></span><code id="downloadName"></code></a>
-                        <details class="json-view">
-                            <summary><span data-i18n="json_content"></span><code id="jsonName"></code></summary>
-                            <pre id="jsonView"></pre>
-                        </details>
-                    </div>
-                </div>
-            </section>
-
-            <section id="panelAbout" role="tabpanel" aria-labelledby="tabAbout" hidden>
-                <div id="aboutContent" class="card markdown"></div>
-            </section>
-        </main>
-
-        <footer>
-            <div class="lang-toggle" id="langToggle" role="group" aria-label="Language"></div>
-            <p>
-                &copy; <span id="footerYear"></span>
-                <a href="https://dirdam.squadro.app/" target="_blank" rel="noopener noreferrer">Adri&aacute;n Jim&eacute;nez Pascual</a>
-                &middot; <a href="https://dirdam.squadro.app/my-apps.html" target="_blank" rel="noopener noreferrer" data-i18n="footer_more_tools"></a>
-                &middot; <a href="https://github.com/dirdam/letra" target="_blank" rel="noopener noreferrer" data-i18n="footer_source"></a>
-            </p>
-        </footer>
+    <div class="tabs" id="tabs" role="tablist">
+        <button type="button" role="tab" id="tab-evolve" class="tab" aria-selected="true" aria-controls="panel-evolve" data-tab="evolve" data-i18n="tab_evolve"></button>
+        <button type="button" role="tab" id="tab-rulebook" class="tab" aria-selected="false" aria-controls="panel-rulebook" data-tab="rulebook" tabindex="-1" data-i18n="tab_rulebook"></button>
+        <button type="button" role="tab" id="tab-editor" class="tab" aria-selected="false" aria-controls="panel-editor" data-tab="editor" tabindex="-1" data-i18n="tab_editor"></button>
+        <button type="button" role="tab" id="tab-about" class="tab" aria-selected="false" aria-controls="panel-about" data-tab="about" tabindex="-1" data-i18n="tab_about"></button>
     </div>
 
+    <main id="main">
+        <!-- ===== Evolve ===== -->
+        <section id="panel-evolve" class="workbench" role="tabpanel" aria-labelledby="tab-evolve">
+            <aside class="rail">
+                <div class="panel" id="wordsPanel">
+                    <h2 class="panel-title" data-i18n="words_title"></h2>
+                    <textarea id="words" class="words" rows="7" spellcheck="false" autocapitalize="off" autocomplete="off"
+                              data-i18n="words_label" data-i18n-attr="aria-label"></textarea>
+                    <p class="hint" data-i18n="words_hint"></p>
+                    <p class="hint warn" id="wordCount" hidden></p>
+                    <div class="examples" id="examples"></div>
+                    <label class="check"><input id="matchCase" type="checkbox"> <span data-i18n="match_case"></span></label>
+                    <button type="button" class="btn primary wide" id="evolveBtn"><span data-i18n="evolve"></span> <kbd>Ctrl ⏎</kbd></button>
+                </div>
+                <div class="panel" id="setPanel">
+                    <h2 class="panel-title" id="setTitle"></h2>
+                    <div class="explain" id="setExplain"></div>
+                    <p class="set-stats" id="setStats"></p>
+                    <div class="set-actions">
+                        <button type="button" class="btn small" id="setToRulebook" data-i18n="open_rulebook"></button>
+                        <button type="button" class="btn small" id="setToEditor" data-i18n="edit_copy"></button>
+                    </div>
+                </div>
+            </aside>
+
+            <section class="results-col">
+                <div class="toolbar" id="toolbar" hidden>
+                    <div class="seg" role="group" data-i18n="view_label" data-i18n-attr="aria-label">
+                        <button type="button" class="seg-btn" data-view="cards" aria-pressed="true" data-i18n="view_cards"></button>
+                        <button type="button" class="seg-btn" data-view="table" aria-pressed="false" data-i18n="view_table"></button>
+                    </div>
+                    <div class="seg" role="group" data-i18n="deriv_label" data-i18n-attr="aria-label">
+                        <button type="button" class="seg-btn" data-deriv="chain" aria-pressed="true" data-i18n="deriv_chain"></button>
+                        <button type="button" class="seg-btn" data-deriv="tree" aria-pressed="false" data-i18n="deriv_tree"></button>
+                    </div>
+                    <span class="grow"></span>
+                    <details class="menu" id="exportMenu">
+                        <summary class="btn small" data-i18n="export"></summary>
+                        <div class="menu-body">
+                            <label class="field-label" for="exportKind" data-i18n="export_what"></label>
+                            <select id="exportKind" class="field">
+                                <option value="forms" data-i18n="export_forms"></option>
+                                <option value="derivations" data-i18n="export_derivations"></option>
+                            </select>
+                            <label class="field-label" for="exportFormat" data-i18n="export_format"></label>
+                            <select id="exportFormat" class="field">
+                                <option value="txt">Plain text</option>
+                                <option value="tsv">TSV</option>
+                                <option value="csv">CSV</option>
+                                <option value="tex">LaTeX</option>
+                            </select>
+                            <div class="menu-actions">
+                                <button type="button" class="btn small primary" id="exportCopy" data-i18n="copy"></button>
+                                <button type="button" class="btn small" id="exportDownload" data-i18n="download"></button>
+                            </div>
+                        </div>
+                    </details>
+                    <button type="button" class="btn small" id="shareBtn" data-i18n="share"></button>
+                </div>
+                <p class="status" id="status" role="status"></p>
+                <div id="results"></div>
+            </section>
+        </section>
+
+        <!-- ===== Rule book ===== -->
+        <section id="panel-rulebook" role="tabpanel" aria-labelledby="tab-rulebook" hidden>
+            <div class="panel">
+                <div class="panel-head">
+                    <h2 class="panel-title" id="rbTitle"></h2>
+                    <input type="search" id="rbSearch" class="field search" data-i18n="rb_search" data-i18n-attr="placeholder" autocomplete="off">
+                </div>
+                <p class="hint" data-i18n="rb_hint"></p>
+                <div id="rbBody"></div>
+            </div>
+        </section>
+
+        <!-- ===== Editor ===== -->
+        <section id="panel-editor" role="tabpanel" aria-labelledby="tab-editor" hidden>
+            <div class="panel">
+                <div class="panel-head">
+                    <h2 class="panel-title" data-i18n="ed_title"></h2>
+                    <div class="editor-actions">
+                        <button type="button" class="btn small" id="edCopyOf"></button>
+                        <button type="button" class="btn small" id="edOpen" data-i18n="ed_open"></button>
+                        <button type="button" class="btn small" id="edFormat" data-i18n="ed_format"></button>
+                        <button type="button" class="btn small" id="edDownload" data-i18n="download"></button>
+                        <button type="button" class="btn small primary" id="edRun" data-i18n="ed_run"></button>
+                    </div>
+                </div>
+                <input type="file" id="edFile" accept=".json,application/json" hidden>
+                <p class="hint" id="edNote" role="status"></p>
+                <div class="editor">
+                    <div class="editor-gutter" aria-hidden="true"><div class="editor-nums" id="edGutter"></div></div>
+                    <div class="editor-code">
+                        <div class="editor-marks" id="edMarks" aria-hidden="true"></div>
+                        <pre class="editor-hl" id="edHl" aria-hidden="true"></pre>
+                        <textarea id="edText" class="editor-text" spellcheck="false" autocapitalize="off" autocomplete="off" wrap="off"
+                                  data-i18n="ed_label" data-i18n-attr="aria-label"></textarea>
+                    </div>
+                </div>
+                <p class="editor-summary" id="edSummary" role="status"></p>
+                <ul class="issues" id="edIssues"></ul>
+            </div>
+        </section>
+
+        <!-- ===== About ===== -->
+        <section id="panel-about" role="tabpanel" aria-labelledby="tab-about" hidden>
+            <div class="panel markdown" id="aboutHowto"></div>
+            <div class="panel markdown" id="aboutSyntax"></div>
+            <div class="panel markdown" id="aboutContent"></div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="lang-toggle" id="langToggle" role="group" aria-label="Language"></div>
+        <p>
+            &copy; <span id="footerYear"></span>
+            <a href="https://dirdam.squadro.app/" target="_blank" rel="noopener noreferrer">Adri&aacute;n Jim&eacute;nez Pascual</a>
+            &middot; <a href="https://dirdam.squadro.app/my-apps.html" target="_blank" rel="noopener noreferrer" data-i18n="footer_more_tools"></a>
+            &middot; <a href="https://github.com/dirdam/letra" target="_blank" rel="noopener noreferrer" data-i18n="footer_source"></a>
+            &middot; <a href="static/fonts/OFL.txt" target="_blank" rel="noopener noreferrer">Gentium (OFL)</a>
+        </p>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
     <noscript><p class="error">LETRA needs JavaScript.</p></noscript>
-    <script src="static/app.js?v={{VERSION}}"></script>
+
+    <script src="static/js/i18n.js?v={{VERSION}}"></script>
+    <script src="static/js/api.js?v={{VERSION}}"></script>
+    <script src="static/js/state.js?v={{VERSION}}"></script>
+    <script src="static/js/rulebook.js?v={{VERSION}}"></script>
+    <script src="static/js/entries.js?v={{VERSION}}"></script>
+    <script src="static/js/tree.js?v={{VERSION}}"></script>
+    <script src="static/js/export.js?v={{VERSION}}"></script>
+    <script src="static/js/editor.js?v={{VERSION}}"></script>
+    <script src="static/js/hero.js?v={{VERSION}}"></script>
+    <script src="static/js/main.js?v={{VERSION}}"></script>
 </body>
 </html>
