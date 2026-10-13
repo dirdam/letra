@@ -58,12 +58,12 @@
         return e;
     }
 
-    /* A pattern or replacement as DOM: <group> placeholders as chips, a leading or trailing space as #. */
+    /* A pattern or replacement as DOM: <group> placeholders as chips, a leading or trailing space as the boundary mark (the open box ␣). */
     function pattern(str) {
         const frag = document.createDocumentFragment();
         if (str === '') { frag.appendChild(span('empty', '∅', I.t('nothing_title'))); return frag; }
         let body = str;
-        const boundary = () => span('wb', '#', I.t('boundary_title'));
+        const boundary = () => span('wb', L.state.BOUNDARY, I.t('boundary_title'));
         if (body === ' ') { frag.appendChild(boundary()); return frag; }
         if (body.startsWith(' ')) { frag.appendChild(boundary()); body = body.slice(1); }
         let trailing = false;
@@ -173,7 +173,7 @@
                 dt.appendChild(span('grp', '⟨' + g + '⟩'));
                 const dd = document.createElement('dd');
                 const info1 = d.groups[g];
-                dd.textContent = info1.members.map((m) => (m === ' ' ? '#' : m)).join('  ') + (info1.total > info1.members.length ? '  … (' + info1.total + ')' : '');
+                dd.textContent = info1.members.map((m) => (m === ' ' ? L.state.BOUNDARY : m)).join('  ') + (info1.total > info1.members.length ? '  … (' + info1.total + ')' : '');
                 dl.appendChild(dt);
                 dl.appendChild(dd);
             });

@@ -12,10 +12,10 @@ The page is available in English and Spanish.
 
 ## What you can do
 
-- **Evolve many words at once**: one per line (or separated by commas); results update as you type.
-- **Read the derivation** of every form as a chain of steps, with the letters that changed highlighted
-  and `#` for the word boundary, or as a **tree** that shows every branch (a form reached by two paths
-  is one node with two incoming edges).
+- **Evolve words** from one search bar: a word, or several separated by spaces; results update as you type.
+- **Read every derivation**: each word has a card with the **tree** of all its derivations (a form
+  reached by two paths is one node with two incoming edges) and, under it, the **chain** of steps of
+  the form you click, with the letters that changed highlighted and `␣` (the open box) for the word boundary.
 - **Browse the rule book**: the rules in the order they apply, with their alternatives, the group names
   as chips (hover for the members), search, and the rules used by what is on screen highlighted.
 - **Write your own rules** in the editor: line numbers, syntax colours, live validation with the

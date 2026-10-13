@@ -61,12 +61,10 @@ en,tab_editor,Editor
 es,tab_editor,Editor
 en,tab_about,About
 es,tab_about,Acerca de
-en,words_title,Words
-es,words_title,Palabras
-en,words_label,"Words to evolve, one per line"
-es,words_label,"Palabras a evolucionar, una por línea"
-en,words_hint,"One word per line, or separated by commas. Results update as you type."
-es,words_hint,"Una palabra por línea, o separadas por comas. Los resultados se actualizan mientras escribes."
+en,words_label,Word or words to evolve
+es,words_label,Palabra o palabras a evolucionar
+en,words_hint,Results update as you type. Press Enter to evolve at once.
+es,words_hint,Los resultados se actualizan mientras escribes. Pulsa Intro para evolucionar al instante.
 en,words_too_many,{n} words entered; only the first {max} are used.
 es,words_too_many,Has escrito {n} palabras; solo se usan las primeras {max}.
 en,examples,Try:
@@ -85,18 +83,6 @@ en,edit_copy,Edit a copy
 es,edit_copy,Editar una copia
 en,edit_mine,Edit these rules
 es,edit_mine,Editar estas reglas
-en,view_label,View
-es,view_label,Vista
-en,view_cards,Cards
-es,view_cards,Fichas
-en,view_table,Table
-es,view_table,Tabla
-en,deriv_label,Derivation
-es,deriv_label,Derivación
-en,deriv_chain,Chain
-es,deriv_chain,Cadena
-en,deriv_tree,Tree
-es,deriv_tree,Árbol
 en,export,Export
 es,export,Exportar
 en,export_what,What
@@ -129,8 +115,8 @@ en,status_truncated,Stopped at the time limit: some words were not processed.
 es,status_truncated,Detenido por el límite de tiempo: algunas palabras no se procesaron.
 en,empty_title,Enter a word to evolve it
 es,empty_title,Escribe una palabra para evolucionarla
-en,empty_body,"Every possible result appears here, with the rules that produced it. You can paste a whole list, one word per line."
-es,empty_body,"Aquí aparece cada resultado posible, con las reglas que lo producen. Puedes pegar una lista entera, una palabra por línea."
+en,empty_body,"Every possible result appears here, with the rules that produced it. You can enter several words separated by spaces."
+es,empty_body,"Aquí aparece cada resultado posible, con las reglas que lo producen. Puedes escribir varias palabras separadas por espacios."
 en,empty_no_rules_title,No rules yet
 es,empty_no_rules_title,Aún no hay reglas
 en,empty_no_rules_body,"Write rules in the Editor, or pick one of the rule sets above."
@@ -149,14 +135,8 @@ en,go_to_rule,Show this rule in the rule book
 es,go_to_rule,Mostrar esta regla en el libro de reglas
 en,also_rule,also: {rules}
 es,also_rule,también: {rules}
-en,col_word,Word
-es,col_word,Palabra
-en,col_forms,Forms
-es,col_forms,Formas
-en,open_entry,Open
-es,open_entry,Abrir
-en,tree_hint,Each box is a form and each arrow a rule. A form reached by two paths is shown once. Hover or focus a form to highlight its path; click a result to select it.
-es,tree_hint,Cada caja es una forma y cada flecha una regla. Una forma alcanzada por dos caminos se muestra una vez. Pasa el cursor o enfoca una forma para resaltar su camino; haz clic en un resultado para seleccionarlo.
+en,tree_hint,Each box is a form and each arrow a rule. A form reached by two paths is shown once. Hover or focus a form to highlight its path; click a final form (a blue box or a chip) to see its chain below.
+es,tree_hint,Cada caja es una forma y cada flecha una regla. Una forma alcanzada por dos caminos se muestra una vez. Pasa el cursor o enfoca una forma para resaltar su camino; haz clic en una forma final (una caja azul o una ficha) para ver su cadena debajo.
 en,tree_label,Derivation tree of {word}
 es,tree_label,Árbol de derivación de {word}
 en,tree_too_big,This tree is too large to draw; showing the chain instead.
@@ -171,8 +151,8 @@ en,rb_title,Rule book: {set}
 es,rb_title,Libro de reglas: {set}
 en,rb_search,"Search rules, patterns or groups"
 es,rb_search,"Buscar reglas, patrones o grupos"
-en,rb_hint,Rules in the order they apply. Alternatives (separated by | in the rule file) branch the derivation: each one is tried on every form. Hover a ⟨group⟩ to see its members; # is the word boundary.
-es,rb_hint,Las reglas en el orden en que se aplican. Las alternativas (separadas por | en el archivo) ramifican la derivación: cada una se prueba sobre cada forma. Pasa el cursor sobre un ⟨grupo⟩ para ver sus miembros; # es el límite de palabra.
+en,rb_hint,Rules in the order they apply. Alternatives (separated by | in the rule file) branch the derivation: each one is tried on every form. Hover a ⟨group⟩ to see its members; ␣ is the word boundary.
+es,rb_hint,Las reglas en el orden en que se aplican. Las alternativas (separadas por | en el archivo) ramifican la derivación: cada una se prueba sobre cada forma. Pasa el cursor sobre un ⟨grupo⟩ para ver sus miembros; ␣ es el límite de palabra.
 en,rb_alternatives,alternatives
 es,rb_alternatives,alternativas
 en,rb_iden,(leave unchanged)
@@ -276,15 +256,15 @@ es,issue_rule_error,No se pudo leer esta entrada ({detail}).
 en,howto,"## How to use
 
 1. Pick a **rule set** on the shelf: a sample, Latin → Spanish, Spanish → IPA, or your own rules.
-2. Type or paste **words** in the Evolve tab, one per line. Results update as you type.
-3. Click a **form** to see how it was derived. Switch between **Chain** and **Tree** to see every branch.
+2. Type a **word** in the search bar of the Evolve tab, or several separated by spaces. Results update as you type.
+3. Each word gets a card with the **tree** of all its derivations. Click a final **form** to see its chain of changes below the tree.
 4. Open the **Rule book** to read the rules in the order they apply, and the **Editor** to write your own.
 5. **Export** the results (text, TSV, CSV, LaTeX) or **share** a link to the words and the rule set."
 es,howto,"## Cómo se usa
 
 1. Elige un **conjunto de reglas** en la estantería: una muestra, latín → español, español → AFI, o tus propias reglas.
-2. Escribe o pega **palabras** en la pestaña Evolucionar, una por línea. Los resultados se actualizan mientras escribes.
-3. Haz clic en una **forma** para ver cómo se derivó. Cambia entre **Cadena** y **Árbol** para ver todas las ramas.
+2. Escribe una **palabra** en la barra de búsqueda de la pestaña Evolucionar, o varias separadas por espacios. Los resultados se actualizan mientras escribes.
+3. Cada palabra tiene una ficha con el **árbol** de todas sus derivaciones. Haz clic en una **forma** final para ver su cadena de cambios debajo del árbol.
 4. Abre el **Libro de reglas** para leer las reglas en el orden en que se aplican, y el **Editor** para escribir las tuyas.
 5. **Exporta** los resultados (texto, TSV, CSV, LaTeX) o **comparte** un enlace a las palabras y al conjunto de reglas."
 en,syntax,"## Rule syntax at a glance
@@ -293,7 +273,7 @@ en,syntax,"## Rule syntax at a glance
 - `<vow>`: any member of the group `vow`. The same placeholder on the replacement side puts the matched member back.
 - `<vow*>`: a run of one or more members. `<cons=>`: the same member repeated, for example a doubled consonant.
 - `<vow|cons>`: a member of either group. `<>`: a group that is deleted (empty on the replacement side).
-- A space at the start or end of a pattern is the word boundary (shown as `#`).
+- A space at the start or end of a pattern is the word boundary (shown as `␣`).
 - `""rules""`: named sets of `pattern → replacement` entries.
 - `""order""`: the steps, in sequence. `a|b` makes alternatives: each one is tried on every form and the derivation branches.
 - `// comment`: ignored."
@@ -303,7 +283,7 @@ es,syntax,"## La sintaxis de un vistazo
 - `<vow>`: cualquier miembro del grupo `vow`. El mismo marcador en el reemplazo devuelve el miembro encontrado.
 - `<vow*>`: una serie de uno o más miembros. `<cons=>`: el mismo miembro repetido, por ejemplo una consonante doble.
 - `<vow|cons>`: un miembro de cualquiera de los dos grupos. `<>`: un grupo que se elimina (vacío en el reemplazo).
-- Un espacio al principio o al final de un patrón es el límite de palabra (se muestra como `#`).
+- Un espacio al principio o al final de un patrón es el límite de palabra (se muestra como `␣`).
 - `""rules""`: conjuntos con nombre de entradas `patrón → reemplazo`.
 - `""order""`: los pasos, en secuencia. `a|b` crea alternativas: cada una se prueba sobre cada forma y la derivación se ramifica.
 - `// comentario`: se ignora."
@@ -311,3 +291,9 @@ en,n_words_one,1 word
 en,n_words_other,{n} words
 es,n_words_one,1 palabra
 es,n_words_other,{n} palabras
+en,words_placeholder,"Type a word, or several separated by spaces: lítteram dóminum"
+es,words_placeholder,"Escribe una palabra, o varias separadas por espacios: lítteram dóminum"
+en,tree_title,Tree of all derivations
+es,tree_title,Árbol de todas las derivaciones
+en,chain_title,Chain of changes for {form}
+es,chain_title,Cadena de cambios de {form}
