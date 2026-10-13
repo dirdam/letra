@@ -38,16 +38,23 @@
 
     const entriesFor = (rule) => (info() && info().rules[rule]) || [];
 
-    /* Tooltip text for a group placeholder such as "cons*" or "vow|cons": the members of each group. */
+    const TIP_MEMBERS = 24;       // values shown in a group's tooltip before "…"
+
+    /* Tooltip text for a group placeholder such as "cons*" or "vow|cons": just the values, without the group names. */
     function groupTitle(inner) {
         const groups = info() && info().groups;
         if (!groups) return '';
-        return inner.split('|').map((part) => {
-            const name = part.replace(/[*=]/g, '');
-            const g = groups[name];
-            if (!g) return name;
-            return name + ': ' + g.members.slice(0, 14).join(' ') + (g.total > 14 ? ' … (' + g.total + ')' : '');
-        }).join('\n');
+        const values = [];
+        let more = false;
+        inner.split('|').forEach((part) => {
+            const g = groups[part.replace(/[*=]/g, '')];
+            if (!g) return;
+            if (g.total > g.members.length) more = true;
+            g.members.forEach((m) => { if (!values.includes(m)) values.push(m); });
+        });
+        if (!values.length) return '';
+        if (values.length > TIP_MEMBERS) more = true;
+        return values.slice(0, TIP_MEMBERS).map((m) => (m === ' ' ? L.state.BOUNDARY : m)).join(' ') + (more ? ' …' : '');
     }
 
     function span(cls, text, title) {
