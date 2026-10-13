@@ -99,6 +99,7 @@
         const head = document.createElement('div');
         head.className = 'rb-rule-head';
         head.appendChild(span('rule-name', name === 'iden' ? I.t('rb_iden') : name));
+        if (name !== 'iden') head.appendChild(span('used-badge', I.t('rb_in_use'), I.t('rb_in_use_title')));      // shown only while the rule is in use
         block.appendChild(head);
         if (name !== 'iden') {
             const ul = document.createElement('ul');
@@ -111,6 +112,22 @@
             block.appendChild(ul);
         }
         return block;
+    }
+
+    /* A curly brace "{" that stretches to the height of the rules it groups (non-scaling stroke keeps the line thin). */
+    function brace() {
+        const NS = 'http://www.w3.org/2000/svg';
+        const holder = document.createElement('div');
+        holder.className = 'rb-brace';
+        holder.setAttribute('aria-hidden', 'true');
+        const svg = document.createElementNS(NS, 'svg');
+        svg.setAttribute('viewBox', '0 0 14 100');
+        svg.setAttribute('preserveAspectRatio', 'none');
+        const path = document.createElementNS(NS, 'path');
+        path.setAttribute('d', 'M13 1 Q7 1 7 9 L7 41 Q7 50 1 50 Q7 50 7 59 L7 91 Q7 99 13 99');
+        svg.appendChild(path);
+        holder.appendChild(svg);
+        return holder;
     }
 
     function matches(name, needle) {
@@ -138,8 +155,19 @@
             step.appendChild(span('rb-num', String(i + 1)));
             const box = document.createElement('div');
             box.className = 'rb-alts';
-            if (alts.length > 1) box.appendChild(span('rb-branch-note', I.t('rb_alternatives')));
-            alts.forEach((a) => box.appendChild(ruleBlock(a)));
+            if (alts.length > 1) {
+                box.appendChild(span('rb-branch-note', I.t('rb_alternatives')));      // the label stays above; the brace covers only the rules
+                const branch = document.createElement('div');
+                branch.className = 'rb-branch';
+                branch.appendChild(brace());
+                const rulesBox = document.createElement('div');
+                rulesBox.className = 'rb-branch-rules';
+                alts.forEach((a) => rulesBox.appendChild(ruleBlock(a)));
+                branch.appendChild(rulesBox);
+                box.appendChild(branch);
+            } else {
+                box.appendChild(ruleBlock(alts[0]));
+            }
             step.appendChild(box);
             steps.appendChild(step);
         });
@@ -155,7 +183,10 @@
             const sum = document.createElement('summary');
             sum.textContent = I.count('rb_unused', unused.length);
             sec.appendChild(sum);
-            unused.forEach((r) => sec.appendChild(ruleBlock(r, 'unused')));
+            const list = document.createElement('div');
+            list.className = 'rb-columns';
+            unused.forEach((r) => list.appendChild(ruleBlock(r, 'unused')));
+            sec.appendChild(list);
             body.appendChild(sec);
         }
 
@@ -167,17 +198,17 @@
             const sum = document.createElement('summary');
             sum.textContent = I.count('rb_groups', names.length);
             sec.appendChild(sum);
-            const dl = document.createElement('dl');
+            const list = document.createElement('div');
+            list.className = 'rb-columns rb-group-list';
             names.forEach((g) => {
-                const dt = document.createElement('dt');
-                dt.appendChild(span('grp', '⟨' + g + '⟩'));
-                const dd = document.createElement('dd');
+                const item = document.createElement('div');
+                item.className = 'rb-group';
+                item.appendChild(span('grp', '⟨' + g + '⟩'));
                 const info1 = d.groups[g];
-                dd.textContent = info1.members.map((m) => (m === ' ' ? L.state.BOUNDARY : m)).join('  ') + (info1.total > info1.members.length ? '  … (' + info1.total + ')' : '');
-                dl.appendChild(dt);
-                dl.appendChild(dd);
+                item.appendChild(span('members', info1.members.map((m) => (m === ' ' ? L.state.BOUNDARY : m)).join('  ') + (info1.total > info1.members.length ? '  … (' + info1.total + ')' : '')));
+                list.appendChild(item);
             });
-            sec.appendChild(dl);
+            sec.appendChild(list);
             body.appendChild(sec);
         }
         mark(body, used);
