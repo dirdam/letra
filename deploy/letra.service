@@ -9,7 +9,7 @@ Type=simple
 WorkingDirectory=/opt/dirdam/letra
 # gunicorn kills and replaces a worker that takes longer than --timeout, which is
 # what stops a user-supplied rules file with a runaway regular expression.
-ExecStart=/opt/dirdam/letra/venv/bin/gunicorn -w 2 -b 127.0.0.1:8506 --timeout 10 server:app
+ExecStart=/opt/dirdam/letra/venv/bin/gunicorn -w 2 -b 127.0.0.1:8506 --timeout 10 --no-control-socket server:app
 Restart=on-failure
 # The app only reads its own files: run it as a throw-away unprivileged user
 # and cap its memory.
