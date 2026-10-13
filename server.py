@@ -12,11 +12,13 @@ import json
 import os
 import re
 import textwrap
+import time
+import unicodedata
 
 import markdown
 from flask import Flask, jsonify, request, send_from_directory
 
-from src import letra
+from src import letra, validate
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 WEB = os.path.join(BASE, 'web')
@@ -31,8 +33,11 @@ PRESETS = {'sample': 'sample.json', 'LA_ES': 'LA_ES.json', 'ES_IPA': 'ES_IPA.jso
 # Limits, because user-supplied rules are compiled to regular expressions here.
 MAX_BODY_BYTES = 256 * 1024     # request body (an uploaded rules file is inside it)
 MAX_TERM_CHARS = 64
-MAX_RULE_ITEMS = 1000           # entries in each of groups / rules / order
-MAX_GROUP_VALUES = 20000         # expanded size of any one group (groups can reference other groups)
+MAX_WORDS = 100                 # words in one request
+TIME_BUDGET = 6.0               # seconds spent on words in one request (gunicorn stops a worker at 10)
+MAX_RULE_ITEMS = validate.MAX_ITEMS
+MAX_GROUP_VALUES = validate.MAX_GROUP_VALUES
+GROUP_MEMBERS_SHOWN = 200       # members listed per group in the rule book
 
 app = Flask(__name__, static_folder=None)
 app.config['MAX_CONTENT_LENGTH'] = MAX_BODY_BYTES
@@ -78,6 +83,11 @@ class RulesError(Exception):
         self.code = code
 
 
+def _normalize(text):
+    """Unicode NFC: "é" typed as one character or as e + combining accent must mean the same."""
+    return unicodedata.normalize('NFC', text)
+
+
 def _check_rules_text(text):
     """Cheap structural checks on a user-supplied rules file, before the engine compiles it."""
     try:
@@ -97,39 +107,25 @@ def _check_rules_text(text):
         raise RulesError('invalid_rules')
     if not all(isinstance(x, str) for x in data['order']):
         raise RulesError('invalid_rules')
-    _check_group_sizes(data['groups'])
+    # groups can reference other groups: refuse sets that would expand to billions of values
+    if any(size > MAX_GROUP_VALUES for size in validate.group_sizes(data['groups']).values()):
+        raise RulesError('too_large')
 
 
-def _check_group_sizes(groups):
-    """Groups can reference other groups, so a handful of definitions can expand to billions of
-    values. Work the expanded size out symbolically (same reading of the entries as the engine's
-    expand_groups) and refuse before the engine builds anything."""
-    alias = {part: name for name in groups if '|' in name for part in name.split('|')}
-    sizes = {}
-    for name, values in groups.items():
-        total = 0
-        for v in values:
-            if '!' in v:            # negation: only removes values
-                continue
-            if '<' not in v:        # fixed value
-                total += 1
-            else:                   # call to another group
-                key = v[1:-1]
-                total += sizes.get(alias.get(key, key), 0)
-            if total > MAX_GROUP_VALUES:
-                raise RulesError('too_large')
-        sizes[name] = total
-
-
-def _transform(term, preset=None, rules_text=None):
+def _build(preset=None, rules_text=None):
+    """The compiled Transformer for a bundled preset or for the user's rules text."""
     if preset is not None:
-        t = letra.Transformer(json_path=PRESETS[preset])
-    else:
-        _check_rules_text(rules_text)
-        try:
-            t = letra.Transformer(rules_text)
-        except Exception:
-            raise RulesError('invalid_rules')
+        return letra.Transformer(json_path=PRESETS[preset])
+    rules_text = _normalize(rules_text)
+    _check_rules_text(rules_text)
+    try:
+        return letra.Transformer(rules_text)
+    except Exception:
+        raise RulesError('invalid_rules')
+
+
+def _apply(t, term):
+    """Transform one word with an already compiled Transformer."""
     try:
         final = t.transform(term, verbose=False)
     except Exception:
@@ -141,17 +137,55 @@ def _transform(term, preset=None, rules_text=None):
         rule = info['rule']
         rule_text = ' & '.join(f'"{k}" → "{v}"' for k, v in original_rules.get(rule, {}).items()) if rule else ''
         terms[name] = {'mother': info['mother'], 'rule': rule, 'rule_text': rule_text}
-    return {'start': f' {term} ', 'final': final, 'all': list(t.transformations), 'terms': terms}
+    return {
+        'term': term,
+        'start': f' {term} ',
+        'final': final,
+        'all': list(t.transformations),
+        'terms': terms,
+        # every change applied, as [step, rule, from, to]: unlike `terms`, keeps all paths when branches meet
+        'edges': [[e['step'], e['rule'], e['from'], e['to']] for e in t.edges],
+    }
+
+
+def _word(t, raw, match_case):
+    """One word of a request: its result, or {'term', 'error'} when the word itself is not acceptable."""
+    term = _normalize(raw)
+    if not match_case:
+        term = term.lower()
+    if not term.strip() or any(ord(c) < 32 for c in term):
+        return {'term': raw, 'error': 'bad_term'}
+    if len(term) > MAX_TERM_CHARS:
+        return {'term': raw, 'error': 'term_too_long'}
+    return _apply(t, term)
+
+
+def _rules_source(body):
+    """(preset, rules_text, problem): a bundled preset or the rules text from a request body.
+    `problem` is None or an (error code, HTTP status) pair."""
+    preset = body.get('preset')
+    if preset is not None:
+        if preset not in PRESETS:
+            return None, None, ('not_found', 404)
+        return preset, None, None
+    rules_text = body.get('rules')
+    if not isinstance(rules_text, str):
+        return None, None, ('invalid_json', 400)
+    return None, rules_text, None
 
 
 # ---------- routes ----------
 
 def _version():
-    """Short hash of the page assets, used to refresh browser caches after a deploy."""
+    """Short hash of the page files, used to refresh browser caches after a deploy."""
     h = hashlib.sha1()
-    for name in ('app.js', 'styles.css'):
-        with open(os.path.join(WEB, name), 'rb') as f:
-            h.update(f.read())
+    for folder, dirs, files in os.walk(WEB):
+        dirs[:] = sorted(d for d in dirs if d != 'fonts')       # fonts are cached by their file names
+        for name in sorted(files):
+            if name == 'index.html' or name.startswith('.'):
+                continue
+            with open(os.path.join(folder, name), 'rb') as f:
+                h.update(name.encode() + f.read())
     return h.hexdigest()[:10]
 
 
@@ -166,7 +200,10 @@ def index():
 
 @app.get('/static/<path:name>')
 def static_file(name):
-    return send_from_directory(WEB, name)
+    resp = send_from_directory(WEB, name)
+    if name.startswith('fonts/'):
+        resp.headers['Cache-Control'] = 'public, max-age=31536000, immutable'
+    return resp
 
 
 @app.get('/healthz')
@@ -199,31 +236,79 @@ def api_rules(preset):
 
 @app.post('/api/transform')
 def api_transform():
+    """Evolve one word ({"term": ...}: the answer is that word's result) or many
+    ({"terms": [...]}: {"results": [...], "truncated": bool}), with a bundled preset or rules text."""
     body = request.get_json(silent=True)
     if not isinstance(body, dict):
         return jsonify({'error': 'invalid_json'}), 400
-    term = body.get('term')
-    if not isinstance(term, str) or not term.strip():
-        return jsonify({'error': 'bad_term'}), 400
-    term = term.lower()
-    if len(term) > MAX_TERM_CHARS:
-        return jsonify({'error': 'term_too_long'}), 400
-    if any(ord(c) < 32 for c in term):
-        return jsonify({'error': 'bad_term'}), 400
 
-    preset = body.get('preset')
-    rules_text = body.get('rules')
-    if preset is not None:
-        if preset not in PRESETS:
-            return jsonify({'error': 'not_found'}), 404
-        rules_text = None
-    elif not isinstance(rules_text, str):
-        return jsonify({'error': 'invalid_json'}), 400
+    batch = 'terms' in body
+    if batch:
+        words = body['terms']
+        if not isinstance(words, list) or not words or not all(isinstance(w, str) for w in words):
+            return jsonify({'error': 'bad_term'}), 400
+        if len(words) > MAX_WORDS:
+            return jsonify({'error': 'too_many_terms'}), 400
+    else:
+        if not isinstance(body.get('term'), str):
+            return jsonify({'error': 'bad_term'}), 400
+        words = [body['term']]
+    match_case = body.get('match_case') is True
+
+    preset, rules_text, problem = _rules_source(body)
+    if problem:
+        return jsonify({'error': problem[0]}), problem[1]
 
     try:
-        return jsonify(_transform(term, preset=preset, rules_text=rules_text))
+        t = _build(preset, rules_text)
+        started = time.monotonic()
+        results, truncated = [], False
+        for raw in words:
+            if results and time.monotonic() - started > TIME_BUDGET:
+                truncated = True
+                break
+            results.append(_word(t, raw, match_case))
     except RulesError as e:
         return jsonify({'error': e.code}), 400
+
+    if not batch:
+        if 'error' in results[0]:
+            return jsonify({'error': results[0]['error']}), 400
+        return jsonify(results[0])
+    return jsonify({'results': results, 'truncated': truncated})
+
+
+@app.post('/api/rulebook')
+def api_rulebook():
+    """The rules in reading order: steps (with their | alternatives), rules with their entries,
+    and the members of every group (the first GROUP_MEMBERS_SHOWN of each)."""
+    body = request.get_json(silent=True)
+    if not isinstance(body, dict):
+        return jsonify({'error': 'invalid_json'}), 400
+    preset, rules_text, problem = _rules_source(body)
+    if problem:
+        return jsonify({'error': problem[0]}), problem[1]
+    try:
+        t = _build(preset, rules_text)
+    except RulesError as e:
+        return jsonify({'error': e.code}), 400
+    original = t.json_dict_original
+    return jsonify({
+        'order': original['order'],
+        'rules': {name: [[k, v] for k, v in entries.items()] for name, entries in original['rules'].items()},
+        'groups': {name: {'members': values[:GROUP_MEMBERS_SHOWN], 'total': len(values)}
+                   for name, values in t.groups_expanded.items()},
+    })
+
+
+@app.post('/api/validate')
+def api_validate():
+    """Problems in a rules text, each with its line and column ({"ok", "issues"})."""
+    body = request.get_json(silent=True)
+    text = body.get('rules') if isinstance(body, dict) else None
+    if not isinstance(text, str):
+        return jsonify({'error': 'invalid_json'}), 400
+    return jsonify(validate.check(text))
 
 
 @app.errorhandler(413)

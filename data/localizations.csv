@@ -1,42 +1,6 @@
 lang,key,value
-en,how_to_use,"# How to use"
-es,how_to_use,"# Cómo se usa"
-en,how_to_use_explain,"
-    1. Select the `json` file containing the transformation rules.
-        - For further instructions on how to create the file click the **_Project description_** tab.
-    1. Enter the term you want to transform and hit `enter`.
-    1. Click on a word to see its chain of transformations.
-        - **_Include intermediate terms_** shows all intermediate steps of the term transformation, not only the final result.
-        - If a result term can be obtained through several chains of transformations, only the transformations of the first chain found will be shown."
-es,how_to_use_explain,"
-    1. Elige el archivo `json` que contiene las reglas de las transformaciones.
-        - Para instrucciones detalladas sobre cómo crear el archivo haz clic en la pestaña **_Descripción del proyecto_**.
-    1. Introduce el término que quieras transformar y pulsa `intro`.
-    1. Haz clic en una palabra para comprobar su cadena transformaciones.
-        - **_Incluir los términos intermedios_** muestra todos los pasos intermedios de la transformación del término, no únicamente el resultado final.
-        - Si un término resultado se puede obtener a través de distintas cadenas de transformaciones, sólo se mostrarán las transformaciones de la primera cadena encontrada."
-en,tool,"⚙️ **Tool**"
-es,tool,"⚙️ **Herramienta**"
-en,pj_desc,"📄 **Project description**"
-es,pj_desc,"📄 **Descripción el proyecto**"
-en,upload_text,"### 1. Upload the transformations file or select an existing one"
-es,upload_text,"### 1. Sube el archivo de transformaciones o elige uno existente"
-en,upload_options,"Choose a sample file or upload one of your own."
-es,upload_options,"Elige un archivo de muestra o sube el tuyo propio."
-en,use_sample,"sample.json (demonstration)"
-es,use_sample,"sample.json (demostración)"
-en,use_la_es,"LA_ES.json (Latin > Spanish)"
-es,use_la_es,"LA_ES.json (latín > español)"
-en,use_es_ipa,"ES_IPA.json (Spanish > International Phonetic Alphabet)"
-es,use_es_ipa,"ES_IPA.json (español > Alfabeto Fonético Internacional)"
-en,upload_own,"⬆️ Upload a file..."
-es,upload_own,"⬆️ Subir un archivo..."
-en,upload_desc,"Upload the `json` file containing the transformations."
-es,upload_desc,"Sube el archivo `json` que contiene las transformaciones."
-en,enter_text,"### 2. Enter the term to transform"
-es,enter_text,"### 2. Introduce el término a transformar"
-en,explain_sample,"This example illustrates the transformation of the Latin term **`lítteram`**. (The accent mark is used to indicate the stressed vowel)."
-es,explain_sample,"Este ejemplo ilustra la transformación del término latino **`lítteram`**. (La tilde marca la vocal tónica)."
+en,explain_sample,This example illustrates the transformation of the Latin term **`lítteram`**. (The accent mark is used to indicate the stressed vowel).
+es,explain_sample,Este ejemplo ilustra la transformación del término latino **`lítteram`**. (La tilde marca la vocal tónica).
 en,explain_LA_ES,"- The rules used for this transformation have been extracted from ""_[Verba. Ejercicios de etimología
 latina](https://www.unex.es/organizacion/gobierno/vicerrectorados/vicealumn/funciones/car_20050411_001/coordinacion-ebau-2022-23/materias/latin-ii-1/leyes_evolucion_fonetica_modif_.pdf)_"" (PDF). However, not all rules have been implemented for this demonstration.
 - Use the accent mark to denote the stressed vowel in Latin."
@@ -47,34 +11,6 @@ en,explain_ES_IPA,"- The transformation is based on Spanish general rules of con
 - Allophones are included for reference."
 es,explain_ES_IPA,"- La transformación se basa en reglas generales de conversión de ortografía a pronunciación y no hace un análisis exhaustivo de la división en sílabas ni atiende a excepciones.
 - Se incluyen alófonos."
-en,explain_ref,""
-es,explain_ref,""
-en,text_input,"Term:"
-es,text_input,"Término:"
-en,placeholder,"my_term"
-es,placeholder,"mi_término"
-en,interm_check,"Include intermediate terms."
-es,interm_check,"Incluir los términos intermedios."
-en,trans_result,"### 3. Transformation results"
-es,trans_result,"### 3. Resultados de la transformación"
-en,chain_result,"Chain of transformations for term:"
-es,chain_result,"Cadena de transformaciones para el término:"
-en,col1,"Step"
-es,col1,"Paso"
-en,col2,"Rule name"
-es,col2,"Nombre de la regla"
-en,col3,"Rule"
-es,col3,"Regla"
-en,col4,"Input"
-es,col4,"Entrada"
-en,col5,"Output"
-es,col5,"Salida"
-en,check_json,"### (Optional) Review the `json` file content"
-es,check_json,"### (Opcional) Comprueba el contenido del archivo `json`"
-en,json_content,"Expand the content of the file "
-es,json_content,"Expandir el contenido del archivo "
-en,download_json,"Download "
-es,download_json,"Descargar "
 en,err_invalid_json,This file is not valid JSON. Check commas and quotes.
 es,err_invalid_json,Este archivo no es un JSON válido. Revisa las comas y las comillas.
 en,err_missing_sections,"The file must contain `groups`, `rules` and `order`."
@@ -101,3 +37,277 @@ en,footer_source,Source
 es,footer_source,Código
 en,tagline,Rewrite rules that turn one script into another
 es,tagline,Reglas de reescritura que convierten una escritura en otra
+en,skip,Skip to content
+es,skip,Saltar al contenido
+en,shelf_label,Rule set
+es,shelf_label,Conjunto de reglas
+en,set_sample,Sample
+es,set_sample,Muestra
+en,set_la_es,Latin → Spanish
+es,set_la_es,Latín → español
+en,set_es_ipa,Spanish → IPA
+es,set_es_ipa,Español → AFI
+en,set_mine,My rules
+es,set_mine,Mis reglas
+en,mine_empty_hint,Write or open rules in the Editor first
+es,mine_empty_hint,Primero escribe o abre reglas en el Editor
+en,mine_empty_toast,You have no rules of your own yet: write or open some here.
+es,mine_empty_toast,Todavía no tienes reglas propias: escribe o abre algunas aquí.
+en,tab_evolve,Evolve
+es,tab_evolve,Evolucionar
+en,tab_rulebook,Rule book
+es,tab_rulebook,Libro de reglas
+en,tab_editor,Editor
+es,tab_editor,Editor
+en,tab_about,About
+es,tab_about,Acerca de
+en,words_title,Words
+es,words_title,Palabras
+en,words_label,"Words to evolve, one per line"
+es,words_label,"Palabras a evolucionar, una por línea"
+en,words_hint,"One word per line, or separated by commas. Results update as you type."
+es,words_hint,"Una palabra por línea, o separadas por comas. Los resultados se actualizan mientras escribes."
+en,words_too_many,{n} words entered; only the first {max} are used.
+es,words_too_many,Has escrito {n} palabras; solo se usan las primeras {max}.
+en,examples,Try:
+es,examples,Prueba:
+en,match_case,Match case
+es,match_case,Distinguir mayúsculas
+en,evolve,Evolve
+es,evolve,Evolucionar
+en,explain_mine,"Your own rules, written or opened in the Editor. They stay in this browser."
+es,explain_mine,"Tus propias reglas, escritas o abiertas en el Editor. Se quedan en este navegador."
+en,set_stats,{groups} groups · {rules} rules · {steps} steps
+es,set_stats,{groups} grupos · {rules} reglas · {steps} pasos
+en,open_rulebook,Open rule book
+es,open_rulebook,Abrir libro de reglas
+en,edit_copy,Edit a copy
+es,edit_copy,Editar una copia
+en,edit_mine,Edit these rules
+es,edit_mine,Editar estas reglas
+en,view_label,View
+es,view_label,Vista
+en,view_cards,Cards
+es,view_cards,Fichas
+en,view_table,Table
+es,view_table,Tabla
+en,deriv_label,Derivation
+es,deriv_label,Derivación
+en,deriv_chain,Chain
+es,deriv_chain,Cadena
+en,deriv_tree,Tree
+es,deriv_tree,Árbol
+en,export,Export
+es,export,Exportar
+en,export_what,What
+es,export_what,Qué
+en,export_forms,Words and forms
+es,export_forms,Palabras y formas
+en,export_derivations,Full derivations
+es,export_derivations,Derivaciones completas
+en,export_format,Format
+es,export_format,Formato
+en,copy,Copy
+es,copy,Copiar
+en,download,Download
+es,download,Descargar
+en,cancel,Cancel
+es,cancel,Cancelar
+en,copied,Copied
+es,copied,Copiado
+en,copy_failed,Could not copy
+es,copy_failed,No se pudo copiar
+en,share,Share link
+es,share,Enlace
+en,share_copied,Link copied
+es,share_copied,Enlace copiado
+en,share_copied_mine,Link copied. Your own rules are not included: they stay in this browser.
+es,share_copied_mine,Enlace copiado. Tus reglas propias no se incluyen: se quedan en este navegador.
+en,status_loading,Evolving…
+es,status_loading,Evolucionando…
+en,status_truncated,Stopped at the time limit: some words were not processed.
+es,status_truncated,Detenido por el límite de tiempo: algunas palabras no se procesaron.
+en,empty_title,Enter a word to evolve it
+es,empty_title,Escribe una palabra para evolucionarla
+en,empty_body,"Every possible result appears here, with the rules that produced it. You can paste a whole list, one word per line."
+es,empty_body,"Aquí aparece cada resultado posible, con las reglas que lo producen. Puedes pegar una lista entera, una palabra por línea."
+en,empty_no_rules_title,No rules yet
+es,empty_no_rules_title,Aún no hay reglas
+en,empty_no_rules_body,"Write rules in the Editor, or pick one of the rule sets above."
+es,empty_no_rules_body,Escribe reglas en el Editor o elige uno de los conjuntos de arriba.
+en,n_forms_one,1 form
+es,n_forms_one,1 forma
+en,n_forms_other,{n} forms
+es,n_forms_other,{n} formas
+en,n_steps_one,1 step
+es,n_steps_one,1 paso
+en,n_steps_other,{n} steps
+es,n_steps_other,{n} pasos
+en,no_change,No rule changed this word.
+es,no_change,Ninguna regla cambió esta palabra.
+en,go_to_rule,Show this rule in the rule book
+es,go_to_rule,Mostrar esta regla en el libro de reglas
+en,also_rule,also: {rules}
+es,also_rule,también: {rules}
+en,col_word,Word
+es,col_word,Palabra
+en,col_forms,Forms
+es,col_forms,Formas
+en,open_entry,Open
+es,open_entry,Abrir
+en,tree_hint,Each box is a form and each arrow a rule. A form reached by two paths is shown once. Hover or focus a form to highlight its path; click a result to select it.
+es,tree_hint,Cada caja es una forma y cada flecha una regla. Una forma alcanzada por dos caminos se muestra una vez. Pasa el cursor o enfoca una forma para resaltar su camino; haz clic en un resultado para seleccionarlo.
+en,tree_label,Derivation tree of {word}
+es,tree_label,Árbol de derivación de {word}
+en,tree_too_big,This tree is too large to draw; showing the chain instead.
+es,tree_too_big,Este árbol es demasiado grande para dibujarlo; se muestra la cadena.
+en,boundary_title,Word boundary
+es,boundary_title,Límite de palabra
+en,nothing_title,Nothing (deleted)
+es,nothing_title,Nada (eliminado)
+en,deleted_group_title,A deleted group
+es,deleted_group_title,Un grupo eliminado
+en,rb_title,Rule book: {set}
+es,rb_title,Libro de reglas: {set}
+en,rb_search,"Search rules, patterns or groups"
+es,rb_search,"Buscar reglas, patrones o grupos"
+en,rb_hint,Rules in the order they apply. Alternatives (separated by | in the rule file) branch the derivation: each one is tried on every form. Hover a ⟨group⟩ to see its members; # is the word boundary.
+es,rb_hint,Las reglas en el orden en que se aplican. Las alternativas (separadas por | en el archivo) ramifican la derivación: cada una se prueba sobre cada forma. Pasa el cursor sobre un ⟨grupo⟩ para ver sus miembros; # es el límite de palabra.
+en,rb_alternatives,alternatives
+es,rb_alternatives,alternativas
+en,rb_iden,(leave unchanged)
+es,rb_iden,(dejar sin cambios)
+en,rb_no_match,Nothing matches.
+es,rb_no_match,Nada coincide.
+en,rb_unavailable,The rule book is not available for these rules.
+es,rb_unavailable,El libro de reglas no está disponible para estas reglas.
+en,rb_unused_one,1 rule never used in the order
+es,rb_unused_one,1 regla que nunca se usa en el orden
+en,rb_unused_other,{n} rules never used in the order
+es,rb_unused_other,{n} reglas que nunca se usan en el orden
+en,rb_groups_one,1 group
+es,rb_groups_one,1 grupo
+en,rb_groups_other,{n} groups
+es,rb_groups_other,{n} grupos
+en,ed_title,Rules editor
+es,ed_title,Editor de reglas
+en,ed_label,Rules (JSON)
+es,ed_label,Reglas (JSON)
+en,ed_copy_of,Edit a copy of {set}
+es,ed_copy_of,Editar una copia de {set}
+en,ed_open,Open file…
+es,ed_open,Abrir archivo…
+en,ed_format,Format
+es,ed_format,Dar formato
+en,ed_run,Run
+es,ed_run,Ejecutar
+en,ed_format_comments,"Formatting would remove your // comments, so it is not applied."
+es,ed_format_comments,"Dar formato eliminaría tus comentarios //, así que no se aplica."
+en,ed_replace_q,Replace what is in the editor?
+es,ed_replace_q,¿Reemplazar lo que hay en el editor?
+en,ed_replace_yes,Replace
+es,ed_replace_yes,Reemplazar
+en,ed_empty,Write or open rules to start.
+es,ed_empty,Escribe o abre reglas para empezar.
+en,ed_checking,Checking…
+es,ed_checking,Comprobando…
+en,ed_ok,No problems found.
+es,ed_ok,No se encontraron problemas.
+en,ed_errors_one,1 error
+es,ed_errors_one,1 error
+en,ed_errors_other,{n} errors
+es,ed_errors_other,{n} errores
+en,ed_warnings_one,1 warning
+es,ed_warnings_one,1 aviso
+en,ed_warnings_other,{n} warnings
+es,ed_warnings_other,{n} avisos
+en,ed_fix_first,"Fix the errors first, then run."
+es,ed_fix_first,Corrige primero los errores y luego ejecuta.
+en,err_not_found,That rule set does not exist.
+es,err_not_found,Ese conjunto de reglas no existe.
+en,err_too_many_terms,Too many words at once (100 at most).
+es,err_too_many_terms,Demasiadas palabras a la vez (100 como máximo).
+en,issue_internal,Could not finish checking this file.
+es,issue_internal,No se pudo terminar de comprobar este archivo.
+en,issue_json_syntax,Not valid JSON: {detail}.
+es,issue_json_syntax,JSON no válido: {detail}.
+en,issue_duplicate_key,"""{key}"" appears twice here; only the last one is used."
+es,issue_duplicate_key,"""{key}"" aparece dos veces; solo se usa la última."
+en,issue_not_object,"The file must be a JSON object with ""groups"", ""rules"" and ""order""."
+es,issue_not_object,"El archivo debe ser un objeto JSON con ""groups"", ""rules"" y ""order""."
+en,issue_missing_section,"The ""{section}"" section is missing."
+es,issue_missing_section,"Falta la sección ""{section}""."
+en,issue_wrong_type_object,"""{section}"" must be an object."
+es,issue_wrong_type_object,"""{section}"" debe ser un objeto."
+en,issue_wrong_type_list,"""{section}"" must be a list."
+es,issue_wrong_type_list,"""{section}"" debe ser una lista."
+en,issue_too_large,"""{section}"" has more than {limit} entries."
+es,issue_too_large,"""{section}"" tiene más de {limit} entradas."
+en,issue_group_values,"Group ""{name}"" must be a list of strings."
+es,issue_group_values,"El grupo ""{name}"" debe ser una lista de textos."
+en,issue_rule_values,"Rule ""{name}"" must map text to replacement text (strings)."
+es,issue_rule_values,"La regla ""{name}"" debe asociar texto a texto de reemplazo."
+en,issue_order_items,"Entry {n} in ""order"" must be a string (a rule name, or names joined by |)."
+es,issue_order_items,"La entrada {n} de ""order"" debe ser un texto (un nombre de regla, o nombres unidos por |)."
+en,issue_unbalanced_brackets,"""{text}"" has an unmatched < or >."
+es,issue_unbalanced_brackets,"""{text}"" tiene un < o > sin pareja."
+en,issue_unknown_group,"Group ""{name}"" is not defined."
+es,issue_unknown_group,"El grupo ""{name}"" no está definido."
+en,issue_group_defined_later,"Group ""{name}"" is used here but defined further down; define it first."
+es,issue_group_defined_later,"El grupo ""{name}"" se usa aquí pero se define más abajo; defínelo antes."
+en,issue_group_self_reference,"Group ""{name}"" refers to itself."
+es,issue_group_self_reference,"El grupo ""{name}"" se refiere a sí mismo."
+en,issue_placeholder_count,"""{key}"" has {a} <…> but its replacement has {b}; use <> for a deleted group."
+es,issue_placeholder_count,"""{key}"" tiene {a} <…> pero su reemplazo tiene {b}; usa <> para un grupo eliminado."
+en,issue_unknown_rule_in_order,"Step {step} names rule ""{name}"", which is not defined."
+es,issue_unknown_rule_in_order,"El paso {step} nombra la regla ""{name}"", que no está definida."
+en,issue_order_empty,"""order"" is empty, so nothing will be applied."
+es,issue_order_empty,"""order"" está vacío, así que no se aplicará nada."
+en,issue_rule_unused,"Rule ""{name}"" is never used in ""order""."
+es,issue_rule_unused,"La regla ""{name}"" nunca se usa en ""order""."
+en,issue_group_too_large,"Group ""{name}"" expands to more than {limit} values."
+es,issue_group_too_large,"El grupo ""{name}"" se expande a más de {limit} valores."
+en,issue_groups_error,The groups could not be expanded ({detail}).
+es,issue_groups_error,No se pudieron expandir los grupos ({detail}).
+en,issue_regex_error,This entry is not a valid pattern: {detail}.
+es,issue_regex_error,Esta entrada no es un patrón válido: {detail}.
+en,issue_rule_error,This entry could not be read ({detail}).
+es,issue_rule_error,No se pudo leer esta entrada ({detail}).
+en,howto,"## How to use
+
+1. Pick a **rule set** on the shelf: a sample, Latin → Spanish, Spanish → IPA, or your own rules.
+2. Type or paste **words** in the Evolve tab, one per line. Results update as you type.
+3. Click a **form** to see how it was derived. Switch between **Chain** and **Tree** to see every branch.
+4. Open the **Rule book** to read the rules in the order they apply, and the **Editor** to write your own.
+5. **Export** the results (text, TSV, CSV, LaTeX) or **share** a link to the words and the rule set."
+es,howto,"## Cómo se usa
+
+1. Elige un **conjunto de reglas** en la estantería: una muestra, latín → español, español → AFI, o tus propias reglas.
+2. Escribe o pega **palabras** en la pestaña Evolucionar, una por línea. Los resultados se actualizan mientras escribes.
+3. Haz clic en una **forma** para ver cómo se derivó. Cambia entre **Cadena** y **Árbol** para ver todas las ramas.
+4. Abre el **Libro de reglas** para leer las reglas en el orden en que se aplican, y el **Editor** para escribir las tuyas.
+5. **Exporta** los resultados (texto, TSV, CSV, LaTeX) o **comparte** un enlace a las palabras y al conjunto de reglas."
+en,syntax,"## Rule syntax at a glance
+
+- `""groups""`: named sets of characters, such as `""vow"": [""a"", ""e"", ""i""]`. A group can include others with `<name>` and remove members with `!x` or `!<name>`.
+- `<vow>`: any member of the group `vow`. The same placeholder on the replacement side puts the matched member back.
+- `<vow*>`: a run of one or more members. `<cons=>`: the same member repeated, for example a doubled consonant.
+- `<vow|cons>`: a member of either group. `<>`: a group that is deleted (empty on the replacement side).
+- A space at the start or end of a pattern is the word boundary (shown as `#`).
+- `""rules""`: named sets of `pattern → replacement` entries.
+- `""order""`: the steps, in sequence. `a|b` makes alternatives: each one is tried on every form and the derivation branches.
+- `// comment`: ignored."
+es,syntax,"## La sintaxis de un vistazo
+
+- `""groups""`: conjuntos de caracteres con nombre, como `""vow"": [""a"", ""e"", ""i""]`. Un grupo puede incluir otros con `<nombre>` y quitar miembros con `!x` o `!<nombre>`.
+- `<vow>`: cualquier miembro del grupo `vow`. El mismo marcador en el reemplazo devuelve el miembro encontrado.
+- `<vow*>`: una serie de uno o más miembros. `<cons=>`: el mismo miembro repetido, por ejemplo una consonante doble.
+- `<vow|cons>`: un miembro de cualquiera de los dos grupos. `<>`: un grupo que se elimina (vacío en el reemplazo).
+- Un espacio al principio o al final de un patrón es el límite de palabra (se muestra como `#`).
+- `""rules""`: conjuntos con nombre de entradas `patrón → reemplazo`.
+- `""order""`: los pasos, en secuencia. `a|b` crea alternativas: cada una se prueba sobre cada forma y la derivación se ramifica.
+- `// comentario`: se ignora."
+en,n_words_one,1 word
+en,n_words_other,{n} words
+es,n_words_one,1 palabra
+es,n_words_other,{n} palabras
