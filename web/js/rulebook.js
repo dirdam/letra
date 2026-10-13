@@ -190,21 +190,30 @@
             body.appendChild(sec);
         }
 
-        const names = Object.keys(d.groups).filter((g) => !needle || g.toLowerCase().includes(needle));
-        if (names.length) {
+        // groups with exactly the same members (e.g. an abbreviation and the full name) share one line
+        const lines = new Map();
+        Object.keys(d.groups).filter((g) => !needle || g.toLowerCase().includes(needle)).forEach((g) => {
+            const key = d.groups[g].total + '\u0000' + d.groups[g].members.join('\u0000');
+            if (!lines.has(key)) lines.set(key, []);
+            lines.get(key).push(g);
+        });
+        if (lines.size) {
             const sec = document.createElement('details');
             sec.className = 'rb-groups';
             sec.open = !!needle;
             const sum = document.createElement('summary');
-            sum.textContent = I.count('rb_groups', names.length);
+            sum.textContent = I.count('rb_groups', lines.size);
             sec.appendChild(sum);
             const list = document.createElement('div');
             list.className = 'rb-columns rb-group-list';
-            names.forEach((g) => {
+            lines.forEach((names) => {
                 const item = document.createElement('div');
                 item.className = 'rb-group';
-                item.appendChild(span('grp', '⟨' + g + '⟩'));
-                const info1 = d.groups[g];
+                const tags = document.createElement('span');
+                tags.className = 'rb-group-names';
+                names.forEach((g) => tags.appendChild(span('grp', '⟨' + g + '⟩')));
+                item.appendChild(tags);
+                const info1 = d.groups[names[0]];
                 item.appendChild(span('members', info1.members.map((m) => (m === ' ' ? L.state.BOUNDARY : m)).join('  ') + (info1.total > info1.members.length ? '  … (' + info1.total + ')' : '')));
                 list.appendChild(item);
             });
