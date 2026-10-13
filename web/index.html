@@ -42,66 +42,58 @@
 
     <main id="main">
         <!-- ===== Evolve ===== -->
-        <section id="panel-evolve" class="workbench" role="tabpanel" aria-labelledby="tab-evolve">
-            <aside class="rail">
-                <div class="panel" id="wordsPanel">
-                    <h2 class="panel-title" data-i18n="words_title"></h2>
-                    <textarea id="words" class="words" rows="7" spellcheck="false" autocapitalize="off" autocomplete="off"
-                              data-i18n="words_label" data-i18n-attr="aria-label"></textarea>
-                    <p class="hint" data-i18n="words_hint"></p>
-                    <p class="hint warn" id="wordCount" hidden></p>
+        <section id="panel-evolve" role="tabpanel" aria-labelledby="tab-evolve">
+            <div class="panel searchbar" id="wordsPanel">
+                <label class="sr-only" for="words" data-i18n="words_label"></label>
+                <div class="search-row">
+                    <input id="words" class="words" type="text" spellcheck="false" autocapitalize="off" autocomplete="off" enterkeyhint="search"
+                           data-i18n="words_placeholder" data-i18n-attr="placeholder">
+                    <button type="button" class="btn primary" id="evolveBtn" data-i18n="evolve"></button>
+                </div>
+                <div class="search-meta">
                     <div class="examples" id="examples"></div>
                     <label class="check"><input id="matchCase" type="checkbox"> <span data-i18n="match_case"></span></label>
-                    <button type="button" class="btn primary wide" id="evolveBtn"><span data-i18n="evolve"></span> <kbd>Ctrl ⏎</kbd></button>
                 </div>
-                <div class="panel" id="setPanel">
-                    <h2 class="panel-title" id="setTitle"></h2>
-                    <div class="explain" id="setExplain"></div>
-                    <p class="set-stats" id="setStats"></p>
-                    <div class="set-actions">
-                        <button type="button" class="btn small" id="setToRulebook" data-i18n="open_rulebook"></button>
-                        <button type="button" class="btn small" id="setToEditor" data-i18n="edit_copy"></button>
-                    </div>
-                </div>
-            </aside>
+                <p class="hint" data-i18n="words_hint"></p>
+                <p class="hint warn" id="wordCount" hidden></p>
+            </div>
 
-            <section class="results-col">
-                <div class="toolbar" id="toolbar" hidden>
-                    <div class="seg" role="group" data-i18n="view_label" data-i18n-attr="aria-label">
-                        <button type="button" class="seg-btn" data-view="cards" aria-pressed="true" data-i18n="view_cards"></button>
-                        <button type="button" class="seg-btn" data-view="table" aria-pressed="false" data-i18n="view_table"></button>
-                    </div>
-                    <div class="seg" role="group" data-i18n="deriv_label" data-i18n-attr="aria-label">
-                        <button type="button" class="seg-btn" data-deriv="chain" aria-pressed="true" data-i18n="deriv_chain"></button>
-                        <button type="button" class="seg-btn" data-deriv="tree" aria-pressed="false" data-i18n="deriv_tree"></button>
-                    </div>
-                    <span class="grow"></span>
-                    <details class="menu" id="exportMenu">
-                        <summary class="btn small" data-i18n="export"></summary>
-                        <div class="menu-body">
-                            <label class="field-label" for="exportKind" data-i18n="export_what"></label>
-                            <select id="exportKind" class="field">
-                                <option value="forms" data-i18n="export_forms"></option>
-                                <option value="derivations" data-i18n="export_derivations"></option>
-                            </select>
-                            <label class="field-label" for="exportFormat" data-i18n="export_format"></label>
-                            <select id="exportFormat" class="field">
-                                <option value="txt">Plain text</option>
-                                <option value="tsv">TSV</option>
-                                <option value="csv">CSV</option>
-                                <option value="tex">LaTeX</option>
-                            </select>
-                            <div class="menu-actions">
-                                <button type="button" class="btn small primary" id="exportCopy" data-i18n="copy"></button>
-                                <button type="button" class="btn small" id="exportDownload" data-i18n="download"></button>
-                            </div>
-                        </div>
-                    </details>
-                    <button type="button" class="btn small" id="shareBtn" data-i18n="share"></button>
+            <details class="panel setinfo" id="setInfo">
+                <summary><span class="set-name" id="setTitle"></span><span class="set-stats" id="setStats"></span></summary>
+                <div class="explain" id="setExplain"></div>
+                <div class="set-actions">
+                    <button type="button" class="btn small" id="setToRulebook" data-i18n="open_rulebook"></button>
+                    <button type="button" class="btn small" id="setToEditor" data-i18n="edit_copy"></button>
                 </div>
-                <p class="status" id="status" role="status"></p>
-                <div id="results"></div>
-            </section>
+            </details>
+
+            <div class="toolbar" id="toolbar" hidden>
+                <span class="grow"></span>
+                <details class="menu" id="exportMenu">
+                    <summary class="btn small" data-i18n="export"></summary>
+                    <div class="menu-body">
+                        <label class="field-label" for="exportKind" data-i18n="export_what"></label>
+                        <select id="exportKind" class="field">
+                            <option value="forms" data-i18n="export_forms"></option>
+                            <option value="derivations" data-i18n="export_derivations"></option>
+                        </select>
+                        <label class="field-label" for="exportFormat" data-i18n="export_format"></label>
+                        <select id="exportFormat" class="field">
+                            <option value="txt">Plain text</option>
+                            <option value="tsv">TSV</option>
+                            <option value="csv">CSV</option>
+                            <option value="tex">LaTeX</option>
+                        </select>
+                        <div class="menu-actions">
+                            <button type="button" class="btn small primary" id="exportCopy" data-i18n="copy"></button>
+                            <button type="button" class="btn small" id="exportDownload" data-i18n="download"></button>
+                        </div>
+                    </div>
+                </details>
+                <button type="button" class="btn small" id="shareBtn" data-i18n="share"></button>
+            </div>
+            <p class="status" id="status" role="status"></p>
+            <div id="results"></div>
         </section>
 
         <!-- ===== Rule book ===== -->

@@ -93,7 +93,7 @@
     /* Draws the tree of `r` into `box`; `form` is the chosen final form, `onSelect(form)` is called for a click. */
     function render(box, r, form, onSelect) {
         const g = graph(r);
-        if (g.nodes.size > MAX_NODES) { box.appendChild(Object.assign(document.createElement('p'), { className: 'dim', textContent: I.t('tree_too_big') })); return; }
+        if (g.nodes.size > MAX_NODES) { box.appendChild(Object.assign(document.createElement('p'), { className: 'dim', textContent: I.t('tree_too_big') })); return null; }
         const id = 'tr' + (++uid);
         const finals = new Set(r.final);
 
@@ -170,6 +170,7 @@
         });
         root.appendChild(nodeLayer);
 
+        let current = form;
         const highlight = (target) => {
             const on = target ? ancestors(g, target) : new Set();
             nodeEls.forEach((grp, n) => grp.classList.toggle('on', on.has(n)));
@@ -179,11 +180,16 @@
         nodeEls.forEach((grp, n) => {
             grp.addEventListener('mouseenter', () => highlight(n));
             grp.addEventListener('focus', () => highlight(n));
-            grp.addEventListener('mouseleave', () => highlight(form));
-            grp.addEventListener('blur', () => highlight(form));
+            grp.addEventListener('mouseleave', () => highlight(current));
+            grp.addEventListener('blur', () => highlight(current));
         });
-        highlight(form);
-        nodeEls.get(form) && nodeEls.get(form).classList.add('chosen');
+        const choose = (f) => {
+            current = f;
+            nodeEls.forEach((grp) => grp.classList.remove('chosen'));
+            if (nodeEls.has(f)) nodeEls.get(f).classList.add('chosen');
+            highlight(f);
+        };
+        choose(form);
 
         const scroll = document.createElement('div');
         scroll.className = 'tree-scroll';
@@ -195,6 +201,7 @@
         box.appendChild(legend);
         const chosen = pos.get(form);                       // bring the chosen form into view (once the box is on the page)
         if (chosen) requestAnimationFrame(() => { scroll.scrollLeft = Math.max(0, chosen.x + chosen.w / 2 - scroll.clientWidth / 2); });
+        return { choose };
     }
 
     L.tree = { render, fits, graph, MAX_NODES };

@@ -14,8 +14,8 @@
         return e;
     };
 
-    /* Forms carry a space at each end (the word boundary): show it as #, as linguists write it. */
-    const show = (s) => s.replace(/^ /, '#').replace(/ $/, '#');
+    /* Forms carry a space at each end (the word boundary): show it as the boundary mark. */
+    const show = (s) => s.replace(/^ /, L.state.BOUNDARY).replace(/ $/, L.state.BOUNDARY);
     const plain = (s) => s.trim();
 
     /* The part two strings share at the start and at the end, and the part that differs.
@@ -117,20 +117,36 @@
         return ol;
     }
 
+    /* The tree of all derivations of the word, and under it the chain of steps of the chosen form. */
     function renderDerivation(card, r) {
         const box = card.querySelector('.derivation');
         box.textContent = '';
+        card._tree = null;
         if (!r.final.length) return;
         const form = selectedOf(r);
-        if (S.deriv === 'tree' && L.tree.fits(r)) L.tree.render(box, r, form, (f) => select(card, r, f));
-        else if (S.deriv === 'tree') { box.appendChild(el('p', 'dim', I.t('tree_too_big'))); box.appendChild(chainEl(r, form)); }
-        else box.appendChild(chainEl(r, form));
+        const treeBox = el('div', 'tree-box');
+        treeBox.appendChild(el('h4', 'deriv-title', I.t('tree_title')));
+        if (L.tree.fits(r)) card._tree = L.tree.render(treeBox, r, form, (f) => select(card, r, f));
+        else treeBox.appendChild(el('p', 'dim', I.t('tree_too_big')));
+        box.appendChild(treeBox);
+        box.appendChild(el('div', 'chain-box'));
+        renderChain(card, r);
     }
 
+    function renderChain(card, r) {
+        const form = selectedOf(r);
+        const box = card.querySelector('.chain-box');
+        box.textContent = '';
+        box.appendChild(el('h4', 'deriv-title', I.fmt('chain_title', { form: plain(form) })));
+        box.appendChild(chainEl(r, form));
+    }
+
+    /* Choosing a form updates the chips, the highlighted path in the tree (without redrawing it) and the chain. */
     function select(card, r, form) {
         S.selected[r.term] = form;
         card.querySelectorAll('.forms .form').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.form === form)));
-        renderDerivation(card, r);
+        if (card._tree) card._tree.choose(form);
+        renderChain(card, r);
         announceUsed();
     }
 
@@ -162,39 +178,6 @@
         return card;
     }
 
-    function tableEl(onOpen) {
-        const table = el('table', 'results-table');
-        const thead = el('thead');
-        const hr = el('tr');
-        ['col_word', 'col_forms', ''].forEach((k) => hr.appendChild(el('th', '', k ? I.t(k) : '')));
-        thead.appendChild(hr);
-        table.appendChild(thead);
-        const tbody = el('tbody');
-        S.results.forEach((r) => {
-            const tr = el('tr');
-            tr.appendChild(el('th', 'word', r.term));
-            const td = el('td', 'forms');
-            if (r.error) {
-                td.appendChild(el('span', 'error', I.t('err_' + r.error)));
-            } else {
-                r.final.forEach((f) => td.appendChild(el('span', 'form static', plain(f))));
-                if (!r.final.length) td.appendChild(el('span', 'dim', I.t('no_results')));
-            }
-            tr.appendChild(td);
-            const act = el('td', 'act');
-            if (!r.error) {
-                const b = el('button', 'btn small', I.t('open_entry'));
-                b.type = 'button';
-                b.addEventListener('click', () => onOpen(r.term));
-                act.appendChild(b);
-            }
-            tr.appendChild(act);
-            tbody.appendChild(tr);
-        });
-        table.appendChild(tbody);
-        return table;
-    }
-
     /* The rules used by the derivations currently shown. */
     function used() {
         const set = new Set();
@@ -207,20 +190,11 @@
 
     function announceUsed() { if (handlers.onUsedChange) handlers.onUsedChange(used()); }
 
-    function renderAll(container, onOpen) {
+    function renderAll(container) {
         container.textContent = '';
-        if (S.view === 'table') container.appendChild(tableEl(onOpen));
-        else S.results.forEach((r) => container.appendChild(cardEl(r)));
+        S.results.forEach((r) => container.appendChild(cardEl(r)));
         announceUsed();
     }
 
-    function focusWord(container, word) {
-        const card = Array.from(container.querySelectorAll('.entry')).find((c) => c.dataset.word === word);
-        if (!card) return;
-        card.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        card.classList.add('flash');
-        setTimeout(() => card.classList.remove('flash'), 1400);
-    }
-
-    L.entries = { renderAll, focusWord, chainFor, selectedOf, used, diff, show, plain, handlers };
+    L.entries = { renderAll, chainFor, selectedOf, used, diff, show, plain, handlers };
 })();

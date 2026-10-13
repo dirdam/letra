@@ -73,9 +73,8 @@
             const b = el('button', 'example', w);
             b.type = 'button';
             b.addEventListener('click', () => {
-                const area = $('words');
-                const have = ST.parseWords(area.value);
-                if (!have.includes(w)) area.value = (area.value.trim() ? area.value.replace(/\s+$/, '') + '\n' : '') + w + '\n';
+                const box = $('words');
+                if (!ST.parseWords(box.value).includes(w)) box.value = (box.value.trim() ? box.value.trim() + ' ' : '') + w;
                 evolveNow();
             });
             box.appendChild(b);
@@ -186,8 +185,6 @@
         const box = $('results');
         renderStatus();
         $('toolbar').hidden = !S.results.length;
-        document.querySelectorAll('[data-view]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.view === S.view)));
-        document.querySelectorAll('[data-deriv]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.deriv === S.deriv)));
         box.classList.toggle('loading', S.loading);
         if (S.loading && S.results.length) return;
         if (!S.results.length) {
@@ -201,13 +198,7 @@
             L.rulebook.mark($('rbBody'), new Set());
             return;
         }
-        L.entries.renderAll(box, (word) => {
-            S.view = 'cards';
-            ST.save();
-            ST.writeHash();
-            renderResults();
-            L.entries.focusWord(box, word);
-        });
+        L.entries.renderAll(box);
     }
 
     // ---------- tabs ----------
@@ -290,13 +281,24 @@
 
     function bind() {
         $('words').addEventListener('input', scheduleRun);
-        $('words').addEventListener('keydown', (e) => { if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { e.preventDefault(); evolveNow(); } });
+        $('words').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); evolveNow(); } });
+        // a single-line field can drop line breaks when pasting and glue two words together: make them spaces
+        $('words').addEventListener('paste', (e) => {
+            const text = e.clipboardData && e.clipboardData.getData('text');
+            if (!text || !/[\r\n]/.test(text)) return;
+            e.preventDefault();
+            const box = $('words');
+            const a = box.selectionStart;
+            const z = box.selectionEnd;
+            const clean = text.replace(/[\r\n]+/g, ' ');
+            box.value = box.value.slice(0, a) + clean + box.value.slice(z);
+            box.setSelectionRange(a + clean.length, a + clean.length);
+            scheduleRun();
+        });
         $('evolveBtn').addEventListener('click', evolveNow);
         $('matchCase').addEventListener('change', () => { S.matchCase = $('matchCase').checked; evolveNow(); });
         $('setToRulebook').addEventListener('click', () => switchTab('rulebook'));
         $('setToEditor').addEventListener('click', () => { switchTab('editor'); if (S.setId !== 'mine') L.editor.fork(); });
-        document.querySelectorAll('[data-view]').forEach((b) => b.addEventListener('click', () => { S.view = b.dataset.view; ST.save(); ST.writeHash(); renderResults(); }));
-        document.querySelectorAll('[data-deriv]').forEach((b) => b.addEventListener('click', () => { S.deriv = b.dataset.deriv; ST.save(); ST.writeHash(); renderResults(); }));
         $('exportCopy').addEventListener('click', () => doExport(true));
         $('exportDownload').addEventListener('click', () => doExport(false));
         $('shareBtn').addEventListener('click', share);
