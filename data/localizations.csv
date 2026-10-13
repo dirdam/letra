@@ -41,8 +41,8 @@ en,skip,Skip to content
 es,skip,Saltar al contenido
 en,shelf_label,Rule set
 es,shelf_label,Conjunto de reglas
-en,set_sample,Sample
-es,set_sample,Muestra
+en,set_sample,Sample (LA → ES)
+es,set_sample,Muestra (LA → ES)
 en,set_la_es,Latin → Spanish
 es,set_la_es,Latín → español
 en,set_es_ipa,Spanish → IPA

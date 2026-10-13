@@ -101,6 +101,7 @@
             return;
         }
         S.setId = id;
+        $('words').value = id === 'sample' ? ST.EXAMPLES.sample[0] : '';          // only the sample comes with its word; the other sets show the placeholder
         S.results = [];
         S.selected = {};
         S.error = '';
