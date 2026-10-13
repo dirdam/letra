@@ -326,8 +326,9 @@ summary.btn::-webkit-details-marker { display: none; }
 .rb-unused summary, .rb-groups summary { cursor: pointer; font-family: var(--sans); font-size: 0.85rem; font-weight: 700; color: var(--dim); }
 .rb-columns { margin-top: 10px; }
 .rb-group-list { column-count: 3; column-gap: 28px; column-rule: none; }      /* groups: three columns, no vertical line */
-.rb-group { break-inside: avoid; margin-bottom: 8px; }
-.rb-group .members { display: block; font-size: 0.95rem; color: var(--dim); overflow-wrap: anywhere; }
+.rb-group { display: flex; align-items: baseline; gap: 4px 10px; break-inside: avoid; margin-bottom: 8px; }      /* name on the left, its members to the right */
+.rb-group-names { display: flex; flex-wrap: wrap; gap: 4px; flex: none; }
+.rb-group .members { display: block; flex: 1 1 0; min-width: 0; font-size: 0.95rem; color: var(--dim); overflow-wrap: anywhere; }
 
 /* ---------- editor ---------- */
 .editor-actions { display: flex; flex-wrap: wrap; gap: 8px; }
