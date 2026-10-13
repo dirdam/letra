@@ -63,7 +63,8 @@
         while (cur !== r.start && r.terms[cur] && guard++ < 500) {
             const info = r.terms[cur];
             const also = [...new Set(r.edges.filter((e) => e[2] === info.mother && e[3] === cur && e[1] !== info.rule).map((e) => e[1]))];
-            steps.push({ rule: info.rule, from: info.mother, to: cur, also });
+            const edge = r.edges.find((e) => e[1] === info.rule && e[2] === info.mother && e[3] === cur);
+            steps.push({ rule: info.rule, from: info.mother, to: cur, also, applied: edge ? edge[4] : null });
             cur = info.mother;
         }
         return steps.reverse();
@@ -103,7 +104,8 @@
             const entries = L.rulebook.entriesFor(st.rule);
             if (entries.length) {
                 const ul = el('ul', 'step-entries');
-                entries.forEach((e) => {
+                entries.forEach((e, n) => {
+                    if (st.applied && !st.applied.includes(n)) return;          // only the entries that changed this word
                     const item = el('li');
                     item.appendChild(L.rulebook.pair(e));
                     ul.appendChild(item);
