@@ -1,3 +1,4 @@
+import os
 import re
 
 class Transformer():
@@ -5,7 +6,7 @@ class Transformer():
     json_dict_original = {} # Dictionary with all changes (with original names)
     json_dict = {} # Dictionary with all changes
     values_dict = {} # Dictionary of possible groups for a given letter/combination
-    transformations_path = './transformations' # Path to existing transformations json
+    transformations_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'transformations') # Path to existing transformations json (relative to this file, not to the working directory)
     transformations = [] # List of pairs (rule_name, result) to track the changes
     
     def __init__(self, json_dict={}, json_path='', auxiliary_groups_path=None):
