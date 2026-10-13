@@ -88,15 +88,15 @@ kbd { font-family: var(--sans); font-size: 0.72em; opacity: 0.85; padding: 1px 6
 .tagline { margin-top: 4px; color: var(--dim); font-style: italic; }
 
 .strip { margin: 18px auto 0; max-width: 760px; padding: 12px 18px 14px; border-top: 1px solid var(--gold-soft); border-bottom: 1px solid var(--gold-soft); }
-.strip-stage { min-height: 3.6rem; display: flex; align-items: center; justify-content: center; }
-.strip-form { font-size: 2.7rem; letter-spacing: 0.02em; line-height: 1.15; white-space: pre; }
+.strip-stage { height: 3.6rem; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+.strip-form { font-size: 2.7rem; letter-spacing: 0.02em; line-height: 1.15; white-space: pre; }      /* the rows of the strip have fixed heights, whatever glyphs the current word uses, so nothing below moves */
 .strip-form .mid { display: inline-grid; }
 .strip-form .mid > span { grid-area: 1 / 1; text-align: center; }
 .strip-form .out { color: var(--rubric); animation: out 0.8s ease forwards; }
 .strip-form .in { color: var(--lapis); animation: in 0.8s ease 0.15s both; }
-.strip-rule { min-height: 1.6rem; font-variant: small-caps; letter-spacing: 0.1em; color: var(--rubric); }
+.strip-rule { height: 1.7rem; line-height: 1.7rem; overflow: hidden; font-variant: small-caps; letter-spacing: 0.1em; color: var(--rubric); }
 .strip-rule.pop { animation: pop 0.7s ease both; }
-.strip-trail { display: flex; flex-wrap: wrap; justify-content: center; gap: 2px 8px; font-size: 1.02rem; color: var(--dim); }
+.strip-trail { display: flex; flex-wrap: wrap; justify-content: center; gap: 2px 8px; height: 1.8rem; line-height: 1.6rem; overflow: hidden; font-size: 1.02rem; color: var(--dim); }
 .strip-trail .sep { color: var(--gold-text); }
 .strip-trail .done { color: var(--lapis); }
 .strip-trail .cur { color: var(--ink); font-weight: 700; }
@@ -427,7 +427,7 @@ footer a:hover { text-decoration: underline; }
     .hero { padding: 16px 16px 8px; }
     .acronym { font-size: 1.1rem; }
     .strip { margin-top: 8px; padding: 6px 10px 8px; }
-    .strip-stage { min-height: 2.8rem; }
+    .strip-stage { height: 2.8rem; }
     .strip-trail { display: none; }
     .pack { grid-template-columns: minmax(0, 1fr); gap: 12px; }
     .shelf-sets { flex-direction: row; flex-wrap: wrap; }
