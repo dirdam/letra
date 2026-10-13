@@ -1,0 +1,3679 @@
+{
+ "sample.json|False|lítteram": {
+  "final": [
+   " létra ",
+   " liétra "
+  ],
+  "transformations": [
+   [
+    " lítteram ",
+    "",
+    ""
+   ],
+   [
+    " líttera ",
+    " lítteram ",
+    "remove_m"
+   ],
+   [
+    " lítera ",
+    " líttera ",
+    "simplify_double"
+   ],
+   [
+    " lítra ",
+    " lítera ",
+    "remove_unstressed"
+   ],
+   [
+    " létra ",
+    " lítra ",
+    "vowel_shift"
+   ],
+   [
+    " liétra ",
+    " létra ",
+    "diphthong"
+   ]
+  ]
+ },
+ "sample.json|False|a": {
+  "final": [
+   " a "
+  ],
+  "transformations": [
+   [
+    " a ",
+    "",
+    ""
+   ]
+  ]
+ },
+ "sample.json|False|letra": {
+  "final": [
+   " letra "
+  ],
+  "transformations": [
+   [
+    " letra ",
+    "",
+    ""
+   ]
+  ]
+ },
+ "sample.json|False|xyz": {
+  "final": [
+   " xyz "
+  ],
+  "transformations": [
+   [
+    " xyz ",
+    "",
+    ""
+   ]
+  ]
+ },
+ "sample.json|True|lítteram": {
+  "final": [
+   " lítteram ",
+   " líttera ",
+   " líteram ",
+   " lítera ",
+   " lítram ",
+   " lítra ",
+   " létteram ",
+   " léttera ",
+   " léteram ",
+   " létera ",
+   " létram ",
+   " létra ",
+   " liétteram ",
+   " liéttera ",
+   " liéteram ",
+   " liétera ",
+   " liétram ",
+   " liétra "
+  ],
+  "transformations": [
+   [
+    " lítteram ",
+    "",
+    ""
+   ],
+   [
+    " líttera ",
+    " lítteram ",
+    "remove_m"
+   ],
+   [
+    " líteram ",
+    " lítteram ",
+    "simplify_double"
+   ],
+   [
+    " lítera ",
+    " líttera ",
+    "simplify_double"
+   ],
+   [
+    " lítram ",
+    " lítteram ",
+    "remove_unstressed"
+   ],
+   [
+    " lítra ",
+    " líttera ",
+    "remove_unstressed"
+   ],
+   [
+    " létteram ",
+    " lítteram ",
+    "vowel_shift"
+   ],
+   [
+    " léttera ",
+    " líttera ",
+    "vowel_shift"
+   ],
+   [
+    " léteram ",
+    " líteram ",
+    "vowel_shift"
+   ],
+   [
+    " létera ",
+    " lítera ",
+    "vowel_shift"
+   ],
+   [
+    " létram ",
+    " lítram ",
+    "vowel_shift"
+   ],
+   [
+    " létra ",
+    " lítra ",
+    "vowel_shift"
+   ],
+   [
+    " liétteram ",
+    " létteram ",
+    "diphthong"
+   ],
+   [
+    " liéttera ",
+    " léttera ",
+    "diphthong"
+   ],
+   [
+    " liéteram ",
+    " léteram ",
+    "diphthong"
+   ],
+   [
+    " liétera ",
+    " létera ",
+    "diphthong"
+   ],
+   [
+    " liétram ",
+    " létram ",
+    "diphthong"
+   ],
+   [
+    " liétra ",
+    " létra ",
+    "diphthong"
+   ]
+  ]
+ },
+ "sample.json|True|a": {
+  "final": [
+   " a "
+  ],
+  "transformations": [
+   [
+    " a ",
+    "",
+    ""
+   ]
+  ]
+ },
+ "sample.json|True|letra": {
+  "final": [
+   " letra "
+  ],
+  "transformations": [
+   [
+    " letra ",
+    "",
+    ""
+   ]
+  ]
+ },
+ "sample.json|True|xyz": {
+  "final": [
+   " xyz "
+  ],
+  "transformations": [
+   [
+    " xyz ",
+    "",
+    ""
+   ]
+  ]
+ },
+ "LA_ES.json|False|lítteram": {
+  "final": [
+   " létera ",
+   " létra ",
+   " liétera ",
+   " liétra "
+  ],
+  "transformations": [
+   [
+    " lítteram ",
+    "",
+    ""
+   ],
+   [
+    " líttera ",
+    " lítteram ",
+    "rule_1"
+   ],
+   [
+    " lítera ",
+    " líttera ",
+    "rule_13"
+   ],
+   [
+    " lítra ",
+    " lítera ",
+    "rule_16"
+   ],
+   [
+    " létera ",
+    " lítera ",
+    "rule_21"
+   ],
+   [
+    " létra ",
+    " lítra ",
+    "rule_21"
+   ],
+   [
+    " liétera ",
+    " létera ",
+    "rule_24"
+   ],
+   [
+    " liétra ",
+    " létra ",
+    "rule_24"
+   ]
+  ]
+ },
+ "LA_ES.json|False|trophaéum": {
+  "final": [
+   " troféo "
+  ],
+  "transformations": [
+   [
+    " trophaéum ",
+    "",
+    ""
+   ],
+   [
+    " trophaéu ",
+    " trophaéum ",
+    "rule_1"
+   ],
+   [
+    " trophaéo ",
+    " trophaéu ",
+    "rule_3"
+   ],
+   [
+    " trophéo ",
+    " trophaéo ",
+    "rule_7"
+   ],
+   [
+    " troféo ",
+    " trophéo ",
+    "rule_9"
+   ]
+  ]
+ },
+ "LA_ES.json|False|óperam": {
+  "final": [
+   " óbera ",
+   " óbra ",
+   " óera ",
+   " óra "
+  ],
+  "transformations": [
+   [
+    " óperam ",
+    "",
+    ""
+   ],
+   [
+    " ópera ",
+    " óperam ",
+    "rule_1"
+   ],
+   [
+    " óbera ",
+    " ópera ",
+    "rule_12"
+   ],
+   [
+    " óbra ",
+    " óbera ",
+    "rule_16"
+   ],
+   [
+    " óera ",
+    " óbera ",
+    "rule_18"
+   ],
+   [
+    " óra ",
+    " óbra ",
+    "rule_18"
+   ]
+  ]
+ },
+ "LA_ES.json|False|dóminum": {
+  "final": [
+   " dómino ",
+   " dómbro ",
+   " duémino ",
+   " duémbro ",
+   " dómeno ",
+   " duémeno ",
+   " dóño ",
+   " duéño ",
+   " dúmino ",
+   " dúmbro ",
+   " dúmeno ",
+   " dúño "
+  ],
+  "transformations": [
+   [
+    " dóminum ",
+    "",
+    ""
+   ],
+   [
+    " dóminu ",
+    " dóminum ",
+    "rule_1"
+   ],
+   [
+    " dómino ",
+    " dóminu ",
+    "rule_3"
+   ],
+   [
+    " dómno ",
+    " dómino ",
+    "rule_16"
+   ],
+   [
+    " duémino ",
+    " dómino ",
+    "rule_22"
+   ],
+   [
+    " duémno ",
+    " dómno ",
+    "rule_22"
+   ],
+   [
+    " dómeno ",
+    " dómino ",
+    "rule_28"
+   ],
+   [
+    " duémeno ",
+    " duémino ",
+    "rule_28"
+   ],
+   [
+    " dóño ",
+    " dómno ",
+    "rule_31"
+   ],
+   [
+    " duéño ",
+    " duémno ",
+    "rule_31"
+   ],
+   [
+    " dómbro ",
+    " dómno ",
+    "rule_41"
+   ],
+   [
+    " duémbro ",
+    " duémno ",
+    "rule_41"
+   ],
+   [
+    " dúmino ",
+    " dómino ",
+    "rule_45"
+   ],
+   [
+    " dúmbro ",
+    " dómbro ",
+    "rule_45"
+   ],
+   [
+    " dúmeno ",
+    " dómeno ",
+    "rule_45"
+   ],
+   [
+    " dúño ",
+    " dóño ",
+    "rule_45"
+   ]
+  ]
+ },
+ "LA_ES.json|False|quinquagínta": {
+  "final": [
+   " cincuagénta ",
+   " cinquagénta ",
+   " cincuénta ",
+   " cinquénta ",
+   " cincuagiénta ",
+   " cinquagiénta ",
+   " cencuagénta ",
+   " cenquagénta ",
+   " cencuénta ",
+   " cenquénta ",
+   " cencuagiénta ",
+   " cenquagiénta "
+  ],
+  "transformations": [
+   [
+    " quinquagínta ",
+    "",
+    ""
+   ],
+   [
+    " quincuagínta ",
+    " quinquagínta ",
+    "rule_14_1"
+   ],
+   [
+    " cincuagínta ",
+    " quincuagínta ",
+    "rule_14_4"
+   ],
+   [
+    " cinquagínta ",
+    " quinquagínta ",
+    "rule_14_4"
+   ],
+   [
+    " cincuaínta ",
+    " cincuagínta ",
+    "rule_18"
+   ],
+   [
+    " cinquaínta ",
+    " cinquagínta ",
+    "rule_18"
+   ],
+   [
+    " cincuagénta ",
+    " cincuagínta ",
+    "rule_21"
+   ],
+   [
+    " cinquagénta ",
+    " cinquagínta ",
+    "rule_21"
+   ],
+   [
+    " cincuagiénta ",
+    " cincuagénta ",
+    "rule_24"
+   ],
+   [
+    " cinquagiénta ",
+    " cinquagénta ",
+    "rule_24"
+   ],
+   [
+    " cencuagénta ",
+    " cincuagénta ",
+    "rule_28"
+   ],
+   [
+    " cenquagénta ",
+    " cinquagénta ",
+    "rule_28"
+   ],
+   [
+    " cencuaínta ",
+    " cincuaínta ",
+    "rule_28"
+   ],
+   [
+    " cenquaínta ",
+    " cinquaínta ",
+    "rule_28"
+   ],
+   [
+    " cencuagiénta ",
+    " cincuagiénta ",
+    "rule_28"
+   ],
+   [
+    " cenquagiénta ",
+    " cinquagiénta ",
+    "rule_28"
+   ],
+   [
+    " cincuénta ",
+    " cincuaínta ",
+    "rule_36"
+   ],
+   [
+    " cinquénta ",
+    " cinquaínta ",
+    "rule_36"
+   ],
+   [
+    " cencuénta ",
+    " cencuaínta ",
+    "rule_36"
+   ],
+   [
+    " cenquénta ",
+    " cenquaínta ",
+    "rule_36"
+   ]
+  ]
+ },
+ "LA_ES.json|False|dígitum": {
+  "final": [
+   " dégido ",
+   " dégdo ",
+   " déido ",
+   " diégido ",
+   " diégdo ",
+   " dégedo ",
+   " dédo ",
+   " diégedo "
+  ],
+  "transformations": [
+   [
+    " dígitum ",
+    "",
+    ""
+   ],
+   [
+    " dígitu ",
+    " dígitum ",
+    "rule_1"
+   ],
+   [
+    " dígito ",
+    " dígitu ",
+    "rule_3"
+   ],
+   [
+    " dígido ",
+    " dígito ",
+    "rule_12"
+   ],
+   [
+    " dígdo ",
+    " dígido ",
+    "rule_16"
+   ],
+   [
+    " díido ",
+    " dígido ",
+    "rule_18"
+   ],
+   [
+    " dégido ",
+    " dígido ",
+    "rule_21"
+   ],
+   [
+    " dégdo ",
+    " dígdo ",
+    "rule_21"
+   ],
+   [
+    " déido ",
+    " díido ",
+    "rule_21"
+   ],
+   [
+    " diégido ",
+    " dégido ",
+    "rule_24"
+   ],
+   [
+    " diégdo ",
+    " dégdo ",
+    "rule_24"
+   ],
+   [
+    " dégedo ",
+    " dégido ",
+    "rule_28"
+   ],
+   [
+    " déedo ",
+    " déido ",
+    "rule_28"
+   ],
+   [
+    " diégedo ",
+    " diégido ",
+    "rule_28"
+   ],
+   [
+    " dédo ",
+    " déedo ",
+    "rule_39"
+   ]
+  ]
+ },
+ "LA_ES.json|False|fília": {
+  "final": [
+   " éja ",
+   " yéja "
+  ],
+  "transformations": [
+   [
+    " fília ",
+    "",
+    ""
+   ],
+   [
+    " félia ",
+    " fília ",
+    "rule_21"
+   ],
+   [
+    " fiélia ",
+    " félia ",
+    "rule_24"
+   ],
+   [
+    " élia ",
+    " félia ",
+    "rule_26"
+   ],
+   [
+    " iélia ",
+    " fiélia ",
+    "rule_26"
+   ],
+   [
+    " éja ",
+    " élia ",
+    "rule_38"
+   ],
+   [
+    " iéja ",
+    " iélia ",
+    "rule_38"
+   ],
+   [
+    " yéja ",
+    " iéja ",
+    "rule_44"
+   ]
+  ]
+ },
+ "LA_ES.json|True|lítteram": {
+  "final": [
+   " lítteram ",
+   " líttera ",
+   " líteram ",
+   " lítera ",
+   " lítram ",
+   " lítra ",
+   " létteram ",
+   " léttera ",
+   " léteram ",
+   " létera ",
+   " létram ",
+   " létra ",
+   " liétteram ",
+   " liéttera ",
+   " liéteram ",
+   " liétera ",
+   " liétram ",
+   " liétra ",
+   " líttera  ",
+   " lítera  ",
+   " lítra  ",
+   " léttera  ",
+   " létera  ",
+   " létra  ",
+   " liéttera  ",
+   " liétera  ",
+   " liétra  "
+  ],
+  "transformations": [
+   [
+    " lítteram ",
+    "",
+    ""
+   ],
+   [
+    " líttera ",
+    " lítteram ",
+    "rule_1"
+   ],
+   [
+    " líteram ",
+    " lítteram ",
+    "rule_13"
+   ],
+   [
+    " lítera ",
+    " líttera ",
+    "rule_13"
+   ],
+   [
+    " lítram ",
+    " lítteram ",
+    "rule_16"
+   ],
+   [
+    " lítra ",
+    " líttera ",
+    "rule_16"
+   ],
+   [
+    " létteram ",
+    " lítteram ",
+    "rule_21"
+   ],
+   [
+    " léttera ",
+    " líttera ",
+    "rule_21"
+   ],
+   [
+    " léteram ",
+    " líteram ",
+    "rule_21"
+   ],
+   [
+    " létera ",
+    " lítera ",
+    "rule_21"
+   ],
+   [
+    " létram ",
+    " lítram ",
+    "rule_21"
+   ],
+   [
+    " létra ",
+    " lítra ",
+    "rule_21"
+   ],
+   [
+    " liétteram ",
+    " létteram ",
+    "rule_24"
+   ],
+   [
+    " liéttera ",
+    " léttera ",
+    "rule_24"
+   ],
+   [
+    " liéteram ",
+    " léteram ",
+    "rule_24"
+   ],
+   [
+    " liétera ",
+    " létera ",
+    "rule_24"
+   ],
+   [
+    " liétram ",
+    " létram ",
+    "rule_24"
+   ],
+   [
+    " liétra ",
+    " létra ",
+    "rule_24"
+   ],
+   [
+    " líttera  ",
+    " lítteram ",
+    "rule_25"
+   ],
+   [
+    " lítera  ",
+    " líteram ",
+    "rule_25"
+   ],
+   [
+    " lítra  ",
+    " lítram ",
+    "rule_25"
+   ],
+   [
+    " léttera  ",
+    " létteram ",
+    "rule_25"
+   ],
+   [
+    " létera  ",
+    " léteram ",
+    "rule_25"
+   ],
+   [
+    " létra  ",
+    " létram ",
+    "rule_25"
+   ],
+   [
+    " liéttera  ",
+    " liétteram ",
+    "rule_25"
+   ],
+   [
+    " liétera  ",
+    " liéteram ",
+    "rule_25"
+   ],
+   [
+    " liétra  ",
+    " liétram ",
+    "rule_25"
+   ]
+  ]
+ },
+ "LA_ES.json|True|trophaéum": {
+  "final": [
+   " trophaéum ",
+   " trophaéu ",
+   " trophaéo ",
+   " trophéum ",
+   " trophéu ",
+   " trophéo ",
+   " trofaéum ",
+   " trofaéu ",
+   " trofaéo ",
+   " troféum ",
+   " troféu ",
+   " troféo ",
+   " trophaéu  ",
+   " trophéu  ",
+   " trofaéu  ",
+   " troféu  ",
+   " trophaióm ",
+   " trophaió ",
+   " trophióm ",
+   " trophió ",
+   " trofaióm ",
+   " trofaió ",
+   " trofióm ",
+   " trofió ",
+   " trophaió  ",
+   " trophió  ",
+   " trofaió  ",
+   " trofió  "
+  ],
+  "transformations": [
+   [
+    " trophaéum ",
+    "",
+    ""
+   ],
+   [
+    " trophaéu ",
+    " trophaéum ",
+    "rule_1"
+   ],
+   [
+    " trophaéo ",
+    " trophaéu ",
+    "rule_3"
+   ],
+   [
+    " trophéum ",
+    " trophaéum ",
+    "rule_7"
+   ],
+   [
+    " trophéu ",
+    " trophaéu ",
+    "rule_7"
+   ],
+   [
+    " trophéo ",
+    " trophaéo ",
+    "rule_7"
+   ],
+   [
+    " trofaéum ",
+    " trophaéum ",
+    "rule_9"
+   ],
+   [
+    " trofaéu ",
+    " trophaéu ",
+    "rule_9"
+   ],
+   [
+    " trofaéo ",
+    " trophaéo ",
+    "rule_9"
+   ],
+   [
+    " troféum ",
+    " trophéum ",
+    "rule_9"
+   ],
+   [
+    " troféu ",
+    " trophéu ",
+    "rule_9"
+   ],
+   [
+    " troféo ",
+    " trophéo ",
+    "rule_9"
+   ],
+   [
+    " trophaéu  ",
+    " trophaéum ",
+    "rule_25"
+   ],
+   [
+    " trophéu  ",
+    " trophéum ",
+    "rule_25"
+   ],
+   [
+    " trofaéu  ",
+    " trofaéum ",
+    "rule_25"
+   ],
+   [
+    " troféu  ",
+    " troféum ",
+    "rule_25"
+   ],
+   [
+    " trophaióm ",
+    " trophaéum ",
+    "rule_39"
+   ],
+   [
+    " trophaió ",
+    " trophaéu ",
+    "rule_39"
+   ],
+   [
+    " trophióm ",
+    " trophéum ",
+    "rule_39"
+   ],
+   [
+    " trophió ",
+    " trophéu ",
+    "rule_39"
+   ],
+   [
+    " trofaióm ",
+    " trofaéum ",
+    "rule_39"
+   ],
+   [
+    " trofaió ",
+    " trofaéu ",
+    "rule_39"
+   ],
+   [
+    " trofióm ",
+    " troféum ",
+    "rule_39"
+   ],
+   [
+    " trofió ",
+    " troféu ",
+    "rule_39"
+   ],
+   [
+    " trophaió  ",
+    " trophaéu  ",
+    "rule_39"
+   ],
+   [
+    " trophió  ",
+    " trophéu  ",
+    "rule_39"
+   ],
+   [
+    " trofaió  ",
+    " trofaéu  ",
+    "rule_39"
+   ],
+   [
+    " trofió  ",
+    " troféu  ",
+    "rule_39"
+   ]
+  ]
+ },
+ "LA_ES.json|True|óperam": {
+  "final": [
+   " óperam ",
+   " ópera ",
+   " óberam ",
+   " óbera ",
+   " ópram ",
+   " ópra ",
+   " óbram ",
+   " óbra ",
+   " óeram ",
+   " óera ",
+   " óram ",
+   " óra ",
+   " ópera  ",
+   " óbera  ",
+   " ópra  ",
+   " óbra  ",
+   " óera  ",
+   " óra  "
+  ],
+  "transformations": [
+   [
+    " óperam ",
+    "",
+    ""
+   ],
+   [
+    " ópera ",
+    " óperam ",
+    "rule_1"
+   ],
+   [
+    " óberam ",
+    " óperam ",
+    "rule_12"
+   ],
+   [
+    " óbera ",
+    " ópera ",
+    "rule_12"
+   ],
+   [
+    " ópram ",
+    " óperam ",
+    "rule_16"
+   ],
+   [
+    " ópra ",
+    " ópera ",
+    "rule_16"
+   ],
+   [
+    " óbram ",
+    " óberam ",
+    "rule_16"
+   ],
+   [
+    " óbra ",
+    " óbera ",
+    "rule_16"
+   ],
+   [
+    " óeram ",
+    " óberam ",
+    "rule_18"
+   ],
+   [
+    " óera ",
+    " óbera ",
+    "rule_18"
+   ],
+   [
+    " óram ",
+    " óbram ",
+    "rule_18"
+   ],
+   [
+    " óra ",
+    " óbra ",
+    "rule_18"
+   ],
+   [
+    " ópera  ",
+    " óperam ",
+    "rule_25"
+   ],
+   [
+    " óbera  ",
+    " óberam ",
+    "rule_25"
+   ],
+   [
+    " ópra  ",
+    " ópram ",
+    "rule_25"
+   ],
+   [
+    " óbra  ",
+    " óbram ",
+    "rule_25"
+   ],
+   [
+    " óera  ",
+    " óeram ",
+    "rule_25"
+   ],
+   [
+    " óra  ",
+    " óram ",
+    "rule_25"
+   ]
+  ]
+ },
+ "LA_ES.json|True|dóminum": {
+  "final": [
+   " dóminum ",
+   " dóminu ",
+   " dómino ",
+   " dómnum ",
+   " dómnu ",
+   " dómno ",
+   " duéminum ",
+   " duéminu ",
+   " duémino ",
+   " duémnum ",
+   " duémnu ",
+   " duémno ",
+   " dóminu  ",
+   " dómnu  ",
+   " duéminu  ",
+   " duémnu  ",
+   " dómenum ",
+   " dómenu ",
+   " dómeno ",
+   " duémenum ",
+   " duémenu ",
+   " duémeno ",
+   " dómenu  ",
+   " duémenu  ",
+   " dóñum ",
+   " dóñu ",
+   " dóño ",
+   " duéñum ",
+   " duéñu ",
+   " duéño ",
+   " dóñu  ",
+   " duéñu  ",
+   " dóminom ",
+   " dómnom ",
+   " duéminom ",
+   " duémnom ",
+   " dómenom ",
+   " duémenom ",
+   " dómbrum ",
+   " dómbru ",
+   " dómbro ",
+   " duémbrum ",
+   " duémbru ",
+   " duémbro ",
+   " dómbru  ",
+   " duémbru  ",
+   " dómbrom ",
+   " duémbrom ",
+   " dúminum ",
+   " dúminu ",
+   " dúmino ",
+   " dúmnum ",
+   " dúmnu ",
+   " dúmno ",
+   " dúminu  ",
+   " dúmnu  ",
+   " dúmenum ",
+   " dúmenu ",
+   " dúmeno ",
+   " dúmenu  ",
+   " dúñum ",
+   " dúñu ",
+   " dúño ",
+   " dúñu  ",
+   " dúminom ",
+   " dúmnom ",
+   " dúmenom ",
+   " dúmbrum ",
+   " dúmbru ",
+   " dúmbro ",
+   " dúmbru  ",
+   " dúmbrom "
+  ],
+  "transformations": [
+   [
+    " dóminum ",
+    "",
+    ""
+   ],
+   [
+    " dóminu ",
+    " dóminum ",
+    "rule_1"
+   ],
+   [
+    " dómino ",
+    " dóminu ",
+    "rule_3"
+   ],
+   [
+    " dómnum ",
+    " dóminum ",
+    "rule_16"
+   ],
+   [
+    " dómnu ",
+    " dóminu ",
+    "rule_16"
+   ],
+   [
+    " dómno ",
+    " dómino ",
+    "rule_16"
+   ],
+   [
+    " duéminum ",
+    " dóminum ",
+    "rule_22"
+   ],
+   [
+    " duéminu ",
+    " dóminu ",
+    "rule_22"
+   ],
+   [
+    " duémino ",
+    " dómino ",
+    "rule_22"
+   ],
+   [
+    " duémnum ",
+    " dómnum ",
+    "rule_22"
+   ],
+   [
+    " duémnu ",
+    " dómnu ",
+    "rule_22"
+   ],
+   [
+    " duémno ",
+    " dómno ",
+    "rule_22"
+   ],
+   [
+    " dóminu  ",
+    " dóminum ",
+    "rule_25"
+   ],
+   [
+    " dómnu  ",
+    " dómnum ",
+    "rule_25"
+   ],
+   [
+    " duéminu  ",
+    " duéminum ",
+    "rule_25"
+   ],
+   [
+    " duémnu  ",
+    " duémnum ",
+    "rule_25"
+   ],
+   [
+    " dómenum ",
+    " dóminum ",
+    "rule_28"
+   ],
+   [
+    " dómenu ",
+    " dóminu ",
+    "rule_28"
+   ],
+   [
+    " dómeno ",
+    " dómino ",
+    "rule_28"
+   ],
+   [
+    " duémenum ",
+    " duéminum ",
+    "rule_28"
+   ],
+   [
+    " duémenu ",
+    " duéminu ",
+    "rule_28"
+   ],
+   [
+    " duémeno ",
+    " duémino ",
+    "rule_28"
+   ],
+   [
+    " dómenu  ",
+    " dóminu  ",
+    "rule_28"
+   ],
+   [
+    " duémenu  ",
+    " duéminu  ",
+    "rule_28"
+   ],
+   [
+    " dóñum ",
+    " dómnum ",
+    "rule_31"
+   ],
+   [
+    " dóñu ",
+    " dómnu ",
+    "rule_31"
+   ],
+   [
+    " dóño ",
+    " dómno ",
+    "rule_31"
+   ],
+   [
+    " duéñum ",
+    " duémnum ",
+    "rule_31"
+   ],
+   [
+    " duéñu ",
+    " duémnu ",
+    "rule_31"
+   ],
+   [
+    " duéño ",
+    " duémno ",
+    "rule_31"
+   ],
+   [
+    " dóñu  ",
+    " dómnu  ",
+    "rule_31"
+   ],
+   [
+    " duéñu  ",
+    " duémnu  ",
+    "rule_31"
+   ],
+   [
+    " dóminom ",
+    " dóminum ",
+    "rule_34"
+   ],
+   [
+    " dómnom ",
+    " dómnum ",
+    "rule_34"
+   ],
+   [
+    " duéminom ",
+    " duéminum ",
+    "rule_34"
+   ],
+   [
+    " duémnom ",
+    " duémnum ",
+    "rule_34"
+   ],
+   [
+    " dómenom ",
+    " dómenum ",
+    "rule_34"
+   ],
+   [
+    " duémenom ",
+    " duémenum ",
+    "rule_34"
+   ],
+   [
+    " dómbrum ",
+    " dómnum ",
+    "rule_41"
+   ],
+   [
+    " dómbru ",
+    " dómnu ",
+    "rule_41"
+   ],
+   [
+    " dómbro ",
+    " dómno ",
+    "rule_41"
+   ],
+   [
+    " duémbrum ",
+    " duémnum ",
+    "rule_41"
+   ],
+   [
+    " duémbru ",
+    " duémnu ",
+    "rule_41"
+   ],
+   [
+    " duémbro ",
+    " duémno ",
+    "rule_41"
+   ],
+   [
+    " dómbru  ",
+    " dómnu  ",
+    "rule_41"
+   ],
+   [
+    " duémbru  ",
+    " duémnu  ",
+    "rule_41"
+   ],
+   [
+    " dómbrom ",
+    " dómnom ",
+    "rule_41"
+   ],
+   [
+    " duémbrom ",
+    " duémnom ",
+    "rule_41"
+   ],
+   [
+    " dúminum ",
+    " dóminum ",
+    "rule_45"
+   ],
+   [
+    " dúminu ",
+    " dóminu ",
+    "rule_45"
+   ],
+   [
+    " dúmino ",
+    " dómino ",
+    "rule_45"
+   ],
+   [
+    " dúmnum ",
+    " dómnum ",
+    "rule_45"
+   ],
+   [
+    " dúmnu ",
+    " dómnu ",
+    "rule_45"
+   ],
+   [
+    " dúmno ",
+    " dómno ",
+    "rule_45"
+   ],
+   [
+    " dúminu  ",
+    " dóminu  ",
+    "rule_45"
+   ],
+   [
+    " dúmnu  ",
+    " dómnu  ",
+    "rule_45"
+   ],
+   [
+    " dúmenum ",
+    " dómenum ",
+    "rule_45"
+   ],
+   [
+    " dúmenu ",
+    " dómenu ",
+    "rule_45"
+   ],
+   [
+    " dúmeno ",
+    " dómeno ",
+    "rule_45"
+   ],
+   [
+    " dúmenu  ",
+    " dómenu  ",
+    "rule_45"
+   ],
+   [
+    " dúñum ",
+    " dóñum ",
+    "rule_45"
+   ],
+   [
+    " dúñu ",
+    " dóñu ",
+    "rule_45"
+   ],
+   [
+    " dúño ",
+    " dóño ",
+    "rule_45"
+   ],
+   [
+    " dúñu  ",
+    " dóñu  ",
+    "rule_45"
+   ],
+   [
+    " dúminom ",
+    " dóminom ",
+    "rule_45"
+   ],
+   [
+    " dúmnom ",
+    " dómnom ",
+    "rule_45"
+   ],
+   [
+    " dúmenom ",
+    " dómenom ",
+    "rule_45"
+   ],
+   [
+    " dúmbrum ",
+    " dómbrum ",
+    "rule_45"
+   ],
+   [
+    " dúmbru ",
+    " dómbru ",
+    "rule_45"
+   ],
+   [
+    " dúmbro ",
+    " dómbro ",
+    "rule_45"
+   ],
+   [
+    " dúmbru  ",
+    " dómbru  ",
+    "rule_45"
+   ],
+   [
+    " dúmbrom ",
+    " dómbrom ",
+    "rule_45"
+   ]
+  ]
+ },
+ "LA_ES.json|True|quinquagínta": {
+  "final": [
+   " quinquagínta ",
+   " quincuagínta ",
+   " cinquagínta ",
+   " cincuagínta ",
+   " quinquaínta ",
+   " quincuaínta ",
+   " cinquaínta ",
+   " cincuaínta ",
+   " quinquagénta ",
+   " quincuagénta ",
+   " cinquagénta ",
+   " cincuagénta ",
+   " quinquagiénta ",
+   " quincuagiénta ",
+   " cinquagiénta ",
+   " cincuagiénta ",
+   " cenquagínta ",
+   " cencuagínta ",
+   " cenquaínta ",
+   " cencuaínta ",
+   " cenquagénta ",
+   " cencuagénta ",
+   " cenquagiénta ",
+   " cencuagiénta ",
+   " quinquénta ",
+   " quincuénta ",
+   " cinquénta ",
+   " cincuénta ",
+   " cenquénta ",
+   " cencuénta ",
+   " quenquagínta ",
+   " quencuagínta ",
+   " quenquaínta ",
+   " quencuaínta ",
+   " quenquagénta ",
+   " quencuagénta ",
+   " quenquagiénta ",
+   " quencuagiénta ",
+   " quenquénta ",
+   " quencuénta "
+  ],
+  "transformations": [
+   [
+    " quinquagínta ",
+    "",
+    ""
+   ],
+   [
+    " quincuagínta ",
+    " quinquagínta ",
+    "rule_14_1"
+   ],
+   [
+    " cinquagínta ",
+    " quinquagínta ",
+    "rule_14_4"
+   ],
+   [
+    " cincuagínta ",
+    " quincuagínta ",
+    "rule_14_4"
+   ],
+   [
+    " quinquaínta ",
+    " quinquagínta ",
+    "rule_18"
+   ],
+   [
+    " quincuaínta ",
+    " quincuagínta ",
+    "rule_18"
+   ],
+   [
+    " cinquaínta ",
+    " cinquagínta ",
+    "rule_18"
+   ],
+   [
+    " cincuaínta ",
+    " cincuagínta ",
+    "rule_18"
+   ],
+   [
+    " quinquagénta ",
+    " quinquagínta ",
+    "rule_21"
+   ],
+   [
+    " quincuagénta ",
+    " quincuagínta ",
+    "rule_21"
+   ],
+   [
+    " cinquagénta ",
+    " cinquagínta ",
+    "rule_21"
+   ],
+   [
+    " cincuagénta ",
+    " cincuagínta ",
+    "rule_21"
+   ],
+   [
+    " quinquagiénta ",
+    " quinquagénta ",
+    "rule_24"
+   ],
+   [
+    " quincuagiénta ",
+    " quincuagénta ",
+    "rule_24"
+   ],
+   [
+    " cinquagiénta ",
+    " cinquagénta ",
+    "rule_24"
+   ],
+   [
+    " cincuagiénta ",
+    " cincuagénta ",
+    "rule_24"
+   ],
+   [
+    " cenquagínta ",
+    " cinquagínta ",
+    "rule_28"
+   ],
+   [
+    " cencuagínta ",
+    " cincuagínta ",
+    "rule_28"
+   ],
+   [
+    " cenquaínta ",
+    " cinquaínta ",
+    "rule_28"
+   ],
+   [
+    " cencuaínta ",
+    " cincuaínta ",
+    "rule_28"
+   ],
+   [
+    " cenquagénta ",
+    " cinquagénta ",
+    "rule_28"
+   ],
+   [
+    " cencuagénta ",
+    " cincuagénta ",
+    "rule_28"
+   ],
+   [
+    " cenquagiénta ",
+    " cinquagiénta ",
+    "rule_28"
+   ],
+   [
+    " cencuagiénta ",
+    " cincuagiénta ",
+    "rule_28"
+   ],
+   [
+    " quinquénta ",
+    " quinquaínta ",
+    "rule_36"
+   ],
+   [
+    " quincuénta ",
+    " quincuaínta ",
+    "rule_36"
+   ],
+   [
+    " cinquénta ",
+    " cinquaínta ",
+    "rule_36"
+   ],
+   [
+    " cincuénta ",
+    " cincuaínta ",
+    "rule_36"
+   ],
+   [
+    " cenquénta ",
+    " cenquaínta ",
+    "rule_36"
+   ],
+   [
+    " cencuénta ",
+    " cencuaínta ",
+    "rule_36"
+   ],
+   [
+    " quenquagínta ",
+    " quinquagínta ",
+    "rule_39"
+   ],
+   [
+    " quencuagínta ",
+    " quincuagínta ",
+    "rule_39"
+   ],
+   [
+    " quenquaínta ",
+    " quinquaínta ",
+    "rule_39"
+   ],
+   [
+    " quencuaínta ",
+    " quincuaínta ",
+    "rule_39"
+   ],
+   [
+    " quenquagénta ",
+    " quinquagénta ",
+    "rule_39"
+   ],
+   [
+    " quencuagénta ",
+    " quincuagénta ",
+    "rule_39"
+   ],
+   [
+    " quenquagiénta ",
+    " quinquagiénta ",
+    "rule_39"
+   ],
+   [
+    " quencuagiénta ",
+    " quincuagiénta ",
+    "rule_39"
+   ],
+   [
+    " quenquénta ",
+    " quinquénta ",
+    "rule_39"
+   ],
+   [
+    " quencuénta ",
+    " quincuénta ",
+    "rule_39"
+   ]
+  ]
+ },
+ "LA_ES.json|True|dígitum": {
+  "final": [
+   " dígitum ",
+   " dígitu ",
+   " dígito ",
+   " dígidum ",
+   " dígidu ",
+   " dígido ",
+   " dígtum ",
+   " dígtu ",
+   " dígto ",
+   " dígdum ",
+   " dígdu ",
+   " dígdo ",
+   " díitum ",
+   " díitu ",
+   " díito ",
+   " díidum ",
+   " díidu ",
+   " díido ",
+   " dégitum ",
+   " dégitu ",
+   " dégito ",
+   " dégidum ",
+   " dégidu ",
+   " dégido ",
+   " dégtum ",
+   " dégtu ",
+   " dégto ",
+   " dégdum ",
+   " dégdu ",
+   " dégdo ",
+   " déitum ",
+   " déitu ",
+   " déito ",
+   " déidum ",
+   " déidu ",
+   " déido ",
+   " diégitum ",
+   " diégitu ",
+   " diégito ",
+   " diégidum ",
+   " diégidu ",
+   " diégido ",
+   " diégtum ",
+   " diégtu ",
+   " diégto ",
+   " diégdum ",
+   " diégdu ",
+   " diégdo ",
+   " dígitu  ",
+   " dígidu  ",
+   " dígtu  ",
+   " dígdu  ",
+   " díitu  ",
+   " díidu  ",
+   " dégitu  ",
+   " dégidu  ",
+   " dégtu  ",
+   " dégdu  ",
+   " déitu  ",
+   " déidu  ",
+   " diégitu  ",
+   " diégidu  ",
+   " diégtu  ",
+   " diégdu  ",
+   " dígetum ",
+   " dígetu ",
+   " dígeto ",
+   " dígedum ",
+   " dígedu ",
+   " dígedo ",
+   " díetum ",
+   " díetu ",
+   " díeto ",
+   " díedum ",
+   " díedu ",
+   " díedo ",
+   " dégetum ",
+   " dégetu ",
+   " dégeto ",
+   " dégedum ",
+   " dégedu ",
+   " dégedo ",
+   " déetum ",
+   " déetu ",
+   " déeto ",
+   " déedum ",
+   " déedu ",
+   " déedo ",
+   " diégetum ",
+   " diégetu ",
+   " diégeto ",
+   " diégedum ",
+   " diégedu ",
+   " diégedo ",
+   " dígetu  ",
+   " dígedu  ",
+   " díetu  ",
+   " díedu  ",
+   " dégetu  ",
+   " dégedu  ",
+   " déetu  ",
+   " déedu  ",
+   " diégetu  ",
+   " diégedu  ",
+   " dígitom ",
+   " dígidom ",
+   " dígtom ",
+   " dígdom ",
+   " díitom ",
+   " díidom ",
+   " dégitom ",
+   " dégidom ",
+   " dégtom ",
+   " dégdom ",
+   " déitom ",
+   " déidom ",
+   " diégitom ",
+   " diégidom ",
+   " diégtom ",
+   " diégdom ",
+   " dígetom ",
+   " dígedom ",
+   " díetom ",
+   " díedom ",
+   " dégetom ",
+   " dégedom ",
+   " déetom ",
+   " déedom ",
+   " diégetom ",
+   " diégedom ",
+   " dítum ",
+   " dítu ",
+   " díto ",
+   " dídum ",
+   " dídu ",
+   " dído ",
+   " dítu  ",
+   " dídu  ",
+   " détum ",
+   " détu ",
+   " déto ",
+   " dédum ",
+   " dédu ",
+   " dédo ",
+   " détu  ",
+   " dédu  ",
+   " dítom ",
+   " dídom ",
+   " détom ",
+   " dédom "
+  ],
+  "transformations": [
+   [
+    " dígitum ",
+    "",
+    ""
+   ],
+   [
+    " dígitu ",
+    " dígitum ",
+    "rule_1"
+   ],
+   [
+    " dígito ",
+    " dígitu ",
+    "rule_3"
+   ],
+   [
+    " dígidum ",
+    " dígitum ",
+    "rule_12"
+   ],
+   [
+    " dígidu ",
+    " dígitu ",
+    "rule_12"
+   ],
+   [
+    " dígido ",
+    " dígito ",
+    "rule_12"
+   ],
+   [
+    " dígtum ",
+    " dígitum ",
+    "rule_16"
+   ],
+   [
+    " dígtu ",
+    " dígitu ",
+    "rule_16"
+   ],
+   [
+    " dígto ",
+    " dígito ",
+    "rule_16"
+   ],
+   [
+    " dígdum ",
+    " dígidum ",
+    "rule_16"
+   ],
+   [
+    " dígdu ",
+    " dígidu ",
+    "rule_16"
+   ],
+   [
+    " dígdo ",
+    " dígido ",
+    "rule_16"
+   ],
+   [
+    " díitum ",
+    " dígitum ",
+    "rule_18"
+   ],
+   [
+    " díitu ",
+    " dígitu ",
+    "rule_18"
+   ],
+   [
+    " díito ",
+    " dígito ",
+    "rule_18"
+   ],
+   [
+    " díidum ",
+    " dígidum ",
+    "rule_18"
+   ],
+   [
+    " díidu ",
+    " dígidu ",
+    "rule_18"
+   ],
+   [
+    " díido ",
+    " dígido ",
+    "rule_18"
+   ],
+   [
+    " dégitum ",
+    " dígitum ",
+    "rule_21"
+   ],
+   [
+    " dégitu ",
+    " dígitu ",
+    "rule_21"
+   ],
+   [
+    " dégito ",
+    " dígito ",
+    "rule_21"
+   ],
+   [
+    " dégidum ",
+    " dígidum ",
+    "rule_21"
+   ],
+   [
+    " dégidu ",
+    " dígidu ",
+    "rule_21"
+   ],
+   [
+    " dégido ",
+    " dígido ",
+    "rule_21"
+   ],
+   [
+    " dégtum ",
+    " dígtum ",
+    "rule_21"
+   ],
+   [
+    " dégtu ",
+    " dígtu ",
+    "rule_21"
+   ],
+   [
+    " dégto ",
+    " dígto ",
+    "rule_21"
+   ],
+   [
+    " dégdum ",
+    " dígdum ",
+    "rule_21"
+   ],
+   [
+    " dégdu ",
+    " dígdu ",
+    "rule_21"
+   ],
+   [
+    " dégdo ",
+    " dígdo ",
+    "rule_21"
+   ],
+   [
+    " déitum ",
+    " díitum ",
+    "rule_21"
+   ],
+   [
+    " déitu ",
+    " díitu ",
+    "rule_21"
+   ],
+   [
+    " déito ",
+    " díito ",
+    "rule_21"
+   ],
+   [
+    " déidum ",
+    " díidum ",
+    "rule_21"
+   ],
+   [
+    " déidu ",
+    " díidu ",
+    "rule_21"
+   ],
+   [
+    " déido ",
+    " díido ",
+    "rule_21"
+   ],
+   [
+    " diégitum ",
+    " dégitum ",
+    "rule_24"
+   ],
+   [
+    " diégitu ",
+    " dégitu ",
+    "rule_24"
+   ],
+   [
+    " diégito ",
+    " dégito ",
+    "rule_24"
+   ],
+   [
+    " diégidum ",
+    " dégidum ",
+    "rule_24"
+   ],
+   [
+    " diégidu ",
+    " dégidu ",
+    "rule_24"
+   ],
+   [
+    " diégido ",
+    " dégido ",
+    "rule_24"
+   ],
+   [
+    " diégtum ",
+    " dégtum ",
+    "rule_24"
+   ],
+   [
+    " diégtu ",
+    " dégtu ",
+    "rule_24"
+   ],
+   [
+    " diégto ",
+    " dégto ",
+    "rule_24"
+   ],
+   [
+    " diégdum ",
+    " dégdum ",
+    "rule_24"
+   ],
+   [
+    " diégdu ",
+    " dégdu ",
+    "rule_24"
+   ],
+   [
+    " diégdo ",
+    " dégdo ",
+    "rule_24"
+   ],
+   [
+    " dígitu  ",
+    " dígitum ",
+    "rule_25"
+   ],
+   [
+    " dígidu  ",
+    " dígidum ",
+    "rule_25"
+   ],
+   [
+    " dígtu  ",
+    " dígtum ",
+    "rule_25"
+   ],
+   [
+    " dígdu  ",
+    " dígdum ",
+    "rule_25"
+   ],
+   [
+    " díitu  ",
+    " díitum ",
+    "rule_25"
+   ],
+   [
+    " díidu  ",
+    " díidum ",
+    "rule_25"
+   ],
+   [
+    " dégitu  ",
+    " dégitum ",
+    "rule_25"
+   ],
+   [
+    " dégidu  ",
+    " dégidum ",
+    "rule_25"
+   ],
+   [
+    " dégtu  ",
+    " dégtum ",
+    "rule_25"
+   ],
+   [
+    " dégdu  ",
+    " dégdum ",
+    "rule_25"
+   ],
+   [
+    " déitu  ",
+    " déitum ",
+    "rule_25"
+   ],
+   [
+    " déidu  ",
+    " déidum ",
+    "rule_25"
+   ],
+   [
+    " diégitu  ",
+    " diégitum ",
+    "rule_25"
+   ],
+   [
+    " diégidu  ",
+    " diégidum ",
+    "rule_25"
+   ],
+   [
+    " diégtu  ",
+    " diégtum ",
+    "rule_25"
+   ],
+   [
+    " diégdu  ",
+    " diégdum ",
+    "rule_25"
+   ],
+   [
+    " dígetum ",
+    " dígitum ",
+    "rule_28"
+   ],
+   [
+    " dígetu ",
+    " dígitu ",
+    "rule_28"
+   ],
+   [
+    " dígeto ",
+    " dígito ",
+    "rule_28"
+   ],
+   [
+    " dígedum ",
+    " dígidum ",
+    "rule_28"
+   ],
+   [
+    " dígedu ",
+    " dígidu ",
+    "rule_28"
+   ],
+   [
+    " dígedo ",
+    " dígido ",
+    "rule_28"
+   ],
+   [
+    " díetum ",
+    " díitum ",
+    "rule_28"
+   ],
+   [
+    " díetu ",
+    " díitu ",
+    "rule_28"
+   ],
+   [
+    " díeto ",
+    " díito ",
+    "rule_28"
+   ],
+   [
+    " díedum ",
+    " díidum ",
+    "rule_28"
+   ],
+   [
+    " díedu ",
+    " díidu ",
+    "rule_28"
+   ],
+   [
+    " díedo ",
+    " díido ",
+    "rule_28"
+   ],
+   [
+    " dégetum ",
+    " dégitum ",
+    "rule_28"
+   ],
+   [
+    " dégetu ",
+    " dégitu ",
+    "rule_28"
+   ],
+   [
+    " dégeto ",
+    " dégito ",
+    "rule_28"
+   ],
+   [
+    " dégedum ",
+    " dégidum ",
+    "rule_28"
+   ],
+   [
+    " dégedu ",
+    " dégidu ",
+    "rule_28"
+   ],
+   [
+    " dégedo ",
+    " dégido ",
+    "rule_28"
+   ],
+   [
+    " déetum ",
+    " déitum ",
+    "rule_28"
+   ],
+   [
+    " déetu ",
+    " déitu ",
+    "rule_28"
+   ],
+   [
+    " déeto ",
+    " déito ",
+    "rule_28"
+   ],
+   [
+    " déedum ",
+    " déidum ",
+    "rule_28"
+   ],
+   [
+    " déedu ",
+    " déidu ",
+    "rule_28"
+   ],
+   [
+    " déedo ",
+    " déido ",
+    "rule_28"
+   ],
+   [
+    " diégetum ",
+    " diégitum ",
+    "rule_28"
+   ],
+   [
+    " diégetu ",
+    " diégitu ",
+    "rule_28"
+   ],
+   [
+    " diégeto ",
+    " diégito ",
+    "rule_28"
+   ],
+   [
+    " diégedum ",
+    " diégidum ",
+    "rule_28"
+   ],
+   [
+    " diégedu ",
+    " diégidu ",
+    "rule_28"
+   ],
+   [
+    " diégedo ",
+    " diégido ",
+    "rule_28"
+   ],
+   [
+    " dígetu  ",
+    " dígitu  ",
+    "rule_28"
+   ],
+   [
+    " dígedu  ",
+    " dígidu  ",
+    "rule_28"
+   ],
+   [
+    " díetu  ",
+    " díitu  ",
+    "rule_28"
+   ],
+   [
+    " díedu  ",
+    " díidu  ",
+    "rule_28"
+   ],
+   [
+    " dégetu  ",
+    " dégitu  ",
+    "rule_28"
+   ],
+   [
+    " dégedu  ",
+    " dégidu  ",
+    "rule_28"
+   ],
+   [
+    " déetu  ",
+    " déitu  ",
+    "rule_28"
+   ],
+   [
+    " déedu  ",
+    " déidu  ",
+    "rule_28"
+   ],
+   [
+    " diégetu  ",
+    " diégitu  ",
+    "rule_28"
+   ],
+   [
+    " diégedu  ",
+    " diégidu  ",
+    "rule_28"
+   ],
+   [
+    " dígitom ",
+    " dígitum ",
+    "rule_34"
+   ],
+   [
+    " dígidom ",
+    " dígidum ",
+    "rule_34"
+   ],
+   [
+    " dígtom ",
+    " dígtum ",
+    "rule_34"
+   ],
+   [
+    " dígdom ",
+    " dígdum ",
+    "rule_34"
+   ],
+   [
+    " díitom ",
+    " díitum ",
+    "rule_34"
+   ],
+   [
+    " díidom ",
+    " díidum ",
+    "rule_34"
+   ],
+   [
+    " dégitom ",
+    " dégitum ",
+    "rule_34"
+   ],
+   [
+    " dégidom ",
+    " dégidum ",
+    "rule_34"
+   ],
+   [
+    " dégtom ",
+    " dégtum ",
+    "rule_34"
+   ],
+   [
+    " dégdom ",
+    " dégdum ",
+    "rule_34"
+   ],
+   [
+    " déitom ",
+    " déitum ",
+    "rule_34"
+   ],
+   [
+    " déidom ",
+    " déidum ",
+    "rule_34"
+   ],
+   [
+    " diégitom ",
+    " diégitum ",
+    "rule_34"
+   ],
+   [
+    " diégidom ",
+    " diégidum ",
+    "rule_34"
+   ],
+   [
+    " diégtom ",
+    " diégtum ",
+    "rule_34"
+   ],
+   [
+    " diégdom ",
+    " diégdum ",
+    "rule_34"
+   ],
+   [
+    " dígetom ",
+    " dígetum ",
+    "rule_34"
+   ],
+   [
+    " dígedom ",
+    " dígedum ",
+    "rule_34"
+   ],
+   [
+    " díetom ",
+    " díetum ",
+    "rule_34"
+   ],
+   [
+    " díedom ",
+    " díedum ",
+    "rule_34"
+   ],
+   [
+    " dégetom ",
+    " dégetum ",
+    "rule_34"
+   ],
+   [
+    " dégedom ",
+    " dégedum ",
+    "rule_34"
+   ],
+   [
+    " déetom ",
+    " déetum ",
+    "rule_34"
+   ],
+   [
+    " déedom ",
+    " déedum ",
+    "rule_34"
+   ],
+   [
+    " diégetom ",
+    " diégetum ",
+    "rule_34"
+   ],
+   [
+    " diégedom ",
+    " diégedum ",
+    "rule_34"
+   ],
+   [
+    " dítum ",
+    " díitum ",
+    "rule_39"
+   ],
+   [
+    " dítu ",
+    " díitu ",
+    "rule_39"
+   ],
+   [
+    " díto ",
+    " díito ",
+    "rule_39"
+   ],
+   [
+    " dídum ",
+    " díidum ",
+    "rule_39"
+   ],
+   [
+    " dídu ",
+    " díidu ",
+    "rule_39"
+   ],
+   [
+    " dído ",
+    " díido ",
+    "rule_39"
+   ],
+   [
+    " dítu  ",
+    " díitu  ",
+    "rule_39"
+   ],
+   [
+    " dídu  ",
+    " díidu  ",
+    "rule_39"
+   ],
+   [
+    " détum ",
+    " déetum ",
+    "rule_39"
+   ],
+   [
+    " détu ",
+    " déetu ",
+    "rule_39"
+   ],
+   [
+    " déto ",
+    " déeto ",
+    "rule_39"
+   ],
+   [
+    " dédum ",
+    " déedum ",
+    "rule_39"
+   ],
+   [
+    " dédu ",
+    " déedu ",
+    "rule_39"
+   ],
+   [
+    " dédo ",
+    " déedo ",
+    "rule_39"
+   ],
+   [
+    " détu  ",
+    " déetu  ",
+    "rule_39"
+   ],
+   [
+    " dédu  ",
+    " déedu  ",
+    "rule_39"
+   ],
+   [
+    " dítom ",
+    " díitom ",
+    "rule_39"
+   ],
+   [
+    " dídom ",
+    " díidom ",
+    "rule_39"
+   ],
+   [
+    " détom ",
+    " déetom ",
+    "rule_39"
+   ],
+   [
+    " dédom ",
+    " déedom ",
+    "rule_39"
+   ]
+  ]
+ },
+ "LA_ES.json|True|fília": {
+  "final": [
+   " fília ",
+   " félia ",
+   " fiélia ",
+   " ília ",
+   " élia ",
+   " iélia ",
+   " fíja ",
+   " féja ",
+   " fiéja ",
+   " íja ",
+   " éja ",
+   " iéja ",
+   " yélia ",
+   " yéja "
+  ],
+  "transformations": [
+   [
+    " fília ",
+    "",
+    ""
+   ],
+   [
+    " félia ",
+    " fília ",
+    "rule_21"
+   ],
+   [
+    " fiélia ",
+    " félia ",
+    "rule_24"
+   ],
+   [
+    " ília ",
+    " fília ",
+    "rule_26"
+   ],
+   [
+    " élia ",
+    " félia ",
+    "rule_26"
+   ],
+   [
+    " iélia ",
+    " fiélia ",
+    "rule_26"
+   ],
+   [
+    " fíja ",
+    " fília ",
+    "rule_38"
+   ],
+   [
+    " féja ",
+    " félia ",
+    "rule_38"
+   ],
+   [
+    " fiéja ",
+    " fiélia ",
+    "rule_38"
+   ],
+   [
+    " íja ",
+    " ília ",
+    "rule_38"
+   ],
+   [
+    " éja ",
+    " élia ",
+    "rule_38"
+   ],
+   [
+    " iéja ",
+    " iélia ",
+    "rule_38"
+   ],
+   [
+    " yélia ",
+    " iélia ",
+    "rule_44"
+   ],
+   [
+    " yéja ",
+    " iéja ",
+    "rule_44"
+   ]
+  ]
+ },
+ "ES_IPA.json|False|civilización": {
+  "final": [
+   " θibiliθaθjón ",
+   " θiβiliθaθjón "
+  ],
+  "transformations": [
+   [
+    " civilización ",
+    "",
+    ""
+   ],
+   [
+    " θivilizaθión ",
+    " civilización ",
+    "c"
+   ],
+   [
+    " θibilizaθión ",
+    " θivilizaθión ",
+    "v"
+   ],
+   [
+    " θibiliθaθión ",
+    " θibilizaθión ",
+    "z"
+   ],
+   [
+    " θibiliθaθjón ",
+    " θibiliθaθión ",
+    "i"
+   ],
+   [
+    " θiβiliθaθjón ",
+    " θibiliθaθjón ",
+    "fricativización"
+   ]
+  ]
+ },
+ "ES_IPA.json|False|chascarrillo": {
+  "final": [
+   " tʃaskariʎo "
+  ],
+  "transformations": [
+   [
+    " chascarrillo ",
+    "",
+    ""
+   ],
+   [
+    " tʃascarrillo ",
+    " chascarrillo ",
+    "ch"
+   ],
+   [
+    " tʃascarriʎo ",
+    " tʃascarrillo ",
+    "ll"
+   ],
+   [
+    " tʃaskarriʎo ",
+    " tʃascarriʎo ",
+    "c"
+   ],
+   [
+    " tʃaskariʎo ",
+    " tʃaskarriʎo ",
+    "r"
+   ]
+  ]
+ },
+ "ES_IPA.json|False|halagüeño": {
+  "final": [
+   " alaɡweɲo "
+  ],
+  "transformations": [
+   [
+    " halagüeño ",
+    "",
+    ""
+   ],
+   [
+    " halaɡweño ",
+    " halagüeño ",
+    "g"
+   ],
+   [
+    " alaɡweño ",
+    " halaɡweño ",
+    "h"
+   ],
+   [
+    " alaɡweɲo ",
+    " alaɡweño ",
+    "ñ"
+   ]
+  ]
+ },
+ "ES_IPA.json|False|verdad": {
+  "final": [
+   " beɾdad ",
+   " beɾðad "
+  ],
+  "transformations": [
+   [
+    " verdad ",
+    "",
+    ""
+   ],
+   [
+    " veɾdad ",
+    " verdad ",
+    "r"
+   ],
+   [
+    " beɾdad ",
+    " veɾdad ",
+    "v"
+   ],
+   [
+    " beɾðad ",
+    " beɾdad ",
+    "fricativización"
+   ]
+  ]
+ },
+ "ES_IPA.json|False|rejuvenecer": {
+  "final": [
+   " rexubeneθeɾ ",
+   " rexuβeneθeɾ "
+  ],
+  "transformations": [
+   [
+    " rejuvenecer ",
+    "",
+    ""
+   ],
+   [
+    " rejuveneθer ",
+    " rejuvenecer ",
+    "c"
+   ],
+   [
+    " rexuveneθer ",
+    " rejuveneθer ",
+    "j"
+   ],
+   [
+    " rexuveneθeɾ ",
+    " rexuveneθer ",
+    "r"
+   ],
+   [
+    " rexubeneθeɾ ",
+    " rexuveneθeɾ ",
+    "v"
+   ],
+   [
+    " rexuβeneθeɾ ",
+    " rexubeneθeɾ ",
+    "fricativización"
+   ]
+  ]
+ },
+ "ES_IPA.json|False|water": {
+  "final": [
+   " bateɾ ",
+   " ɡwateɾ "
+  ],
+  "transformations": [
+   [
+    " water ",
+    "",
+    ""
+   ],
+   [
+    " bater ",
+    " water ",
+    "w_tradicional"
+   ],
+   [
+    " ɡwater ",
+    " water ",
+    "w_moderna"
+   ],
+   [
+    " bateɾ ",
+    " bater ",
+    "r"
+   ],
+   [
+    " ɡwateɾ ",
+    " ɡwater ",
+    "r"
+   ]
+  ]
+ },
+ "ES_IPA.json|False|hijo": {
+  "final": [
+   " ixo "
+  ],
+  "transformations": [
+   [
+    " hijo ",
+    "",
+    ""
+   ],
+   [
+    " ijo ",
+    " hijo ",
+    "h"
+   ],
+   [
+    " ixo ",
+    " ijo ",
+    "j"
+   ]
+  ]
+ },
+ "ES_IPA.json|True|civilización": {
+  "final": [
+   " civilización ",
+   " θivilizaθión ",
+   " cibilización ",
+   " θibilizaθión ",
+   " civiliθación ",
+   " θiviliθaθión ",
+   " cibiliθación ",
+   " θibiliθaθión ",
+   " civilizacjón ",
+   " θivilizaθjón ",
+   " cibilizacjón ",
+   " θibilizaθjón ",
+   " civiliθacjón ",
+   " θiviliθaθjón ",
+   " cibiliθacjón ",
+   " θibiliθaθjón ",
+   " ciβilización ",
+   " θiβilizaθión ",
+   " ciβiliθación ",
+   " θiβiliθaθión ",
+   " ciβilizacjón ",
+   " θiβilizaθjón ",
+   " ciβiliθacjón ",
+   " θiβiliθaθjón "
+  ],
+  "transformations": [
+   [
+    " civilización ",
+    "",
+    ""
+   ],
+   [
+    " θivilizaθión ",
+    " civilización ",
+    "c"
+   ],
+   [
+    " cibilización ",
+    " civilización ",
+    "v"
+   ],
+   [
+    " θibilizaθión ",
+    " θivilizaθión ",
+    "v"
+   ],
+   [
+    " civiliθación ",
+    " civilización ",
+    "z"
+   ],
+   [
+    " θiviliθaθión ",
+    " θivilizaθión ",
+    "z"
+   ],
+   [
+    " cibiliθación ",
+    " cibilización ",
+    "z"
+   ],
+   [
+    " θibiliθaθión ",
+    " θibilizaθión ",
+    "z"
+   ],
+   [
+    " civilizacjón ",
+    " civilización ",
+    "i"
+   ],
+   [
+    " θivilizaθjón ",
+    " θivilizaθión ",
+    "i"
+   ],
+   [
+    " cibilizacjón ",
+    " cibilización ",
+    "i"
+   ],
+   [
+    " θibilizaθjón ",
+    " θibilizaθión ",
+    "i"
+   ],
+   [
+    " civiliθacjón ",
+    " civiliθación ",
+    "i"
+   ],
+   [
+    " θiviliθaθjón ",
+    " θiviliθaθión ",
+    "i"
+   ],
+   [
+    " cibiliθacjón ",
+    " cibiliθación ",
+    "i"
+   ],
+   [
+    " θibiliθaθjón ",
+    " θibiliθaθión ",
+    "i"
+   ],
+   [
+    " ciβilización ",
+    " cibilización ",
+    "fricativización"
+   ],
+   [
+    " θiβilizaθión ",
+    " θibilizaθión ",
+    "fricativización"
+   ],
+   [
+    " ciβiliθación ",
+    " cibiliθación ",
+    "fricativización"
+   ],
+   [
+    " θiβiliθaθión ",
+    " θibiliθaθión ",
+    "fricativización"
+   ],
+   [
+    " ciβilizacjón ",
+    " cibilizacjón ",
+    "fricativización"
+   ],
+   [
+    " θiβilizaθjón ",
+    " θibilizaθjón ",
+    "fricativización"
+   ],
+   [
+    " ciβiliθacjón ",
+    " cibiliθacjón ",
+    "fricativización"
+   ],
+   [
+    " θiβiliθaθjón ",
+    " θibiliθaθjón ",
+    "fricativización"
+   ]
+  ]
+ },
+ "ES_IPA.json|True|chascarrillo": {
+  "final": [
+   " chascarrillo ",
+   " tʃascarrillo ",
+   " chascarriʎo ",
+   " tʃascarriʎo ",
+   " khaskarrillo ",
+   " tʃaskarrillo ",
+   " khaskarriʎo ",
+   " tʃaskarriʎo ",
+   " cascarrillo ",
+   " cascarriʎo ",
+   " kaskarrillo ",
+   " kaskarriʎo ",
+   " chascarillo ",
+   " tʃascarillo ",
+   " chascariʎo ",
+   " tʃascariʎo ",
+   " khaskarillo ",
+   " tʃaskarillo ",
+   " khaskariʎo ",
+   " tʃaskariʎo ",
+   " cascarillo ",
+   " cascariʎo ",
+   " kaskarillo ",
+   " kaskariʎo "
+  ],
+  "transformations": [
+   [
+    " chascarrillo ",
+    "",
+    ""
+   ],
+   [
+    " tʃascarrillo ",
+    " chascarrillo ",
+    "ch"
+   ],
+   [
+    " chascarriʎo ",
+    " chascarrillo ",
+    "ll"
+   ],
+   [
+    " tʃascarriʎo ",
+    " tʃascarrillo ",
+    "ll"
+   ],
+   [
+    " khaskarrillo ",
+    " chascarrillo ",
+    "c"
+   ],
+   [
+    " tʃaskarrillo ",
+    " tʃascarrillo ",
+    "c"
+   ],
+   [
+    " khaskarriʎo ",
+    " chascarriʎo ",
+    "c"
+   ],
+   [
+    " tʃaskarriʎo ",
+    " tʃascarriʎo ",
+    "c"
+   ],
+   [
+    " cascarrillo ",
+    " chascarrillo ",
+    "h"
+   ],
+   [
+    " cascarriʎo ",
+    " chascarriʎo ",
+    "h"
+   ],
+   [
+    " kaskarrillo ",
+    " khaskarrillo ",
+    "h"
+   ],
+   [
+    " kaskarriʎo ",
+    " khaskarriʎo ",
+    "h"
+   ],
+   [
+    " chascarillo ",
+    " chascarrillo ",
+    "r"
+   ],
+   [
+    " tʃascarillo ",
+    " tʃascarrillo ",
+    "r"
+   ],
+   [
+    " chascariʎo ",
+    " chascarriʎo ",
+    "r"
+   ],
+   [
+    " tʃascariʎo ",
+    " tʃascarriʎo ",
+    "r"
+   ],
+   [
+    " khaskarillo ",
+    " khaskarrillo ",
+    "r"
+   ],
+   [
+    " tʃaskarillo ",
+    " tʃaskarrillo ",
+    "r"
+   ],
+   [
+    " khaskariʎo ",
+    " khaskarriʎo ",
+    "r"
+   ],
+   [
+    " tʃaskariʎo ",
+    " tʃaskarriʎo ",
+    "r"
+   ],
+   [
+    " cascarillo ",
+    " cascarrillo ",
+    "r"
+   ],
+   [
+    " cascariʎo ",
+    " cascarriʎo ",
+    "r"
+   ],
+   [
+    " kaskarillo ",
+    " kaskarrillo ",
+    "r"
+   ],
+   [
+    " kaskariʎo ",
+    " kaskarriʎo ",
+    "r"
+   ]
+  ]
+ },
+ "ES_IPA.json|True|halagüeño": {
+  "final": [
+   " halagüeño ",
+   " halaɡweño ",
+   " alagüeño ",
+   " alaɡweño ",
+   " halagüeɲo ",
+   " halaɡweɲo ",
+   " alagüeɲo ",
+   " alaɡweɲo "
+  ],
+  "transformations": [
+   [
+    " halagüeño ",
+    "",
+    ""
+   ],
+   [
+    " halaɡweño ",
+    " halagüeño ",
+    "g"
+   ],
+   [
+    " alagüeño ",
+    " halagüeño ",
+    "h"
+   ],
+   [
+    " alaɡweño ",
+    " halaɡweño ",
+    "h"
+   ],
+   [
+    " halagüeɲo ",
+    " halagüeño ",
+    "ñ"
+   ],
+   [
+    " halaɡweɲo ",
+    " halaɡweño ",
+    "ñ"
+   ],
+   [
+    " alagüeɲo ",
+    " alagüeño ",
+    "ñ"
+   ],
+   [
+    " alaɡweɲo ",
+    " alaɡweño ",
+    "ñ"
+   ]
+  ]
+ },
+ "ES_IPA.json|True|verdad": {
+  "final": [
+   " verdad ",
+   " veɾdad ",
+   " berdad ",
+   " beɾdad ",
+   " veɾðad ",
+   " beɾðad "
+  ],
+  "transformations": [
+   [
+    " verdad ",
+    "",
+    ""
+   ],
+   [
+    " veɾdad ",
+    " verdad ",
+    "r"
+   ],
+   [
+    " berdad ",
+    " verdad ",
+    "v"
+   ],
+   [
+    " beɾdad ",
+    " veɾdad ",
+    "v"
+   ],
+   [
+    " veɾðad ",
+    " veɾdad ",
+    "fricativización"
+   ],
+   [
+    " beɾðad ",
+    " beɾdad ",
+    "fricativización"
+   ]
+  ]
+ },
+ "ES_IPA.json|True|rejuvenecer": {
+  "final": [
+   " rejuvenecer ",
+   " rejuveneθer ",
+   " rexuvenecer ",
+   " rexuveneθer ",
+   " rejuveneceɾ ",
+   " rejuveneθeɾ ",
+   " rexuveneceɾ ",
+   " rexuveneθeɾ ",
+   " rejubenecer ",
+   " rejubeneθer ",
+   " rexubenecer ",
+   " rexubeneθer ",
+   " rejubeneceɾ ",
+   " rejubeneθeɾ ",
+   " rexubeneceɾ ",
+   " rexubeneθeɾ ",
+   " rejuβenecer ",
+   " rejuβeneθer ",
+   " rexuβenecer ",
+   " rexuβeneθer ",
+   " rejuβeneceɾ ",
+   " rejuβeneθeɾ ",
+   " rexuβeneceɾ ",
+   " rexuβeneθeɾ "
+  ],
+  "transformations": [
+   [
+    " rejuvenecer ",
+    "",
+    ""
+   ],
+   [
+    " rejuveneθer ",
+    " rejuvenecer ",
+    "c"
+   ],
+   [
+    " rexuvenecer ",
+    " rejuvenecer ",
+    "j"
+   ],
+   [
+    " rexuveneθer ",
+    " rejuveneθer ",
+    "j"
+   ],
+   [
+    " rejuveneceɾ ",
+    " rejuvenecer ",
+    "r"
+   ],
+   [
+    " rejuveneθeɾ ",
+    " rejuveneθer ",
+    "r"
+   ],
+   [
+    " rexuveneceɾ ",
+    " rexuvenecer ",
+    "r"
+   ],
+   [
+    " rexuveneθeɾ ",
+    " rexuveneθer ",
+    "r"
+   ],
+   [
+    " rejubenecer ",
+    " rejuvenecer ",
+    "v"
+   ],
+   [
+    " rejubeneθer ",
+    " rejuveneθer ",
+    "v"
+   ],
+   [
+    " rexubenecer ",
+    " rexuvenecer ",
+    "v"
+   ],
+   [
+    " rexubeneθer ",
+    " rexuveneθer ",
+    "v"
+   ],
+   [
+    " rejubeneceɾ ",
+    " rejuveneceɾ ",
+    "v"
+   ],
+   [
+    " rejubeneθeɾ ",
+    " rejuveneθeɾ ",
+    "v"
+   ],
+   [
+    " rexubeneceɾ ",
+    " rexuveneceɾ ",
+    "v"
+   ],
+   [
+    " rexubeneθeɾ ",
+    " rexuveneθeɾ ",
+    "v"
+   ],
+   [
+    " rejuβenecer ",
+    " rejubenecer ",
+    "fricativización"
+   ],
+   [
+    " rejuβeneθer ",
+    " rejubeneθer ",
+    "fricativización"
+   ],
+   [
+    " rexuβenecer ",
+    " rexubenecer ",
+    "fricativización"
+   ],
+   [
+    " rexuβeneθer ",
+    " rexubeneθer ",
+    "fricativización"
+   ],
+   [
+    " rejuβeneceɾ ",
+    " rejubeneceɾ ",
+    "fricativización"
+   ],
+   [
+    " rejuβeneθeɾ ",
+    " rejubeneθeɾ ",
+    "fricativización"
+   ],
+   [
+    " rexuβeneceɾ ",
+    " rexubeneceɾ ",
+    "fricativización"
+   ],
+   [
+    " rexuβeneθeɾ ",
+    " rexubeneθeɾ ",
+    "fricativización"
+   ]
+  ]
+ },
+ "ES_IPA.json|True|water": {
+  "final": [
+   " water ",
+   " bater ",
+   " ɡwater ",
+   " wateɾ ",
+   " bateɾ ",
+   " ɡwateɾ "
+  ],
+  "transformations": [
+   [
+    " water ",
+    "",
+    ""
+   ],
+   [
+    " bater ",
+    " water ",
+    "w_tradicional"
+   ],
+   [
+    " ɡwater ",
+    " water ",
+    "w_moderna"
+   ],
+   [
+    " wateɾ ",
+    " water ",
+    "r"
+   ],
+   [
+    " bateɾ ",
+    " bater ",
+    "r"
+   ],
+   [
+    " ɡwateɾ ",
+    " ɡwater ",
+    "r"
+   ]
+  ]
+ },
+ "ES_IPA.json|True|hijo": {
+  "final": [
+   " hijo ",
+   " ijo ",
+   " hixo ",
+   " ixo "
+  ],
+  "transformations": [
+   [
+    " hijo ",
+    "",
+    ""
+   ],
+   [
+    " ijo ",
+    " hijo ",
+    "h"
+   ],
+   [
+    " hixo ",
+    " hijo ",
+    "j"
+   ],
+   [
+    " ixo ",
+    " ijo ",
+    "j"
+   ]
+  ]
+ },
+ "ES_IPA_dialects.json|init": {
+  "error": "FileNotFoundError"
+ },
+ "IPA.json|init": {
+  "error": "FileNotFoundError"
+ }
+}

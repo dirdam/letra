@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LETRA: LanguagE TRAnsformations</title>
+    <meta name="description" content="LETRA applies sets of rewrite rules to a word and shows every possible result and the step-by-step derivation.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔀</text></svg>">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://dirdam.squadro.app/assets/images/lasso-touch-180.png">
+    <meta name="apple-mobile-web-app-title" content="LETRA">
+    <link rel="stylesheet" href="static/styles.css?v={{VERSION}}">
+</head>
+<body>
+    <header class="hero">
+        <h1>LETRA</h1>
+        <p class="hero-name">LanguagE TRAnsformations</p>
+        <p class="hero-tagline" data-i18n="tagline"></p>
+    </header>
+
+    <div class="container">
+        <div class="tabs" role="tablist">
+            <button type="button" role="tab" id="tabTool" class="tab" aria-selected="true" aria-controls="panelTool" data-i18n-html="tool"></button>
+            <button type="button" role="tab" id="tabAbout" class="tab" aria-selected="false" aria-controls="panelAbout" data-i18n-html="pj_desc"></button>
+        </div>
+
+        <main>
+            <section id="panelTool" role="tabpanel" aria-labelledby="tabTool">
+                <div class="card howto">
+                    <div data-i18n-html="how_to_use"></div>
+                    <div data-i18n-html="how_to_use_explain"></div>
+                </div>
+
+                <div class="card">
+                    <div data-i18n-html="upload_text"></div>
+                    <label class="label" for="preset" data-i18n="upload_options"></label>
+                    <select id="preset" class="field"></select>
+                    <div id="uploadRow" class="upload-row" hidden>
+                        <label class="label" for="fileInput" data-i18n-html="upload_desc"></label>
+                        <input id="fileInput" class="field" type="file" accept=".json,application/json">
+                        <p id="fileError" class="error" role="alert" hidden></p>
+                    </div>
+                    <div id="presetExplain" class="explain"></div>
+                </div>
+
+                <div id="afterRules" hidden>
+                    <div class="card">
+                        <div data-i18n-html="enter_text"></div>
+                        <label class="label" for="term" data-i18n="text_input"></label>
+                        <input id="term" class="field" type="text" maxlength="64" autocomplete="off" autocapitalize="off" spellcheck="false">
+                        <p id="error" class="error" role="alert" hidden></p>
+                    </div>
+
+                    <div id="results" class="card" hidden>
+                        <div data-i18n-html="trans_result"></div>
+                        <label class="check"><input id="interm" type="checkbox"> <span data-i18n="interm_check"></span></label>
+                        <div id="chips" class="chips"></div>
+                        <div id="chain" hidden>
+                            <p class="chain-title"><span data-i18n="chain_result"></span> <code id="chainTerm"></code></p>
+                            <div class="table-wrap">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th data-i18n="col1"></th>
+                                            <th data-i18n="col2"></th>
+                                            <th data-i18n="col3"></th>
+                                            <th data-i18n="col4"></th>
+                                            <th data-i18n="col5"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="chainBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div data-i18n-html="check_json"></div>
+                        <a id="download" class="button"><span data-i18n="download_json"></span><code id="downloadName"></code></a>
+                        <details class="json-view">
+                            <summary><span data-i18n="json_content"></span><code id="jsonName"></code></summary>
+                            <pre id="jsonView"></pre>
+                        </details>
+                    </div>
+                </div>
+            </section>
+
+            <section id="panelAbout" role="tabpanel" aria-labelledby="tabAbout" hidden>
+                <div id="aboutContent" class="card markdown"></div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="lang-toggle" id="langToggle" role="group" aria-label="Language"></div>
+            <p>
+                &copy; <span id="footerYear"></span>
+                <a href="https://dirdam.squadro.app/" target="_blank" rel="noopener noreferrer">Adri&aacute;n Jim&eacute;nez Pascual</a>
+                &middot; <a href="https://dirdam.squadro.app/my-apps.html" target="_blank" rel="noopener noreferrer" data-i18n="footer_more_tools"></a>
+                &middot; <a href="https://github.com/dirdam/letra" target="_blank" rel="noopener noreferrer" data-i18n="footer_source"></a>
+            </p>
+        </footer>
+    </div>
+
+    <noscript><p class="error">LETRA needs JavaScript.</p></noscript>
+    <script src="static/app.js?v={{VERSION}}"></script>
+</body>
+</html>

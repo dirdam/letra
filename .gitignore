@@ -1,3 +1,16 @@
 *.pyc
 *.pyo
+__pycache__/
+.pytest_cache/
+.venv/
+venv/
+.DS_Store
 **.DS_Store
+
+# secrets and credentials never go in git
+.env
+.env.*
+*.pem
+*.key
+*credentials*
+*secret*

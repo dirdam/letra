@@ -75,3 +75,29 @@ en,json_content,"Expand the content of the file "
 es,json_content,"Expandir el contenido del archivo "
 en,download_json,"Download "
 es,download_json,"Descargar "
+en,err_invalid_json,This file is not valid JSON. Check commas and quotes.
+es,err_invalid_json,Este archivo no es un JSON válido. Revisa las comas y las comillas.
+en,err_missing_sections,"The file must contain `groups`, `rules` and `order`."
+es,err_missing_sections,"El archivo debe contener `groups`, `rules` y `order`."
+en,err_too_large,This rules file is too big.
+es,err_too_large,Este archivo de reglas es demasiado grande.
+en,err_invalid_rules,These rules could not be applied. Check the group names and rule syntax.
+es,err_invalid_rules,No se pudieron aplicar estas reglas. Revisa los nombres de grupos y la sintaxis.
+en,err_term_too_long,The term is too long (64 characters at most).
+es,err_term_too_long,El término es demasiado largo (64 caracteres como máximo).
+en,err_bad_term,The term contains characters that are not allowed.
+es,err_bad_term,El término contiene caracteres no permitidos.
+en,err_timeout,These rules took too long to apply. Try simpler rules.
+es,err_timeout,Estas reglas tardaron demasiado en aplicarse. Prueba con reglas más simples.
+en,err_server,Something went wrong. Please try again in a moment.
+es,err_server,Algo salió mal. Inténtalo de nuevo en un momento.
+en,err_file_too_big,The file is too big (256 KB at most).
+es,err_file_too_big,El archivo es demasiado grande (256 KB como máximo).
+en,no_results,No results.
+es,no_results,Sin resultados.
+en,footer_more_tools,See more tools
+es,footer_more_tools,Ver más herramientas
+en,footer_source,Source
+es,footer_source,Código
+en,tagline,Rewrite rules that turn one script into another
+es,tagline,Reglas de reescritura que convierten una escritura en otra
