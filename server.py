@@ -1,7 +1,7 @@
 """LETRA web server: a small Flask API and page around the Transformer engine.
 
 Run locally:   python server.py            (http://127.0.0.1:8506/)
-On the server: gunicorn -w 2 -b 127.0.0.1:8506 --timeout 10 server:app
+On the server: gunicorn -w 2 -b 127.0.0.1:8506 --timeout 10 --no-control-socket server:app
 
 The page and the API use relative URLs, so the app works the same at "/" and
 behind nginx under "/letra/".
