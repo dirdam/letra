@@ -28,11 +28,6 @@
         </div>
     </header>
 
-    <nav class="shelf" aria-label="Rule sets">
-        <span class="shelf-label" data-i18n="shelf_label"></span>
-        <div class="shelf-sets" id="shelfSets" role="radiogroup"></div>
-    </nav>
-
     <div class="tabs" id="tabs" role="tablist">
         <button type="button" role="tab" id="tab-evolve" class="tab" aria-selected="true" aria-controls="panel-evolve" data-tab="evolve" data-i18n="tab_evolve"></button>
         <button type="button" role="tab" id="tab-rulebook" class="tab" aria-selected="false" aria-controls="panel-rulebook" data-tab="rulebook" tabindex="-1" data-i18n="tab_rulebook"></button>
@@ -40,24 +35,33 @@
         <button type="button" role="tab" id="tab-about" class="tab" aria-selected="false" aria-controls="panel-about" data-tab="about" tabindex="-1" data-i18n="tab_about"></button>
     </div>
 
+    <div class="pack" id="pack">
+        <nav class="panel shelf" aria-label="Rule sets">
+            <span class="shelf-label"><b class="step-no" aria-hidden="true">1</b><span data-i18n="shelf_label"></span></span>
+            <p class="sub" data-i18n="shelf_sub"></p>
+            <div class="shelf-sets" id="shelfSets" role="radiogroup"></div>
+        </nav>
+        <div class="panel searchbar" id="wordsPanel">
+            <span class="shelf-label"><b class="step-no" aria-hidden="true">2</b><span data-i18n="step_words"></span></span>
+            <p class="sub" data-i18n="words_sub"></p>
+            <label class="sr-only" for="words" data-i18n="words_label"></label>
+            <div class="search-row">
+                <input id="words" class="words" type="text" spellcheck="false" autocapitalize="off" autocomplete="off" enterkeyhint="search"
+                       data-i18n="words_placeholder" data-i18n-attr="placeholder">
+                <button type="button" class="btn primary" id="evolveBtn" data-i18n="evolve"></button>
+            </div>
+            <div class="search-meta">
+                <div class="examples" id="examples"></div>
+                <label class="check"><input id="matchCase" type="checkbox"> <span data-i18n="match_case"></span></label>
+            </div>
+            <p class="hint" data-i18n="words_hint"></p>
+            <p class="hint warn" id="wordCount" hidden></p>
+        </div>
+    </div>
+
     <main id="main">
         <!-- ===== Evolve ===== -->
         <section id="panel-evolve" role="tabpanel" aria-labelledby="tab-evolve">
-            <div class="panel searchbar" id="wordsPanel">
-                <label class="sr-only" for="words" data-i18n="words_label"></label>
-                <div class="search-row">
-                    <input id="words" class="words" type="text" spellcheck="false" autocapitalize="off" autocomplete="off" enterkeyhint="search"
-                           data-i18n="words_placeholder" data-i18n-attr="placeholder">
-                    <button type="button" class="btn primary" id="evolveBtn" data-i18n="evolve"></button>
-                </div>
-                <div class="search-meta">
-                    <div class="examples" id="examples"></div>
-                    <label class="check"><input id="matchCase" type="checkbox"> <span data-i18n="match_case"></span></label>
-                </div>
-                <p class="hint" data-i18n="words_hint"></p>
-                <p class="hint warn" id="wordCount" hidden></p>
-            </div>
-
             <details class="panel setinfo" id="setInfo">
                 <summary><span class="set-name" id="setTitle"></span><span class="set-stats" id="setStats"></span></summary>
                 <div class="explain" id="setExplain"></div>
