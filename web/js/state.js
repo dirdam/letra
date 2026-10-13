@@ -23,7 +23,6 @@
         tab: 'evolve',                // evolve | rulebook | editor | about
         setId: 'sample',              // a preset id, or 'mine'
         words: 'lítteram',            // the textarea's text
-        matchCase: false,
         mine: '',                     // the user's rules text (editor draft)
         mineName: 'my-rules.json',
         results: [],                  // one entry per word, as returned by the server
@@ -39,14 +38,13 @@
     function load() {
         try {
             const saved = JSON.parse(stored(KEY) || '{}');
-            ['setId', 'words', 'matchCase'].forEach((k) => { if (k in saved) s[k] = saved[k]; });
+            ['setId', 'words'].forEach((k) => { if (k in saved) s[k] = saved[k]; });
         } catch (e) { /* ignore a damaged value */ }
         s.mine = stored(MINE_KEY) || '';
         s.mineName = stored(MINE_NAME_KEY) || s.mineName;
         const q = new URLSearchParams(location.hash.slice(1));      // a share link wins over what was remembered
         if (q.has('r')) s.setId = q.get('r');
         if (q.has('w')) s.words = q.get('w');
-        if (q.get('mc') === '1') s.matchCase = true;
         if (q.has('t') && ['evolve', 'rulebook', 'editor', 'about'].includes(q.get('t'))) s.tab = q.get('t');
         s.words = String(s.words).replace(/\s+/g, ' ').trim();        // one line; spaces separate the words
         if (s.setId !== 'mine' && !PRESETS.includes(s.setId)) s.setId = 'sample';
@@ -54,7 +52,7 @@
     }
 
     function save() {
-        store(KEY, JSON.stringify({ setId: s.setId, words: s.words, matchCase: s.matchCase }));
+        store(KEY, JSON.stringify({ setId: s.setId, words: s.words }));
     }
 
     function saveMine() {
@@ -66,7 +64,6 @@
         const q = new URLSearchParams();
         q.set('r', s.setId);
         if (s.words.trim()) q.set('w', s.words);
-        if (s.matchCase) q.set('mc', '1');
         if (s.tab !== 'evolve') q.set('t', s.tab);
         try { history.replaceState(null, '', '#' + q.toString()); } catch (e) { /* ignore */ }
     }

@@ -52,14 +52,14 @@ python3 -m venv .venv
 
 | Request | Answer |
 | --- | --- |
-| `POST /api/transform` `{"terms": [...], "preset": "sample"}` or `{"terms": [...], "rules": "<rules JSON text>"}`, optional `"match_case": true` | `{"results": [...], "truncated": false}`: for each word its final forms, every intermediate form, the derivation tree and `edges` (`[step, rule, from, to]`, every change applied). `{"term": "..."}` (one word) answers with that word's result alone |
+| `POST /api/transform` `{"terms": [...], "preset": "sample"}` or `{"terms": [...], "rules": "<rules JSON text>"}` | `{"results": [...], "truncated": false}`: for each word its final forms, every intermediate form, the derivation tree and `edges` (`[step, rule, from, to]`, every change applied). `{"term": "..."}` (one word) answers with that word's result alone |
 | `POST /api/rulebook` (`preset` or `rules`) | The steps in order, the rules with their entries, and the members of each group |
 | `POST /api/validate` `{"rules": "..."}` | `{"ok": bool, "issues": [{severity, code, message, params, path, line, col}]}` |
 | `GET /api/presets`, `GET /api/rules/<preset>` | The bundled rule files |
 | `GET /api/strings`, `GET /api/about?lang=en` | Page texts |
 
 Words and rule text are normalised to Unicode NFC, so `é` typed as one character or as `e` plus a
-combining accent means the same. Input is lower-cased unless `match_case` is set.
+combining accent means the same. Input is lower-cased.
 
 Because rules uploaded through the page are compiled to regular expressions on the server, there are
 limits: 256 KB per request, 100 words of at most 64 characters, 1000 entries per section, 20000 values

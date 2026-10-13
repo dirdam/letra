@@ -41,8 +41,8 @@ en,skip,Skip to content
 es,skip,Saltar al contenido
 en,shelf_label,Rule set
 es,shelf_label,Conjunto de reglas
-en,set_sample,Sample (LA → ES)
-es,set_sample,Muestra (LA → ES)
+en,set_sample,Latin → Spanish (sample)
+es,set_sample,Latín → español (muestra)
 en,set_la_es,Latin → Spanish
 es,set_la_es,Latín → español
 en,set_es_ipa,Spanish → IPA
@@ -75,8 +75,6 @@ en,words_too_many,{n} words entered; only the first {max} are used.
 es,words_too_many,Has escrito {n} palabras; solo se usan las primeras {max}.
 en,examples,Try:
 es,examples,Prueba:
-en,match_case,Match case
-es,match_case,Distinguir mayúsculas
 en,evolve,Evolve
 es,evolve,Evolucionar
 en,explain_mine,"Your own rules, written or opened in the Editor. They stay in this browser."

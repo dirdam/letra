@@ -23,8 +23,8 @@
     L.api = {
         about: (lang) => request('api/about?lang=' + encodeURIComponent(lang)),
         ruleText: (preset) => request('api/rules/' + encodeURIComponent(preset)),
-        transform: (set, words, matchCase, signal) =>
-            request('api/transform', Object.assign({ terms: words, match_case: !!matchCase }, source(set)), signal),
+        transform: (set, words, signal) =>
+            request('api/transform', Object.assign({ terms: words }, source(set)), signal),
         rulebook: (set) => request('api/rulebook', source(set)),
         validate: (text, signal) => request('api/validate', { rules: text }, signal),
     };

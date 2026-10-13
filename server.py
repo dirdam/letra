@@ -149,11 +149,9 @@ def _apply(t, term):
     }
 
 
-def _word(t, raw, match_case):
+def _word(t, raw):
     """One word of a request: its result, or {'term', 'error'} when the word itself is not acceptable."""
-    term = _normalize(raw)
-    if not match_case:
-        term = term.lower()
+    term = _normalize(raw).lower()
     if not term.strip() or any(ord(c) < 32 for c in term):
         return {'term': raw, 'error': 'bad_term'}
     if len(term) > MAX_TERM_CHARS:
@@ -254,7 +252,6 @@ def api_transform():
         if not isinstance(body.get('term'), str):
             return jsonify({'error': 'bad_term'}), 400
         words = [body['term']]
-    match_case = body.get('match_case') is True
 
     preset, rules_text, problem = _rules_source(body)
     if problem:
@@ -268,7 +265,7 @@ def api_transform():
             if results and time.monotonic() - started > TIME_BUDGET:
                 truncated = True
                 break
-            results.append(_word(t, raw, match_case))
+            results.append(_word(t, raw))
     except RulesError as e:
         return jsonify({'error': e.code}), 400
 
