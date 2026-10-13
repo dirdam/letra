@@ -143,8 +143,9 @@ def _apply(t, term):
         'final': final,
         'all': list(t.transformations),
         'terms': terms,
-        # every change applied, as [step, rule, from, to]: unlike `terms`, keeps all paths when branches meet
-        'edges': [[e['step'], e['rule'], e['from'], e['to']] for e in t.edges],
+        # every change applied, as [step, rule, from, to, entries]: unlike `terms`, keeps all paths when branches meet;
+        # `entries` are the positions of the rule's entries that changed the word
+        'edges': [[e['step'], e['rule'], e['from'], e['to'], e['entries']] for e in t.edges],
     }
 
 

@@ -74,7 +74,7 @@
             b.type = 'button';
             b.addEventListener('click', () => {
                 const box = $('words');
-                if (!ST.parseWords(box.value).includes(w)) box.value = (box.value.trim() ? box.value.trim() + ' ' : '') + w;
+                box.value = w;          // replaces what is in the bar
                 evolveNow();
             });
             box.appendChild(b);

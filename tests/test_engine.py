@@ -68,3 +68,22 @@ def test_bundled_rule_files_are_already_nfc(name):
     import unicodedata
     text = open(os.path.join(HERE, '..', 'transformations', f'{name}.json'), encoding='utf-8').read()
     assert unicodedata.normalize('NFC', text) == text
+
+
+# ---------- which entries of a rule changed the word ----------
+
+def test_edges_name_the_entries_that_changed_the_word():
+    t = letra.Transformer('{"groups": {}, "rules": {"r": {"a": "b", "x": "y", "c": "d"}}, "order": ["r"]}')
+    t.transform('ac')
+    assert [(e['rule'], e['entries']) for e in t.edges] == [('r', [0, 2])]
+
+
+def test_halagueno_applies_only_one_entry_of_its_rule():
+    t = letra.Transformer(json_path='ES_IPA.json')
+    t.transform('halagüeño')
+    original = t.json_dict_original['rules']
+    for e in t.edges:
+        entries = list(original[e['rule']].items())
+        assert e['entries'] and all(0 <= n < len(entries) for n in e['entries'])
+    g = [e for e in t.edges if e['rule'] == 'g']
+    assert g and len(g[0]['entries']) == 1 and list(original['g'].items())[g[0]['entries'][0]][0].startswith('gü')
