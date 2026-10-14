@@ -293,8 +293,9 @@
         box.appendChild(scroll);
         box.appendChild(legend);
         const chosen = pos.get(form);                       // bring the chosen form into view (once the box is on the page)
-        if (chosen) requestAnimationFrame(() => { scroll.scrollLeft = Math.max(0, chosen.cx - scroll.clientWidth / 2); });
-        return { choose };
+        const center = () => { if (chosen) scroll.scrollLeft = Math.max(0, chosen.cx - scroll.clientWidth / 2); };
+        requestAnimationFrame(center);
+        return { choose, center };
     }
 
     L.tree = { render, fits, graph, MAX_NODES };
