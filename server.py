@@ -49,7 +49,7 @@ def _html(text):
     """Markdown to HTML; a single paragraph is returned without its <p> wrapper."""
     out = markdown.markdown(textwrap.dedent(text).strip(), extensions=['sane_lists'])
     m = re.fullmatch(r'<p>(.*)</p>', out, re.S)
-    return m.group(1) if m else out
+    return m.group(1) if m and '<p>' not in m.group(1) else out
 
 
 def _load_strings():
