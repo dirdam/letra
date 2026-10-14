@@ -8,7 +8,7 @@
     const S = ST.s;
 
     const $ = (id) => document.getElementById(id);
-    const TABS = ['about', 'evolve', 'rulebook', 'editor'];          // left to right; Evolve is the one open by default
+    const TABS = ['evolve', 'rulebook', 'editor'];          // the working tabs, left to right; Evolve is the one open by default. About is a page of its own (link in the hero)
     const SETS = ['sample', 'LA_ES', 'ES_IPA', 'mine'];
     const SET_LABEL = { sample: 'set_sample', LA_ES: 'set_la_es', ES_IPA: 'set_es_ipa', mine: 'set_mine' };
     const setLabel = (id) => I.t(SET_LABEL[id]);
@@ -210,11 +210,14 @@
 
     // ---------- tabs ----------
 
+    let lastTab = 'evolve';          // the working tab the About page's Back button returns to
+
     function switchTab(name) {
-        if (!TABS.includes(name)) name = 'evolve';
+        if (name !== 'about' && !TABS.includes(name)) name = 'evolve';
         S.tab = name;
-        $('wordsPack').hidden = name !== 'evolve';
-        $('wordsPanel').hidden = name !== 'evolve';
+        if (name !== 'about') lastTab = name;
+        $('workbench').hidden = name === 'about';          // About does not depend on the rule set: no rule set bar, no tabs
+        $('panel-about').hidden = name !== 'about';
         TABS.forEach((t) => {
             const on = t === name;
             $('panel-' + t).hidden = !on;
@@ -321,6 +324,8 @@
             if (S.results.length) renderResults();          // the trees are drawn again the other way round
         }));
         $('rbSearch').addEventListener('input', renderRulebookTab);
+        $('aboutLink').addEventListener('click', (e) => { e.preventDefault(); switchTab('about'); });
+        $('aboutBack').addEventListener('click', () => switchTab(lastTab));
         document.querySelectorAll('.tab').forEach((b) => {
             b.addEventListener('click', () => switchTab(b.dataset.tab));
             b.addEventListener('keydown', (e) => {

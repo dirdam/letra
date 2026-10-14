@@ -16,6 +16,7 @@
     <a class="skip" href="#main" data-i18n="skip"></a>
 
     <header class="hero" id="hero">
+        <a class="about-link" id="aboutLink" href="#t=about"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg><span data-i18n="tab_about"></span></a>
         <div class="hero-inner">
             <h1 class="logo" aria-label="LETRA"><span class="initial" aria-hidden="true">L</span><span class="logo-rest" aria-hidden="true">ETRA</span></h1>
             <p class="acronym" aria-label="LanguagE TRAnsformations"><b>L</b>anguag<b>E</b> <b>TRA</b>nsformations</p>
@@ -28,40 +29,36 @@
         </div>
     </header>
 
-    <div class="pack" id="pack">
-        <nav class="panel shelf" aria-label="Rule sets">
-            <span class="shelf-label"><span data-i18n="shelf_label"></span><button type="button" class="info" data-i18n="shelf_sub" data-i18n-attr="data-tip"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><span class="sr-only" data-i18n="shelf_sub"></span></button></span>
-            <div class="shelf-sets" id="shelfSets" role="radiogroup"></div>
-        </nav>
-    </div>
 
-    <div class="tabs" id="tabs" role="tablist">
-        <button type="button" role="tab" id="tab-about" class="tab" aria-selected="false" aria-controls="panel-about" data-tab="about" tabindex="-1"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg><span data-i18n="tab_about"></span></button>
-        <span class="tab-divider" aria-hidden="true"></span>
-        <button type="button" role="tab" id="tab-evolve" class="tab" aria-selected="true" aria-controls="panel-evolve" data-tab="evolve"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10 16 1.5 1.5"/><path d="m14 8-1.5-1.5"/><path d="M15 2c-1.798 1.998-2.518 3.995-2.807 5.993"/><path d="m16.5 10.5 1 1"/><path d="m17 6-2.891-2.891"/><path d="M2 15c6.667-6 13.333 0 20-6"/><path d="m20 9 .891.891"/><path d="M3.109 14.109 4 15"/><path d="m6.5 12.5 1 1"/><path d="m7 18 2.891 2.891"/><path d="M9 22c1.798-1.998 2.518-3.995 2.807-5.993"/></svg><span data-i18n="tab_evolve"></span></button>
-        <button type="button" role="tab" id="tab-rulebook" class="tab" aria-selected="false" aria-controls="panel-rulebook" data-tab="rulebook" tabindex="-1"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2v7.751a.25.25 0 00.407.195l2.28-1.834a.5.5 0 01.627 0l2.28 1.834A.25.25 0 0016 9.751V2"/><path d="M4 19.5v-15A2.5 2.5 0 016.5 2H19a1 1 0 011 1v18a1 1 0 01-1 1H6.5a1 1 0 010-5H20"/></svg><span data-i18n="tab_rulebook"></span></button>
-        <button type="button" role="tab" id="tab-editor" class="tab" aria-selected="false" aria-controls="panel-editor" data-tab="editor" tabindex="-1"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/></svg><span data-i18n="tab_editor"></span></button>
-    </div>
 
-    <div class="pack" id="wordsPack">
-        <div class="panel searchbar" id="wordsPanel">
-            <span class="shelf-label"><span data-i18n="step_words"></span><button type="button" class="info" data-i18n="words_sub" data-i18n-attr="data-tip"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><span class="sr-only" data-i18n="words_sub"></span></button></span>
-            <label class="sr-only" for="words" data-i18n="words_label"></label>
-            <div class="search-row">
-                <input id="words" class="words" type="text" spellcheck="false" autocapitalize="off" autocomplete="off" enterkeyhint="search"
-                       data-i18n="words_placeholder" data-i18n-attr="placeholder">
-                <button type="button" class="btn primary has-icon" id="evolveBtn"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"/></svg><span data-i18n="evolve"></span></button>
-            </div>
-            <div class="search-meta">
-                <div class="examples" id="examples"></div>
-            </div>
-            <p class="hint warn" id="wordCount" hidden></p>
-        </div>
-    </div>
 
     <main id="main">
+        <div class="panel workbench" id="workbench">
+            <nav class="shelf" aria-label="Rule sets">
+                <span class="shelf-label"><span data-i18n="shelf_label"></span><button type="button" class="info" data-i18n="shelf_sub" data-i18n-attr="data-tip"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><span class="sr-only" data-i18n="shelf_sub"></span></button></span>
+                <div class="shelf-sets" id="shelfSets" role="radiogroup"></div>
+            </nav>
+            <div class="tabs" id="tabs" role="tablist">
+                <button type="button" role="tab" id="tab-evolve" class="tab" aria-selected="true" aria-controls="panel-evolve" data-tab="evolve"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10 16 1.5 1.5"/><path d="m14 8-1.5-1.5"/><path d="M15 2c-1.798 1.998-2.518 3.995-2.807 5.993"/><path d="m16.5 10.5 1 1"/><path d="m17 6-2.891-2.891"/><path d="M2 15c6.667-6 13.333 0 20-6"/><path d="m20 9 .891.891"/><path d="M3.109 14.109 4 15"/><path d="m6.5 12.5 1 1"/><path d="m7 18 2.891 2.891"/><path d="M9 22c1.798-1.998 2.518-3.995 2.807-5.993"/></svg><span data-i18n="tab_evolve"></span></button>
+                <button type="button" role="tab" id="tab-rulebook" class="tab" aria-selected="false" aria-controls="panel-rulebook" data-tab="rulebook" tabindex="-1"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2v7.751a.25.25 0 00.407.195l2.28-1.834a.5.5 0 01.627 0l2.28 1.834A.25.25 0 0016 9.751V2"/><path d="M4 19.5v-15A2.5 2.5 0 016.5 2H19a1 1 0 011 1v18a1 1 0 01-1 1H6.5a1 1 0 010-5H20"/></svg><span data-i18n="tab_rulebook"></span></button>
+                <button type="button" role="tab" id="tab-editor" class="tab" aria-selected="false" aria-controls="panel-editor" data-tab="editor" tabindex="-1"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/></svg><span data-i18n="tab_editor"></span></button>
+            </div>
+
         <!-- ===== Evolve ===== -->
         <section id="panel-evolve" role="tabpanel" aria-labelledby="tab-evolve">
+            <div class="panel searchbar" id="wordsPanel">
+                <span class="shelf-label"><span data-i18n="step_words"></span><button type="button" class="info" data-i18n="words_sub" data-i18n-attr="data-tip"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><span class="sr-only" data-i18n="words_sub"></span></button></span>
+                <label class="sr-only" for="words" data-i18n="words_label"></label>
+                <div class="search-row">
+                    <input id="words" class="words" type="text" spellcheck="false" autocapitalize="off" autocomplete="off" enterkeyhint="search"
+                           data-i18n="words_placeholder" data-i18n-attr="placeholder">
+                    <button type="button" class="btn primary has-icon" id="evolveBtn"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"/></svg><span data-i18n="evolve"></span></button>
+                </div>
+                <div class="search-meta">
+                    <div class="examples" id="examples"></div>
+                </div>
+                <p class="hint warn" id="wordCount" hidden></p>
+            </div>
             <details class="panel setinfo" id="setInfo">
                 <summary><span class="set-name" id="setTitle"></span><span class="set-stats" id="setStats"></span></summary>
                 <div class="explain" id="setExplain"></div>
@@ -156,8 +153,11 @@
             </div>
         </section>
 
-        <!-- ===== About ===== -->
-        <section id="panel-about" role="tabpanel" aria-labelledby="tab-about" hidden>
+        </div>
+
+        <!-- ===== About: a page of its own, reached from the link in the hero ===== -->
+        <section id="panel-about" hidden>
+            <div class="about-bar"><button type="button" class="btn small has-icon" id="aboutBack"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg><span data-i18n="about_back"></span></button></div>
             <div class="panel markdown" id="aboutHowto"></div>
             <div class="panel markdown" id="aboutSyntax"></div>
             <div class="panel markdown" id="aboutContent"></div>
