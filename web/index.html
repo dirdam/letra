@@ -36,10 +36,10 @@
     </div>
 
     <div class="tabs" id="tabs" role="tablist">
-        <button type="button" role="tab" id="tab-evolve" class="tab" aria-selected="true" aria-controls="panel-evolve" data-tab="evolve" data-i18n="tab_evolve"></button>
-        <button type="button" role="tab" id="tab-rulebook" class="tab" aria-selected="false" aria-controls="panel-rulebook" data-tab="rulebook" tabindex="-1" data-i18n="tab_rulebook"></button>
-        <button type="button" role="tab" id="tab-editor" class="tab" aria-selected="false" aria-controls="panel-editor" data-tab="editor" tabindex="-1" data-i18n="tab_editor"></button>
-        <button type="button" role="tab" id="tab-about" class="tab" aria-selected="false" aria-controls="panel-about" data-tab="about" tabindex="-1" data-i18n="tab_about"></button>
+        <button type="button" role="tab" id="tab-evolve" class="tab" aria-selected="true" aria-controls="panel-evolve" data-tab="evolve"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10 16 1.5 1.5"/><path d="m14 8-1.5-1.5"/><path d="M15 2c-1.798 1.998-2.518 3.995-2.807 5.993"/><path d="m16.5 10.5 1 1"/><path d="m17 6-2.891-2.891"/><path d="M2 15c6.667-6 13.333 0 20-6"/><path d="m20 9 .891.891"/><path d="M3.109 14.109 4 15"/><path d="m6.5 12.5 1 1"/><path d="m7 18 2.891 2.891"/><path d="M9 22c1.798-1.998 2.518-3.995 2.807-5.993"/></svg><span data-i18n="tab_evolve"></span></button>
+        <button type="button" role="tab" id="tab-rulebook" class="tab" aria-selected="false" aria-controls="panel-rulebook" data-tab="rulebook" tabindex="-1"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2v7.751a.25.25 0 00.407.195l2.28-1.834a.5.5 0 01.627 0l2.28 1.834A.25.25 0 0016 9.751V2"/><path d="M4 19.5v-15A2.5 2.5 0 016.5 2H19a1 1 0 011 1v18a1 1 0 01-1 1H6.5a1 1 0 010-5H20"/></svg><span data-i18n="tab_rulebook"></span></button>
+        <button type="button" role="tab" id="tab-editor" class="tab" aria-selected="false" aria-controls="panel-editor" data-tab="editor" tabindex="-1"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/></svg><span data-i18n="tab_editor"></span></button>
+        <button type="button" role="tab" id="tab-about" class="tab" aria-selected="false" aria-controls="panel-about" data-tab="about" tabindex="-1"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg><span data-i18n="tab_about"></span></button>
     </div>
 
     <div class="pack" id="wordsPack">
@@ -49,7 +49,7 @@
             <div class="search-row">
                 <input id="words" class="words" type="text" spellcheck="false" autocapitalize="off" autocomplete="off" enterkeyhint="search"
                        data-i18n="words_placeholder" data-i18n-attr="placeholder">
-                <button type="button" class="btn primary" id="evolveBtn" data-i18n="evolve"></button>
+                <button type="button" class="btn primary has-icon" id="evolveBtn"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"/></svg><span data-i18n="evolve"></span></button>
             </div>
             <div class="search-meta">
                 <div class="examples" id="examples"></div>
@@ -77,12 +77,12 @@
 
                 <div class="toolbar" id="toolbar" hidden>
                     <div class="seg" id="treeView" role="group" data-i18n="tree_view" data-i18n-attr="aria-label">
-                        <button type="button" data-view="v" aria-pressed="true" data-i18n="tree_vertical"></button>
-                        <button type="button" data-view="h" aria-pressed="false" data-i18n="tree_horizontal"></button>
+                        <button type="button" data-view="v" aria-pressed="true"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/></svg><span data-i18n="tree_vertical"></span></button>
+                        <button type="button" data-view="h" aria-pressed="false"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/></svg><span data-i18n="tree_horizontal"></span></button>
                     </div>
                     <span class="grow"></span>
                     <details class="menu" id="exportMenu">
-                        <summary class="btn small" data-i18n="export"></summary>
+                        <summary class="btn small has-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v13"/><path d="m16 6-4-4-4 4"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/></svg><span data-i18n="export"></span></summary>
                         <div class="menu-body">
                             <label class="field-label" for="exportKind" data-i18n="export_what"></label>
                             <select id="exportKind" class="field">
@@ -97,12 +97,12 @@
                                 <option value="tex">LaTeX</option>
                             </select>
                             <div class="menu-actions">
-                                <button type="button" class="btn small primary" id="exportCopy" data-i18n="copy"></button>
-                                <button type="button" class="btn small" id="exportDownload" data-i18n="download"></button>
+                                <button type="button" class="btn small primary has-icon" id="exportCopy"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span data-i18n="copy"></span></button>
+                                <button type="button" class="btn small has-icon" id="exportDownload"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/></svg><span data-i18n="download"></span></button>
                             </div>
                         </div>
                     </details>
-                    <button type="button" class="btn small" id="shareBtn" data-i18n="share"></button>
+                    <button type="button" class="btn small has-icon" id="shareBtn"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span data-i18n="share"></span></button>
                 </div>
                 <p class="status" id="status" role="status"></p>
                 <div id="results"></div>
@@ -128,10 +128,10 @@
                     <h2 class="panel-title" data-i18n="ed_title"></h2>
                     <div class="editor-actions">
                         <button type="button" class="btn small" id="edCopyOf"></button>
-                        <button type="button" class="btn small" id="edOpen" data-i18n="ed_open"></button>
-                        <button type="button" class="btn small" id="edFormat" data-i18n="ed_format"></button>
-                        <button type="button" class="btn small" id="edDownload" data-i18n="download"></button>
-                        <button type="button" class="btn small primary" id="edRun" data-i18n="ed_run"></button>
+                        <button type="button" class="btn small has-icon" id="edOpen"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg><span data-i18n="ed_open"></span></button>
+                        <button type="button" class="btn small has-icon" id="edFormat"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 5H3"/><path d="M21 12H8"/><path d="M21 19H8"/><path d="M3 12v7"/></svg><span data-i18n="ed_format"></span></button>
+                        <button type="button" class="btn small has-icon" id="edDownload"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/></svg><span data-i18n="download"></span></button>
+                        <button type="button" class="btn small primary has-icon" id="edRun"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"/></svg><span data-i18n="ed_run"></span></button>
                     </div>
                 </div>
                 <p class="hint" data-i18n-html="ed_comments_note"></p>
