@@ -104,6 +104,7 @@
         $('words').value = id === 'sample' ? ST.EXAMPLES.sample[0] : '';          // only the sample comes with its word; the other sets show the placeholder
         S.results = [];
         S.selected = {};
+        S.collapsed = {};
         S.error = '';
         ST.save();
         renderShelf();
@@ -335,6 +336,7 @@
             S.setId = 'mine';
             S.results = [];
             S.selected = {};
+        S.collapsed = {};
             ST.save();
             renderShelf();
             renderSetPanel();

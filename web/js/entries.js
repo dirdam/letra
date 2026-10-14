@@ -155,9 +155,22 @@
         const card = el('article', 'entry');
         card.dataset.word = r.term;
         const head = el('header', 'entry-head');
-        head.appendChild(el('h3', 'headword', r.term));
+        const title = el('h3', 'headword');
+        const toggle = el('button', 'fold', r.term);          // the word is the button that folds the card up and down
+        toggle.type = 'button';
+        title.appendChild(toggle);
+        head.appendChild(title);
         if (!r.error) head.appendChild(el('span', 'count', I.count('n_forms', r.final.length)));
         card.appendChild(head);
+        const fold = (folded) => {
+            card.classList.toggle('collapsed', folded);
+            toggle.setAttribute('aria-expanded', String(!folded));
+            S.collapsed[r.term] = folded;
+            if (!folded && card._tree) card._tree.center();           // a hidden tree could not be centred on its chosen form
+        };
+        toggle.setAttribute('aria-expanded', 'true');
+        if (S.collapsed[r.term]) { card.classList.add('collapsed'); toggle.setAttribute('aria-expanded', 'false'); }
+        head.addEventListener('click', () => fold(!card.classList.contains('collapsed')));
         if (r.error) {
             card.appendChild(el('p', 'error', I.t('err_' + r.error)));
             return card;

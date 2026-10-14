@@ -28,6 +28,7 @@
         results: [],                  // one entry per word, as returned by the server
         truncated: false,
         selected: {},                 // word -> the form whose derivation is shown
+        collapsed: {},                // word -> true when its card is folded up
         error: '',                    // error code of the last request
         loading: false,
     };
