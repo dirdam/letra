@@ -118,6 +118,19 @@
         return ol;
     }
 
+    /* The tree in the full-screen viewer; a form chosen there is chosen in the card too. */
+    function openMax(card, r, button) {
+        L.viewer.open({
+            title: r.term,
+            orient: S.treeView,
+            returnFocus: button,
+            draw: (box, orient) => {
+                const handle = L.tree.render(box, r, selectedOf(r), (f) => { select(card, r, f); handle.choose(f); }, orient, { bare: true });
+                return handle;
+            },
+        });
+    }
+
     /* The tree of all derivations of the word, and under it the chain of steps of the chosen form. */
     function renderDerivation(card, r) {
         const box = card.querySelector('.derivation');
@@ -126,7 +139,18 @@
         if (!r.final.length) return;
         const form = selectedOf(r);
         const treeBox = el('div', 'tree-box');
-        treeBox.appendChild(el('h4', 'deriv-title', I.t('tree_title')));
+        const head = el('div', 'deriv-head');
+        head.appendChild(el('h4', 'deriv-title', I.t('tree_title')));
+        if (L.tree.fits(r)) {
+            const max = el('button', 'icon-btn max');
+            max.type = 'button';
+            max.appendChild(L.viewer.icon(L.viewer.ICONS.max));
+            max.setAttribute('aria-label', I.t('tree_max'));
+            max.setAttribute('data-tip', I.t('tree_max'));
+            max.addEventListener('click', () => openMax(card, r, max));
+            head.appendChild(max);
+        }
+        treeBox.appendChild(head);
         if (L.tree.fits(r)) card._tree = L.tree.render(treeBox, r, form, (f) => select(card, r, f), S.treeView);
         else treeBox.appendChild(el('p', 'dim', I.t('tree_too_big')));
         box.appendChild(treeBox);

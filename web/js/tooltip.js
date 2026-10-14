@@ -93,6 +93,7 @@
         el._tipRich = build;
         el.setAttribute('data-tip-rich', '');
         el.tabIndex = 0;
+        el.addEventListener('click', () => show(el, true));          // a tap on a touch screen, where there is no hover
     }
 
     L.tooltip = { hide, rich };
