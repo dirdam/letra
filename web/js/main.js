@@ -183,6 +183,10 @@
         s.textContent = text;
     }
 
+    function syncTreeView() {
+        document.querySelectorAll('#treeView button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.view === S.treeView)));
+    }
+
     function renderResults() {
         const box = $('results');
         renderStatus();
@@ -277,6 +281,7 @@
 
     function applyStateToUI() {
         $('words').value = S.words;
+        syncTreeView();
         renderShelf();
         renderSetPanel();
         renderExamples();
@@ -305,6 +310,13 @@
         $('exportCopy').addEventListener('click', () => doExport(true));
         $('exportDownload').addEventListener('click', () => doExport(false));
         $('shareBtn').addEventListener('click', share);
+        document.querySelectorAll('#treeView button').forEach((b) => b.addEventListener('click', () => {
+            if (S.treeView === b.dataset.view) return;
+            S.treeView = b.dataset.view;
+            ST.save();
+            syncTreeView();
+            if (S.results.length) renderResults();          // the trees are drawn again the other way round
+        }));
         $('rbSearch').addEventListener('input', renderRulebookTab);
         document.querySelectorAll('.tab').forEach((b) => {
             b.addEventListener('click', () => switchTab(b.dataset.tab));

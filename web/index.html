@@ -70,33 +70,44 @@
                 </div>
             </details>
 
-            <div class="toolbar" id="toolbar" hidden>
-                <span class="grow"></span>
-                <details class="menu" id="exportMenu">
-                    <summary class="btn small" data-i18n="export"></summary>
-                    <div class="menu-body">
-                        <label class="field-label" for="exportKind" data-i18n="export_what"></label>
-                        <select id="exportKind" class="field">
-                            <option value="forms" data-i18n="export_forms"></option>
-                            <option value="derivations" data-i18n="export_derivations"></option>
-                        </select>
-                        <label class="field-label" for="exportFormat" data-i18n="export_format"></label>
-                        <select id="exportFormat" class="field">
-                            <option value="txt">Plain text</option>
-                            <option value="tsv">TSV</option>
-                            <option value="csv">CSV</option>
-                            <option value="tex">LaTeX</option>
-                        </select>
-                        <div class="menu-actions">
-                            <button type="button" class="btn small primary" id="exportCopy" data-i18n="copy"></button>
-                            <button type="button" class="btn small" id="exportDownload" data-i18n="download"></button>
-                        </div>
+            <div class="panel evolution" id="evolution">
+                <div class="sect-head">
+                    <span class="shelf-label"><b class="step-no" aria-hidden="true">3</b><span data-i18n="step_evolution"></span></span>
+                    <p class="sub" data-i18n="evolution_sub"></p>
+                </div>
+
+                <div class="toolbar" id="toolbar" hidden>
+                    <div class="seg" id="treeView" role="group" data-i18n="tree_view" data-i18n-attr="aria-label">
+                        <button type="button" data-view="v" aria-pressed="true" data-i18n="tree_vertical"></button>
+                        <button type="button" data-view="h" aria-pressed="false" data-i18n="tree_horizontal"></button>
                     </div>
-                </details>
-                <button type="button" class="btn small" id="shareBtn" data-i18n="share"></button>
+                    <span class="grow"></span>
+                    <details class="menu" id="exportMenu">
+                        <summary class="btn small" data-i18n="export"></summary>
+                        <div class="menu-body">
+                            <label class="field-label" for="exportKind" data-i18n="export_what"></label>
+                            <select id="exportKind" class="field">
+                                <option value="forms" data-i18n="export_forms"></option>
+                                <option value="derivations" data-i18n="export_derivations"></option>
+                            </select>
+                            <label class="field-label" for="exportFormat" data-i18n="export_format"></label>
+                            <select id="exportFormat" class="field">
+                                <option value="txt">Plain text</option>
+                                <option value="tsv">TSV</option>
+                                <option value="csv">CSV</option>
+                                <option value="tex">LaTeX</option>
+                            </select>
+                            <div class="menu-actions">
+                                <button type="button" class="btn small primary" id="exportCopy" data-i18n="copy"></button>
+                                <button type="button" class="btn small" id="exportDownload" data-i18n="download"></button>
+                            </div>
+                        </div>
+                    </details>
+                    <button type="button" class="btn small" id="shareBtn" data-i18n="share"></button>
+                </div>
+                <p class="status" id="status" role="status"></p>
+                <div id="results"></div>
             </div>
-            <p class="status" id="status" role="status"></p>
-            <div id="results"></div>
         </section>
 
         <!-- ===== Rule book ===== -->

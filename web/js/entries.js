@@ -127,7 +127,7 @@
         const form = selectedOf(r);
         const treeBox = el('div', 'tree-box');
         treeBox.appendChild(el('h4', 'deriv-title', I.t('tree_title')));
-        if (L.tree.fits(r)) card._tree = L.tree.render(treeBox, r, form, (f) => select(card, r, f));
+        if (L.tree.fits(r)) card._tree = L.tree.render(treeBox, r, form, (f) => select(card, r, f), S.treeView);
         else treeBox.appendChild(el('p', 'dim', I.t('tree_too_big')));
         box.appendChild(treeBox);
         box.appendChild(el('div', 'chain-box'));

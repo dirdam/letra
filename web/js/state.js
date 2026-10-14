@@ -29,6 +29,7 @@
         truncated: false,
         selected: {},                 // word -> the form whose derivation is shown
         collapsed: {},                // word -> true when its card is folded up
+        treeView: 'v',                // 'v' = tree grows downwards, 'h' = to the right
         error: '',                    // error code of the last request
         loading: false,
     };
@@ -40,6 +41,7 @@
         try {
             const saved = JSON.parse(stored(KEY) || '{}');
             ['setId', 'words'].forEach((k) => { if (k in saved) s[k] = saved[k]; });
+            if (saved.treeView === 'h' || saved.treeView === 'v') s.treeView = saved.treeView;
         } catch (e) { /* ignore a damaged value */ }
         s.mine = stored(MINE_KEY) || '';
         s.mineName = stored(MINE_NAME_KEY) || s.mineName;
@@ -53,7 +55,7 @@
     }
 
     function save() {
-        store(KEY, JSON.stringify({ setId: s.setId, words: s.words }));
+        store(KEY, JSON.stringify({ setId: s.setId, words: s.words, treeView: s.treeView }));
     }
 
     function saveMine() {

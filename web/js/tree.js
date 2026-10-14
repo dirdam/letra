@@ -1,5 +1,5 @@
-/* The branching tree of a word, drawn downwards: every form is a node, every change an edge labelled with
-   its rule and, right below the rule name, the entries of the rule that were applied.
+/* The branching tree of a word, drawn downwards ('v') or to the right ('h'): every form is a node, every
+   change an edge labelled with its rule (the applied entries show in a tooltip).
    A form reached from two different parents is ONE node with two incoming edges (the chain view only
    shows the first path). Rows are derivation depth: the longest path from the start. */
 (function () {
@@ -17,6 +17,7 @@
     const LABEL_CLEAR = 20;        // px between a label and the next form's edge
     const BAR_ROOM = 24;           // px under a row kept free for the bars of the edges
     const BAR_Y = 16;              // px between a form and the bar its children split off from
+    const MIN_GAP_H = 64;          // px between two columns of a horizontal tree, at least
     let uid = 0;
 
     function svg(tag, attrs, text) {
@@ -119,7 +120,8 @@
     }
 
     /* Draws the tree of `r` into `box`; `form` is the chosen final form, `onSelect(form)` is called for a click. */
-    function render(box, r, form, onSelect) {
+    function render(box, r, form, onSelect, orient) {
+        const horiz = orient === 'h';
         const g = graph(r);
         if (g.nodes.size > MAX_NODES) { box.appendChild(Object.assign(document.createElement('p'), { className: 'dim', textContent: I.t('tree_too_big') })); return null; }
         const id = 'tr' + (++uid);
@@ -133,16 +135,25 @@
         const nodeW = new Map();
         g.nodes.forEach((n) => nodeW.set(n, Math.max(46, width(label(n), '17px Gentium, serif') + 2 * PAD_X)));
 
-        // The edge labels, measured, decide how far apart the forms are and how tall each gap is.
+        // The edge labels, measured, decide how far apart the forms are and how much room each gap needs.
+        // Everything is laid out on two axes: MAIN (the direction the tree grows: down, or to the right)
+        // and CROSS (across it). The tree is drawn by mapping them to y/x (vertical) or x/y (horizontal).
         const labelEls = g.edges.map((e) => labelEl(e.items));
         const sizes = measure(labelEls);
-        const incoming = new Map();                             // form -> widest label of the edges that lead into it
-        g.edges.forEach((e, i) => incoming.set(e.to, Math.max(incoming.get(e.to) || 0, sizes[i].w)));
-        const reach = (n) => (incoming.has(n) ? LABEL_SIDE + incoming.get(n) : 0);
+        const into = new Map();                                 // form -> indices of the edges that lead into it
+        g.edges.forEach((e, i) => { if (!into.has(e.to)) into.set(e.to, []); into.get(e.to).push(i); });
+        const nodeMain = (n) => (horiz ? nodeW.get(n) : NODE_H);
+        const nodeCross = (n) => (horiz ? NODE_H : nodeW.get(n));
+        const stackH = (n) => (into.has(n) ? into.get(n).reduce((sum, i) => sum + sizes[i].h, 0) + 4 * (into.get(n).length - 1) : 0);
+        const widest = (n) => (into.has(n) ? Math.max(...into.get(n).map((i) => sizes[i].w)) : 0);
+        // space a form needs on each side of its centre, across the tree: its labels stand to the right of its
+        // edge (vertical tree) or above it (horizontal tree)
+        const sideL = (n) => (horiz ? Math.max(nodeCross(n) / 2, into.has(n) ? 8 + stackH(n) : 0) : nodeCross(n) / 2);
+        const sideR = (n) => (horiz ? nodeCross(n) / 2 : Math.max(nodeCross(n) / 2, into.has(n) ? LABEL_SIDE + widest(n) : 0));
 
-        // The tree proper: every form hangs from ONE parent (the nearest one above it), the other incoming
-        // edges are drawn on top. A parent stands over the middle of its children: a single child is
-        // straight below it, two children split off symmetrically.
+        // The tree proper: every form hangs from ONE parent (the nearest one before it), the other incoming
+        // edges are drawn on top. A parent stands level with the middle of its children: a single child is
+        // straight in line with it, two children split off symmetrically.
         const primary = new Map();
         g.nodes.forEach((n) => {
             if (n === r.start) return;
@@ -152,62 +163,87 @@
         });
         const kids = new Map();
         g.edges.forEach((e) => { if (primary.get(e.to) === e.from) { if (!kids.has(e.from)) kids.set(e.from, []); kids.get(e.from).push(e.to); } });
-        const ext = new Map();                                  // form -> {L, R, off}: space to its left / right, offsets of its children
+        const ext = new Map();                                  // form -> {L, R, off}: room before / after it across the tree, offsets of its children
         const measureTree = (n) => {
             const list = kids.get(n) || [];
             list.forEach(measureTree);
-            let L = nodeW.get(n) / 2;
-            let R = Math.max(nodeW.get(n) / 2, reach(n));
+            let before = sideL(n);
+            let after = sideR(n);
             const off = new Map();
             if (list.length) {
                 const t = [];
                 list.forEach((k, i) => { t[i] = i ? t[i - 1] + ext.get(list[i - 1]).R + ext.get(k).L + SLOT_GAP : 0; });
-                const k = t.length;
-                const mid = k % 2 ? t[(k - 1) / 2] : (t[k / 2 - 1] + t[k / 2]) / 2;          // over the middle child, or between the two middle ones
+                const count = t.length;
+                const mid = count % 2 ? t[(count - 1) / 2] : (t[count / 2 - 1] + t[count / 2]) / 2;          // level with the middle child, or between the two middle ones
                 list.forEach((k, i) => {
                     off.set(k, t[i] - mid);
-                    L = Math.max(L, mid - t[i] + ext.get(k).L);
-                    R = Math.max(R, t[i] - mid + ext.get(k).R);
+                    before = Math.max(before, mid - t[i] + ext.get(k).L);
+                    after = Math.max(after, t[i] - mid + ext.get(k).R);
                 });
             }
-            ext.set(n, { L, R, off });
+            ext.set(n, { L: before, R: after, off });
         };
         measureTree(r.start);
-        const totalW = ext.get(r.start).L + ext.get(r.start).R + 2 * MARGIN;
-        const pos = new Map();                  // node -> {cx, x, y, w, d}: x,y is the top-left corner of its box
-        const settle = (n, cx) => {
-            pos.set(n, { cx, x: cx - nodeW.get(n) / 2, w: nodeW.get(n), y: 0, d: g.depth.get(n) || 0 });
-            (kids.get(n) || []).forEach((k) => settle(k, cx + ext.get(n).off.get(k)));
-        };
+        const crossTotal = ext.get(r.start).L + ext.get(r.start).R + 2 * MARGIN;
+        const cc = new Map();                                   // form -> centre across the tree
+        const settle = (n, c) => { cc.set(n, c); (kids.get(n) || []).forEach((k) => settle(k, c + ext.get(n).off.get(k))); };
         settle(r.start, MARGIN + ext.get(r.start).L);
 
-        // labels go in the gap above the form they lead to; the ones that would overlap (a form reached twice) use other lanes
-        const place = g.edges.map((e, i) => ({ i, gap: pos.get(e.to).d, left: pos.get(e.to).cx + LABEL_SIDE, w: sizes[i].w, h: sizes[i].h, top: 0, lane: 0 }));
-        const gapH = rows.map(() => MIN_GAP);
-        rows.forEach((row, d) => {
-            if (d === 0) return;
-            const lanes = [];                                   // each lane: {right, h}
-            place.filter((p) => p.gap === d).sort((p, q) => p.left - q.left).forEach((p) => {
-                let lane = lanes.findIndex((l) => l.right + 8 <= p.left);
-                if (lane < 0) { lane = lanes.length; lanes.push({ right: -1, h: 0 }); }
-                lanes[lane].right = p.left + p.w;
-                lanes[lane].h = Math.max(lanes[lane].h, p.h);
-                p.lane = lane;
+        const depthOf = (n) => g.depth.get(n) || 0;
+        const mainAt = [];                                      // depth -> where its forms start along the tree
+        const labelBox = [];                                    // edge index -> {x, y, w, h}
+        let mainTotal;
+        if (horiz) {
+            const colW = rows.map((row) => Math.max(0, ...row.map(nodeMain)));
+            const gapLen = rows.map((row, d) => (d === 0 ? 0 : Math.max(MIN_GAP_H, BAR_Y + 10 + Math.max(0, ...row.map(widest)) + 18)));
+            let m = MARGIN;
+            rows.forEach((row, d) => { m += gapLen[d]; mainAt[d] = m; m += colW[d]; });
+            mainTotal = m + MARGIN;
+            g.edges.forEach((e, i) => {                         // above the last stretch of the edge, stacked when a form is reached twice
+                const list = into.get(e.to);
+                const k = list.indexOf(i);
+                const below = list.slice(0, k).reduce((sum, j) => sum + sizes[j].h + 4, 0);
+                const d = depthOf(e.to);
+                labelBox[i] = { x: mainAt[d] - gapLen[d] + BAR_Y + 10, y: cc.get(e.to) - 6 - sizes[i].h - below, w: sizes[i].w, h: sizes[i].h };
             });
-            const offsets = [];
-            let used = BAR_ROOM;
-            lanes.forEach((l, k) => { offsets[k] = used; used += l.h + 6; });
-            place.filter((p) => p.gap === d).forEach((p) => { p.top = offsets[p.lane]; });
-            gapH[d] = Math.max(MIN_GAP, used + 6);
+        } else {
+            // each label goes in the gap above the form it leads to; labels that would overlap use other lanes of the gap
+            const place = g.edges.map((e, i) => ({ i, gap: depthOf(e.to), left: cc.get(e.to) + LABEL_SIDE, w: sizes[i].w, h: sizes[i].h, top: 0, lane: 0 }));
+            const gapH = rows.map(() => MIN_GAP);
+            rows.forEach((row, d) => {
+                if (d === 0) return;
+                const lanes = [];                               // each lane: {right, h}
+                place.filter((p) => p.gap === d).sort((p, q) => p.left - q.left).forEach((p) => {
+                    let lane = lanes.findIndex((l) => l.right + 8 <= p.left);
+                    if (lane < 0) { lane = lanes.length; lanes.push({ right: -1, h: 0 }); }
+                    lanes[lane].right = p.left + p.w;
+                    lanes[lane].h = Math.max(lanes[lane].h, p.h);
+                    p.lane = lane;
+                });
+                const offsets = [];
+                let used = BAR_ROOM;
+                lanes.forEach((l, k) => { offsets[k] = used; used += l.h + 6; });
+                place.filter((p) => p.gap === d).forEach((p) => { p.top = offsets[p.lane]; });
+                gapH[d] = Math.max(MIN_GAP, used + 6);
+            });
+            let y = MARGIN;
+            rows.forEach((row, d) => {
+                if (d > 0) y += gapH[d];
+                mainAt[d] = y;
+                place.filter((p) => p.gap === d).forEach((p) => { p.top += y - gapH[d]; });
+                y += NODE_H;
+            });
+            mainTotal = y + MARGIN;
+            place.forEach((p) => { labelBox[p.i] = { x: p.left, y: p.top, w: p.w, h: p.h }; });
+        }
+        const pos = new Map();                                  // form -> {x, y, w, c, m, d}: x,y is the top-left corner of its box
+        g.nodes.forEach((n) => {
+            const m = mainAt[depthOf(n)];
+            const c = cc.get(n);
+            pos.set(n, horiz ? { x: m, y: c - NODE_H / 2, w: nodeW.get(n), c, m, d: depthOf(n) } : { x: c - nodeW.get(n) / 2, y: m, w: nodeW.get(n), c, m, d: depthOf(n) });
         });
-        let y = MARGIN;
-        rows.forEach((row, d) => {
-            if (d > 0) y += gapH[d];
-            row.forEach((n) => { pos.get(n).y = y; });
-            place.filter((p) => p.gap === d).forEach((p) => { p.top += y - gapH[d]; });
-            y += NODE_H;
-        });
-        const totalH = y + MARGIN;
+        const totalW = horiz ? mainTotal : crossTotal;
+        const totalH = horiz ? crossTotal : mainTotal;
 
         const root = svg('svg', { width: totalW, height: totalH, viewBox: '0 0 ' + totalW + ' ' + totalH, role: 'group', 'aria-label': I.fmt('tree_label', { word: r.term }) });
         const defs = svg('defs');
@@ -222,20 +258,19 @@
         g.edges.forEach((e, i) => {
             const a = pos.get(e.from);
             const b = pos.get(e.to);
-            const x1 = a.cx;
-            const y1 = a.y + NODE_H;
-            const x2 = b.cx;
-            const y2 = b.y;
-            const ym = y1 + BAR_Y;                                          // the bar under the parent, shared by all its children
-            const r = Math.min(7, Math.abs(x2 - x1) / 2, (y2 - ym) / 2);
-            const sx = Math.sign(x2 - x1);
-            const d = x1 === x2 ? 'M' + x1 + ' ' + y1 + ' L' + x2 + ' ' + y2          // straight: no bend unless one is needed
-                : 'M' + x1 + ' ' + y1 + ' L' + x1 + ' ' + (ym - r) + ' Q' + x1 + ' ' + ym + ' ' + (x1 + sx * r) + ' ' + ym + ' L' + (x2 - sx * r) + ' ' + ym + ' Q' + x2 + ' ' + ym + ' ' + x2 + ' ' + (ym + r) + ' L' + x2 + ' ' + y2;
+            const pt = (m, c) => (horiz ? m + ' ' + c : c + ' ' + m);
+            const m1 = a.m + (horiz ? a.w : NODE_H);                        // where the edge leaves its parent
+            const m2 = b.m;                                                 // and where it enters the child
+            const mBar = m1 + BAR_Y;                                        // the bar the children of a parent split off from
+            const rad = Math.min(7, Math.abs(b.c - a.c) / 2, (m2 - mBar) / 2);
+            const sc = Math.sign(b.c - a.c);
+            const d = a.c === b.c ? 'M' + pt(m1, a.c) + ' L' + pt(m2, b.c)                  // straight: no bend unless one is needed
+                : 'M' + pt(m1, a.c) + ' L' + pt(mBar - rad, a.c) + ' Q' + pt(mBar, a.c) + ' ' + pt(mBar, a.c + sc * rad) + ' L' + pt(mBar, b.c - sc * rad) + ' Q' + pt(mBar, b.c) + ' ' + pt(mBar + rad, b.c) + ' L' + pt(m2, b.c);
             const grp = svg('g', { class: 'tree-edge' });
             grp.appendChild(svg('path', { d, 'marker-end': 'url(#' + id + 'a)' }));
             edgeLayer.appendChild(grp);
-            const p = place[i];
-            const fo = svg('foreignObject', { class: 'tree-elabel', x: p.left, y: p.top, width: p.w, height: p.h });
+            const p = labelBox[i];
+            const fo = svg('foreignObject', { class: 'tree-elabel', x: p.x, y: p.y, width: p.w, height: p.h });
             fo.appendChild(labelEls[i]);
             labelLayer.appendChild(fo);
             edgeEls.push({ e, grp, fo });
@@ -293,7 +328,7 @@
         box.appendChild(scroll);
         box.appendChild(legend);
         const chosen = pos.get(form);                       // bring the chosen form into view (once the box is on the page)
-        const center = () => { if (chosen) scroll.scrollLeft = Math.max(0, chosen.cx - scroll.clientWidth / 2); };
+        const center = () => { if (chosen) scroll.scrollLeft = Math.max(0, (horiz ? chosen.x + chosen.w / 2 : chosen.c) - scroll.clientWidth / 2); };
         requestAnimationFrame(center);
         return { choose, center };
     }
