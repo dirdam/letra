@@ -149,6 +149,7 @@ kbd { font-family: var(--sans); font-size: 0.72em; opacity: 0.85; padding: 1px 6
 }
 .tab .icon { width: 17px; height: 17px; flex: none; }
 .tab:hover { border-color: var(--rubric); }
+.tab-divider { width: 0; margin: 0 10px; border-left: 1px dashed var(--line); }          /* sets About apart from the working tabs; stretches to the tabs' height */
 .tab[aria-selected="true"] { background: var(--ink); color: #fbf5e4; border-color: var(--ink); }
 
 main { max-width: 1180px; margin: 0 auto; padding: 0 20px 10px; }
