@@ -29,6 +29,7 @@
         truncated: false,
         selected: {},                 // word -> the form whose derivation is shown
         collapsed: {},                // word -> true when its card is folded up
+        chainFolded: {},              // word -> true when its chain of changes is folded up
         treeView: 'v',                // 'v' = tree grows downwards, 'h' = to the right
         error: '',                    // error code of the last request
         loading: false,

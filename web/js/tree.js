@@ -131,7 +131,7 @@
         const rows = Array.from({ length: maxDepth + 1 }, () => []);
         g.nodes.forEach((n) => rows[g.depth.get(n) || 0].push(n));
 
-        const label = (n) => (n === r.start ? L.entries.show(n) : L.entries.plain(n));
+        const label = (n) => L.entries.plain(n);          // no word-boundary mark on the forms of the tree
         const nodeW = new Map();
         g.nodes.forEach((n) => nodeW.set(n, Math.max(46, width(label(n), '17px Gentium, serif') + 2 * PAD_X)));
 
