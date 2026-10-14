@@ -66,7 +66,7 @@
     function renderExamples() {
         const box = $('examples');
         box.textContent = '';
-        const list = ST.EXAMPLES[S.setId] || [];
+        const list = S.setId === 'sample' ? [] : ST.EXAMPLES[S.setId] || [];          // the sample already holds its word in the bar
         if (!list.length) return;
         box.appendChild(el('span', 'examples-label', I.t('examples')));
         list.forEach((w) => {
