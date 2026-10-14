@@ -138,8 +138,23 @@
         const form = selectedOf(r);
         const box = card.querySelector('.chain-box');
         box.textContent = '';
-        box.appendChild(el('h4', 'deriv-title', I.fmt('chain_title', { form: plain(form) })));
+        const head = el('h4', 'deriv-title');
+        const toggle = el('button', 'fold small');                    // the title folds the chain up and down
+        toggle.type = 'button';
+        const parts = I.t('chain_title').split('{form}');
+        toggle.appendChild(document.createTextNode(parts[0]));
+        toggle.appendChild(el('span', 'chain-form', plain(form)));          // the word itself, in the normal font
+        toggle.appendChild(document.createTextNode(parts[1] || ''));
+        head.appendChild(toggle);
+        box.appendChild(head);
         box.appendChild(chainEl(r, form));
+        const fold = (folded) => {
+            box.classList.toggle('folded', folded);
+            toggle.setAttribute('aria-expanded', String(!folded));
+            S.chainFolded[r.term] = folded;
+        };
+        fold(!!S.chainFolded[r.term]);
+        toggle.addEventListener('click', () => fold(!box.classList.contains('folded')));
     }
 
     /* Choosing a form updates the chips, the highlighted path in the tree (without redrawing it) and the chain. */

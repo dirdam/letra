@@ -105,6 +105,7 @@
         S.results = [];
         S.selected = {};
         S.collapsed = {};
+        S.chainFolded = {};
         S.error = '';
         ST.save();
         renderShelf();
@@ -349,6 +350,7 @@
             S.results = [];
             S.selected = {};
         S.collapsed = {};
+        S.chainFolded = {};
             ST.save();
             renderShelf();
             renderSetPanel();

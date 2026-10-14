@@ -265,7 +265,12 @@ summary.btn::-webkit-details-marker { display: none; }
 .form.static { cursor: default; }
 .derivation { margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--gold-soft); }
 .deriv-title { margin: 0 0 6px; font-family: var(--sans); font-size: 0.74rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); }
-.deriv-title .form-text { text-transform: none; letter-spacing: 0; }
+.chain-form { font-family: var(--serif); font-size: 1.25rem; font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--ink); }      /* the chosen word: normal font, not the heading's capitals */
+.fold.small { gap: 8px; font-family: var(--sans); font-size: 0.74rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); align-items: center; }
+.fold.small::before { border-left-width: 5px; border-right-width: 5px; border-top-width: 7px; }
+.chain-box.folded .fold.small::before { transform: rotate(-90deg); }
+.chain-box.folded .chain { display: none; }
+.chain-box.folded .deriv-title { margin-bottom: 0; }
 .chain-box { margin-top: 16px; padding-top: 12px; border-top: 1px dashed var(--gold-soft); }
 
 /* chain */
