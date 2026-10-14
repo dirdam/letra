@@ -213,7 +213,7 @@
     function switchTab(name) {
         if (!TABS.includes(name)) name = 'evolve';
         S.tab = name;
-        $('pack').classList.toggle('solo', name !== 'evolve');          // the words box belongs to Evolve only
+        $('wordsPack').hidden = name !== 'evolve';
         $('wordsPanel').hidden = name !== 'evolve';
         TABS.forEach((t) => {
             const on = t === name;

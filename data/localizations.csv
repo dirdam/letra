@@ -63,8 +63,8 @@ en,tab_about,About
 es,tab_about,Acerca de
 en,shelf_sub,Choose the transformation you want to apply.
 es,shelf_sub,Elige la transformación que quieres aplicar.
-en,words_sub,Type the words you want to transform.
-es,words_sub,Escribe las palabras que quieres transformar.
+en,words_sub,Type the words you want to transform. Results update as you type.
+es,words_sub,Escribe las palabras que quieres transformar. Los resultados se actualizan mientras escribes.
 en,step_evolution,Words evolution
 es,step_evolution,Evolución de las palabras
 en,evolution_sub,Possible evolutions of the words based on the chosen rule set.
@@ -91,8 +91,6 @@ en,step_words,Words
 es,step_words,Palabras
 en,words_label,Word or words to evolve
 es,words_label,Palabra o palabras a evolucionar
-en,words_hint,Results update as you type. Press Enter to evolve at once.
-es,words_hint,Los resultados se actualizan mientras escribes. Pulsa Intro para evolucionar al instante.
 en,words_too_many,{n} words entered; only the first {max} are used.
 es,words_too_many,Has escrito {n} palabras; solo se usan las primeras {max}.
 en,examples,Try:
