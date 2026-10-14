@@ -91,4 +91,4 @@ The detail of the transformation is given below:
 |2|`simplify_double`|"`<double_cons=>`" → "`<double_cons>`"|`líttera`|`lítera`|
 |3|`remove_unstressed`|"`<stressed_vow><cons*><unstressed_vow><cons>`" → "`<stressed_vow><cons*><><cons>`"|`lítera`|`lítra`|
 |4|`vowel_shift`|"`<cons>í<cons>`" → "`<cons>é<cons>`"|`lítra`|`létra`|
-|5|`identity\|diphthong`|"" → "" \| "`<cons>é<cons>`" → "`<cons>ié<cons>`"|`létra`|**`létra \| liétra`**|
+|5|<code>identity&#124;diphthong</code>|"" → "" \| "`<cons>é<cons>`" → "`<cons>ié<cons>`"|`létra`|**<code>létra &#124; liétra</code>**|

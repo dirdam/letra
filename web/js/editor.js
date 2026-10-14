@@ -222,15 +222,107 @@
         reader.readAsText(file, 'utf-8');
     }
 
-    function format() {
-        const text = els.text.value;
-        if (/\/\//.test(text)) { els.note.textContent = I.t('ed_format_comments'); return; }
-        try {
-            els.text.value = JSON.stringify(JSON.parse(text), null, 2) + '\n';
-            onInput();
-        } catch (e) {
-            els.note.textContent = I.t('err_invalid_json');
+    /* Re-indents a rules text the way the files are written: one entry per line, indented with tabs when the text
+       uses tabs (else two spaces), short lists and objects such as ["a", "b"] or {"": ""} kept on one line when they were on one line.
+       // comments stay where they are (own-line comments on their own line, trailing ones after their value), and
+       so do blank lines (at most one in a row) and list items that shared a line. Returns null when the text is not JSON tokens and comments. */
+    function formatText(text) {
+        const re = /(\/\/[^\n]*)|("(?:[^"\\\n]|\\.)*")|(-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?|true|false|null)|([{}[\],:])/g;
+        const tokens = [];
+        let last = 0;
+        let m;
+        while ((m = re.exec(text))) {
+            const gap = text.slice(last, m.index);
+            if (/\S/.test(gap)) return null;
+            tokens.push({ kind: m[1] ? 'c' : m[2] ? 's' : m[3] ? 'v' : 'p', text: m[0], newlines: (gap.match(/\n/g) || []).length });
+            last = re.lastIndex;
         }
+        if (/\S/.test(text.slice(last))) return null;
+
+        const indents = (text.match(/^ +(?=\S)/gm) || []).map((x) => x.length);
+        const unit = /^\t/m.test(text) ? '\t' : ' '.repeat(indents.length ? Math.min(...indents) : 2);          // the text's own indentation
+        const lines = [];
+        let cur = null;                         // the line being written (without its indent), or null
+        let depth = 0;
+        let needBreak = false;                  // the next item starts a new line
+        let afterOpener = false;
+        const stack = [];                       // the lists and objects we are inside
+        const flush = () => { if (cur !== null) { lines.push(unit.repeat(Math.max(0, depth)) + cur); cur = null; } };
+        const startItem = (t) => {
+            if (needBreak || cur === null) {
+                flush();
+                if (t.newlines > 1 && lines.length && !afterOpener) lines.push('');          // keep one blank line
+                needBreak = false;
+            }
+            afterOpener = false;
+        };
+        for (let i = 0; i < tokens.length; i++) {
+            const t = tokens[i];
+            if (t.kind === 'c') {
+                if (t.newlines === 0 && cur !== null) cur += ' ' + t.text;                 // trailing: stays on its line
+                else { startItem(t); cur = t.text; needBreak = true; }
+                continue;
+            }
+            if (t.kind === 'p' && (t.text === '}' || t.text === ']')) {
+                flush();
+                depth--;
+                stack.pop();
+                cur = t.text;
+                needBreak = false;
+                continue;
+            }
+            if (t.kind === 'p' && t.text === ',') { cur = (cur === null ? '' : cur) + ','; needBreak = true; continue; }
+            if (t.kind === 'p' && t.text === ':') { cur += ': '; continue; }
+            if (t.kind === 'p') {                                                         // { or [
+                if (cur === null || needBreak) startItem(t);
+                const next = tokens[i + 1];
+                const close = t.text === '{' ? '}' : ']';
+                if (cur === null) cur = '';
+                {                                                                         // a short list or object written on one line stays on one line
+                    let j = i + 1;
+                    const plain = (x) => x.kind === 's' || x.kind === 'v' || (x.kind === 'p' && (x.text === ',' || x.text === ':'));
+                    while (j < tokens.length && plain(tokens[j]) && tokens[j].newlines === 0) j++;
+                    if (j > i + 1 && j < tokens.length && tokens[j].kind === 'p' && tokens[j].text === close && tokens[j].newlines === 0) {
+                        cur += t.text + tokens.slice(i + 1, j).map((x) => (x.text === ',' ? ', ' : x.text === ':' ? ': ' : x.text)).join('') + close;
+                        i = j;
+                        continue;
+                    }
+                }
+                if (next && next.kind === 'p' && next.text === close) { cur += t.text + close; i++; continue; }          // an empty one stays {} / []
+                cur += t.text;
+                flush();
+                depth++;
+                stack.push(t.text);
+                needBreak = false;
+                afterOpener = true;
+                continue;
+            }
+            if (needBreak && cur !== null && t.newlines === 0 && cur.endsWith(',') && stack[stack.length - 1] === '[') { cur += ' '; needBreak = false; }          // list items that shared a line keep sharing it
+            if (cur === null || needBreak) startItem(t);                                  // a key or a value
+            cur = (cur === null ? '' : cur) + t.text;
+        }
+        flush();
+        const out = lines.join('\n') + '\n';
+        // safety: without the comments, the result must mean exactly what the text meant
+        const bare = (list) => list.filter((t) => t.kind !== 'c').map((t) => t.text).join(' ');
+        try {
+            const a = JSON.stringify(JSON.parse(bare(tokens)));
+            const re2 = new RegExp(re.source, 'g');
+            const again = [];
+            let n;
+            while ((n = re2.exec(out))) again.push({ kind: n[1] ? 'c' : 'x', text: n[0] });
+            if (a !== JSON.stringify(JSON.parse(bare(again)))) return null;
+        } catch (e) {
+            return null;
+        }
+        return out;
+    }
+
+    function format() {
+        const out = formatText(els.text.value);
+        if (out === null) { els.note.textContent = I.t('err_invalid_json'); return; }
+        els.text.value = out;
+        onInput();
     }
 
     function download() {
@@ -275,5 +367,5 @@
         if (S.mine.trim()) validateNow();
     }
 
-    L.editor = { init, refresh, run, fork, hooks, validateNow, highlight, setText, focus: () => els && els.text.focus() };
+    L.editor = { init, refresh, run, fork, hooks, validateNow, highlight, formatText, setText, focus: () => els && els.text.focus() };
 })();

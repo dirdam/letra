@@ -207,8 +207,38 @@ en,ed_format,Format
 es,ed_format,Dar formato
 en,ed_run,Run
 es,ed_run,Ejecutar
-en,ed_format_comments,"Formatting would remove your // comments, so it is not applied."
-es,ed_format_comments,"Dar formato eliminaría tus comentarios //, así que no se aplica."
+en,ed_comments_note,"Comments that start with // are allowed: LETRA ignores them when it reads the rules, and *Format* keeps them."
+es,ed_comments_note,"Se permiten comentarios que empiezan por //: LETRA los ignora al leer las reglas y *Dar formato* los conserva."
+en,ed_howto_title,How to write rules
+es,ed_howto_title,Cómo escribir reglas
+en,ed_howto,"A rules file is **JSON that also allows `//` comments**. It has three sections, all required:
+
+- **`groups`**: sets of characters that behave alike, e.g. `""vow"": [""a"", ""e"", ""i""]`.
+    - Reuse a group inside another with `<name>`: `""vow"": [""<stressed>"", ""<unstressed>""]`. Define it before using it.
+    - `!` removes a character or a group: `[""<cons>"", ""!l"", ""!n""]` is every consonant except **l** and **n**.
+    - Give a group several names with `|`: `""a|b"": [...]`.
+- **`rules`**: each rule has a name and `""search"": ""replacement""` pairs, all applied together.
+    - Plain characters stand for themselves; `<name>` stands for any member of that group.
+    - Both sides must have the same number of `<>`. Where a group disappears, leave an empty `<>`.
+    - `<g1|g2>`: either group. `<g*>`: any run of its members. `<g=>`: the same member twice (`<g==>` three times).
+    - A leading space is the start of the word, a trailing space is its end.
+- **`order`**: the rule names in the order they apply. `""rule_a|rule_b""` means only one of the two applies.
+
+Example: `""<cons>í<cons>"": ""<cons>é<cons>""` changes a stressed **í** between consonants into **é**."
+es,ed_howto,"Un archivo de reglas es **JSON que además admite comentarios `//`**. Tiene tres secciones, todas obligatorias:
+
+- **`groups`**: conjuntos de caracteres que se comportan igual, p. ej. `""vow"": [""a"", ""e"", ""i""]`.
+    - Reutiliza un grupo dentro de otro con `<nombre>`: `""vow"": [""<stressed>"", ""<unstressed>""]`. Defínelo antes de usarlo.
+    - `!` quita un carácter o un grupo: `[""<cons>"", ""!l"", ""!n""]` son todas las consonantes menos **l** y **n**.
+    - Un grupo puede tener varios nombres con `|`: `""a|b"": [...]`.
+- **`rules`**: cada regla tiene un nombre y pares `""buscar"": ""reemplazo""`, que se aplican todos a la vez.
+    - Los caracteres normales se representan a sí mismos; `<nombre>` representa cualquier miembro de ese grupo.
+    - Ambos lados deben tener el mismo número de `<>`. Donde un grupo desaparece, deja un `<>` vacío.
+    - `<g1|g2>`: cualquiera de los dos grupos. `<g*>`: una secuencia de miembros. `<g=>`: el mismo miembro dos veces (`<g==>` tres veces).
+    - Un espacio al principio es el inicio de la palabra y un espacio al final es su fin.
+- **`order`**: los nombres de las reglas en el orden en que se aplican. `""regla_a|regla_b""` significa que solo se aplica una de las dos.
+
+Ejemplo: `""<cons>í<cons>"": ""<cons>é<cons>""` cambia una **í** tónica entre consonantes por **é**."
 en,ed_replace_q,Replace what is in the editor?
 es,ed_replace_q,¿Reemplazar lo que hay en el editor?
 en,ed_replace_yes,Replace

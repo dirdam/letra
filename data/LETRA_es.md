@@ -91,4 +91,4 @@ El detalle de la transformación se da a continuación:
 |2|`simplificar_dobles`|"`<cons_dobles=>`" → "`<cons_dobles>`"|`líttera`|`lítera`|
 |3|`eliminar_átonas`|"`<voc_tónicas><cons*><voc_átonasw><cons>`" → "`<voc_tónicas><cons*><><cons>`"|`lítera`|`lítra`|
 |4|`cambiar_vocal`|"`<cons>í<cons>`" → "`<cons>é<cons>`"|`lítra`|`létra`|
-|5|`identidad\|diptongar`|"" → "" \| "`<cons>é<cons>`" → "`<cons>ié<cons>`"|`létra`|**`létra \| liétra`**|
+|5|<code>identidad&#124;diptongar</code>|"" → "" \| "`<cons>é<cons>`" → "`<cons>ié<cons>`"|`létra`|**<code>létra &#124; liétra</code>**|
