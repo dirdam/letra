@@ -21,7 +21,9 @@
         return tip;
     }
 
+    /* What an element's tooltip shows: text, or (for elements given with L.tooltip.rich) a freshly built node. */
     function textOf(el) {
+        if (el._tipRich) return el._tipRich();
         if (el.hasAttribute('title')) {
             const t = el.getAttribute('title');
             el.removeAttribute('title');                 // otherwise the browser's bubble shows as well
@@ -47,7 +49,9 @@
         const open = () => {
             const text = textOf(el);
             if (!text) return;
-            ensure().textContent = text;
+            ensure().textContent = '';
+            if (typeof text === 'string') tip.textContent = text;
+            else tip.appendChild(text);
             target = el;
             el.setAttribute('aria-describedby', 'tip');
             tip.classList.add('show');
@@ -65,7 +69,7 @@
     }
 
     function owner(node) {
-        return node && node.closest ? node.closest('[title], [data-tip]') : null;
+        return node && node.closest ? node.closest('[title], [data-tip], [data-tip-rich]') : null;
     }
 
     document.addEventListener('mouseover', (e) => {
@@ -76,14 +80,20 @@
     });
     document.addEventListener('mouseout', (e) => {
         const el = owner(e.target);
-        if (el && el === target && !el.contains(e.relatedTarget)) hide();
-        else if (!target) clearTimeout(timer);
+        if (el && !el.contains(e.relatedTarget)) hide();          // left the element (moving between its own parts does not count)
     });
     document.addEventListener('focusin', (e) => { const el = owner(e.target); if (el) show(el, true); });
     document.addEventListener('focusout', hide);
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') hide(); });
-    window.addEventListener('scroll', hide, true);
+    window.addEventListener('scroll', () => { if (tip && tip.classList.contains('show')) hide(); }, true);          // a bubble that is about to open is not cancelled by a scroll that was already under way
     window.addEventListener('resize', hide);
 
-    L.tooltip = { hide };
+    /* Gives `el` a tooltip made of DOM: `build()` returns the node to show (called each time it opens). */
+    function rich(el, build) {
+        el._tipRich = build;
+        el.setAttribute('data-tip-rich', '');
+        el.tabIndex = 0;
+    }
+
+    L.tooltip = { hide, rich };
 })();
