@@ -144,6 +144,17 @@
         return entriesFor(name).some((e) => e[0].toLowerCase().includes(needle) || e[1].toLowerCase().includes(needle));
     }
 
+    /* The last step of each column gets no dashed line under it. CSS cannot pick "the last item of a column",
+       so the steps whose next step sits elsewhere (or that have none) are marked; the line turns transparent
+       rather than disappearing, so the columns keep their height. Re-run whenever the layout changes. */
+    function markColumnEnds(steps) {
+        const list = Array.from(steps.querySelectorAll('.rb-step'));
+        list.forEach((el, i) => {
+            const next = list[i + 1];
+            el.classList.toggle('col-end', !next || Math.abs(next.getBoundingClientRect().left - el.getBoundingClientRect().left) > 1);
+        });
+    }
+
     /* Draws the rule book into `body`; `needle` filters (lower-case text), `used` is a Set of rule names to mark. */
     function render(body, needle, used) {
         const d = info();
@@ -181,6 +192,7 @@
         });
         if (!shown) steps.appendChild(span('empty-note', I.t('rb_no_match')));
         body.appendChild(steps);
+        if (shown && typeof ResizeObserver === 'function') new ResizeObserver(() => markColumnEnds(steps)).observe(steps);
 
         const inOrder = new Set(d.order.flatMap((s) => s.split('|')));
         const unused = Object.keys(d.rules).filter((r) => !inOrder.has(r) && matches(r, needle));
