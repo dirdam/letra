@@ -479,3 +479,22 @@ footer a:hover { text-decoration: underline; }
 .seg button { padding: 5px 14px; border: none; border-radius: 999px; background: transparent; font-family: var(--sans); font-weight: 700; font-size: 0.82rem; color: var(--dim); cursor: pointer; }
 .seg button[aria-pressed="true"] { background: var(--rubric); color: #fff; }
 .seg button:focus-visible { outline: none; box-shadow: var(--focus); }
+
+/* the full-screen tree viewer */
+html.viewer-open, html.viewer-open body { overflow: hidden; }
+.deriv-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 6px; }
+.deriv-head .deriv-title { margin: 0; }
+.icon-btn { display: inline-grid; place-items: center; width: 32px; height: 32px; padding: 0; color: var(--dim); background: var(--glass); border: 1px solid var(--line); border-radius: 9px; cursor: pointer; }
+.icon-btn:hover { color: var(--rubric); border-color: var(--rubric); }
+.icon-btn:focus-visible { outline: none; box-shadow: var(--focus); }
+.icon-btn svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.viewer { position: fixed; inset: 0; z-index: 55; display: flex; flex-direction: column; background: var(--vellum-2); overscroll-behavior: contain; }
+.viewer-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; padding: 10px 14px; background: var(--glass); border-bottom: 1px solid var(--line); }
+.viewer-title { font-size: 1.35rem; margin-right: 6px; }
+.viewer-stage { position: relative; flex: 1; overflow: hidden; touch-action: none; cursor: grab; background: var(--vellum-1); user-select: none; -webkit-user-select: none; }
+.viewer-stage.dragging { cursor: grabbing; }
+.viewer-canvas { position: absolute; left: 0; top: 0; transform-origin: 0 0; will-change: transform; }
+.viewer-canvas svg { display: block; }
+.viewer-hint { margin: 0; padding: 8px 14px; font-family: var(--sans); font-size: 0.8rem; color: var(--dim); background: var(--glass); border-top: 1px solid var(--line); }
+.viewer .seg button { white-space: nowrap; }
+@media (max-width: 860px) { .viewer-hint { display: none; } .viewer-bar .grow { display: none; } .viewer-bar { justify-content: space-between; } }

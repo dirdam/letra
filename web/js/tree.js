@@ -120,7 +120,7 @@
     }
 
     /* Draws the tree of `r` into `box`; `form` is the chosen final form, `onSelect(form)` is called for a click. */
-    function render(box, r, form, onSelect, orient) {
+    function render(box, r, form, onSelect, orient, opts) {
         const horiz = orient === 'h';
         const g = graph(r);
         if (g.nodes.size > MAX_NODES) { box.appendChild(Object.assign(document.createElement('p'), { className: 'dim', textContent: I.t('tree_too_big') })); return null; }
@@ -319,6 +319,10 @@
         };
         choose(form);
 
+        if (opts && opts.bare) {                            // for the full-screen viewer: just the drawing, which it zooms and moves itself
+            box.appendChild(root);
+            return { choose, center: () => {}, size: { w: totalW, h: totalH } };
+        }
         const scroll = document.createElement('div');
         scroll.className = 'tree-scroll';
         scroll.appendChild(root);

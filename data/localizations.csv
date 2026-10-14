@@ -75,6 +75,18 @@ en,tree_vertical,Vertical tree
 es,tree_vertical,Árbol vertical
 en,tree_horizontal,Horizontal tree
 es,tree_horizontal,Árbol horizontal
+en,tree_max,Maximize the tree
+es,tree_max,Maximizar el árbol
+en,viewer_close,Close
+es,viewer_close,Cerrar
+en,viewer_zoom_in,Zoom in
+es,viewer_zoom_in,Acercar
+en,viewer_zoom_out,Zoom out
+es,viewer_zoom_out,Alejar
+en,viewer_fit,Fit to screen
+es,viewer_fit,Ajustar a la pantalla
+en,viewer_hint,"Scroll or pinch to zoom, drag to move. Click a blue form to choose it; hover or tap a rule to see its change."
+es,viewer_hint,"Desplaza o pellizca para hacer zoom, arrastra para moverte. Haz clic en una forma azul para elegirla; pasa el cursor o toca una regla para ver su cambio."
 en,step_words,Words
 es,step_words,Palabras
 en,words_label,Word or words to evolve
