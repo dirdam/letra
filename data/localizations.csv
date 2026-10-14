@@ -65,6 +65,16 @@ en,shelf_sub,Choose the transformation you want to apply.
 es,shelf_sub,Elige la transformación que quieres aplicar.
 en,words_sub,Type the words you want to transform.
 es,words_sub,Escribe las palabras que quieres transformar.
+en,step_evolution,Words evolution
+es,step_evolution,Evolución de las palabras
+en,evolution_sub,Possible evolutions of the words based on the chosen rule set.
+es,evolution_sub,Posibles evoluciones de las palabras según el conjunto de reglas elegido.
+en,tree_view,Tree layout
+es,tree_view,Disposición del árbol
+en,tree_vertical,Vertical tree
+es,tree_vertical,Árbol vertical
+en,tree_horizontal,Horizontal tree
+es,tree_horizontal,Árbol horizontal
 en,step_words,Words
 es,step_words,Palabras
 en,words_label,Word or words to evolve
