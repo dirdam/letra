@@ -311,6 +311,8 @@
         $('exportCopy').addEventListener('click', () => doExport(true));
         $('exportDownload').addEventListener('click', () => doExport(false));
         $('shareBtn').addEventListener('click', share);
+        document.addEventListener('click', (e) => { if (!$('exportMenu').contains(e.target)) $('exportMenu').open = false; });          // a click anywhere else closes the export menu
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') $('exportMenu').open = false; });
         document.querySelectorAll('#treeView button').forEach((b) => b.addEventListener('click', () => {
             if (S.treeView === b.dataset.view) return;
             S.treeView = b.dataset.view;
