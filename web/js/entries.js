@@ -43,8 +43,7 @@
         const side = (cls, mid, other) => {
             const w = el('span', 'form-text');
             w.appendChild(document.createTextNode(d.pre));
-            if (mid) w.appendChild(el('span', cls, mid));
-            else if (other) w.appendChild(el('span', 'gap', '∅'));
+            if (mid) w.appendChild(el('span', cls, mid));          // an empty side stays empty (no ∅ here)
             w.appendChild(document.createTextNode(d.post));
             return w;
         };

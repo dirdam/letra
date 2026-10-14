@@ -71,7 +71,7 @@
     async function start() {
         els = { form: document.getElementById('stripForm'), rule: document.getElementById('stripRule'), trail: document.getElementById('stripTrail') };
         try {
-            const res = await L.api.transform({ preset: 'sample' }, ['lítteram'], false);
+            const res = await L.api.transform({ preset: 'sample' }, ['lítteram']);
             const r = res.ok && res.data && res.data.results && res.data.results[0];
             if (r && !r.error && r.final.length) {
                 const steps = L.entries.chainFor(r, r.final[0]);

@@ -139,8 +139,8 @@ en,go_to_rule,Show this rule in the rule book
 es,go_to_rule,Mostrar esta regla en el libro de reglas
 en,also_rule,also: {rules}
 es,also_rule,también: {rules}
-en,tree_hint,Each box is a form and each arrow a rule. A form reached by two paths is shown once. Hover or focus a form to highlight its path; click a final form (a blue box or a chip) to see its chain below.
-es,tree_hint,Cada caja es una forma y cada flecha una regla. Una forma alcanzada por dos caminos se muestra una vez. Pasa el cursor o enfoca una forma para resaltar su camino; haz clic en una forma final (una caja azul o una ficha) para ver su cadena debajo.
+en,tree_hint,Each box is a form and each arrow a change, labelled with its rule and the entries of the rule that were applied. A form reached by two paths is shown once. Hover or focus a form to highlight its path; click a final form (a blue box or a chip) to see its chain below.
+es,tree_hint,Cada caja es una forma y cada flecha un cambio, con su regla y las entradas de la regla que se aplicaron. Una forma alcanzada por dos caminos se muestra una vez. Pasa el cursor o enfoca una forma para resaltar su camino; haz clic en una forma final (una caja azul o una ficha) para ver su cadena debajo.
 en,tree_label,Derivation tree of {word}
 es,tree_label,Árbol de derivación de {word}
 en,tree_too_big,This tree is too large to draw; showing the chain instead.

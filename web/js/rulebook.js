@@ -19,7 +19,8 @@
     async function load(set) {
         const key = keyOf(set);
         if (cache.has(key)) { current = { key, data: cache.get(key) }; return current.data; }
-        const res = await L.api.rulebook(set);
+        let res;
+        try { res = await L.api.rulebook(set); } catch (e) { current = null; return { error: 'server' }; }          // network failure
         if (!res.ok || !res.data || res.data.error) {
             current = null;
             return { error: (res.data && res.data.error) || 'server' };

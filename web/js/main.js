@@ -238,7 +238,8 @@
         $('aboutSyntax').innerHTML = I.h('syntax');
         const lang = I.lang;
         if (aboutCache[lang]) { $('aboutContent').innerHTML = aboutCache[lang]; return; }
-        const res = await L.api.about(lang);
+        let res;
+        try { res = await L.api.about(lang); } catch (e) { return; }          // network failure: leave the tab as it is
         if (res.ok && res.data) {
             aboutCache[lang] = res.data.html;
             if (lang === I.lang) $('aboutContent').innerHTML = res.data.html;
