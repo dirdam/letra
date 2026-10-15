@@ -39,7 +39,7 @@ def test_good_file_has_no_issues():
     assert r == {'ok': True, 'issues': []}
 
 
-@pytest.mark.parametrize('name', ['sample', 'LA_ES', 'ES_IPA'])
+@pytest.mark.parametrize('name', ['sample', 'LA_ES', 'ES_IPA', 'ES_Miquitrifi'])
 def test_bundled_rule_files_are_valid(name):
     text = open(os.path.join(TRANSFORMATIONS, f'{name}.json'), encoding='utf-8').read()
     assert validate.check(text)['ok']

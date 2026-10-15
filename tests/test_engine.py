@@ -63,7 +63,7 @@ def test_groups_are_kept_as_lists_of_values():
     assert t.groups_expanded
 
 
-@pytest.mark.parametrize('name', ['sample', 'LA_ES', 'ES_IPA'])
+@pytest.mark.parametrize('name', ['sample', 'LA_ES', 'ES_IPA', 'ES_Miquitrifi'])
 def test_bundled_rule_files_are_already_nfc(name):
     import unicodedata
     text = open(os.path.join(HERE, '..', 'transformations', f'{name}.json'), encoding='utf-8').read()

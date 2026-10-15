@@ -34,7 +34,7 @@ The page is available in English and Spanish.
 | `src/validate.py` | Checks a rules file and reports each problem with its line and column |
 | `server.py` | Flask app: the JSON API and the page |
 | `web/` | The page: `index.html`, `styles.css`, `js/` (one script per concern), `fonts/` |
-| `transformations/` | The bundled rule files (`sample`, `LA_ES`, `ES_IPA`) |
+| `transformations/` | The bundled rule files (`sample`, `LA_ES`, `ES_IPA`, `ES_Miquitrifi`) |
 | `data/` | Page texts (`localizations.csv`, English and Spanish) and the project description |
 | `tests/` | Tests; `golden.json` holds outputs recorded from the engine before the web version |
 | `deploy/letra.service`, `deploy.sh` | systemd unit and deploy script for the server |
