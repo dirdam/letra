@@ -107,14 +107,15 @@
         const head = document.createElement('div');
         head.className = 'rb-rule-head';
         head.appendChild(span('rule-name', name === 'iden' ? I.t('rb_iden') : name));
-        if (name !== 'iden') head.appendChild(span('used-badge', I.t('rb_in_use'), I.t('rb_in_use_title')));      // shown only while the rule is in use
         block.appendChild(head);
         if (name !== 'iden') {
             const ul = document.createElement('ul');
             ul.className = 'rb-entries';
-            entriesFor(name).forEach((entry) => {
+            entriesFor(name).forEach((entry, position) => {
                 const li = document.createElement('li');
+                li.dataset.pos = String(position);
                 li.appendChild(pair(entry));
+                li.appendChild(span('used-badge', I.t('rb_in_use'), I.t('rb_in_use_title')));      // shown only on the rows that are being applied
                 ul.appendChild(li);
             });
             block.appendChild(ul);
@@ -243,9 +244,15 @@
         mark(body, used);
     }
 
-    /* Marks the rules used by the derivations on screen. */
+    /* Marks what the derivations on screen use. `used` maps a rule to the positions of its rows that applied (null: all rows).
+       The rule keeps a `used` class, but the callout and the badge go on the rows themselves, not on the whole rule. */
     function mark(body, used) {
-        body.querySelectorAll('.rb-rule').forEach((el) => el.classList.toggle('used', !!used && used.has(el.dataset.rule)));
+        body.querySelectorAll('.rb-rule').forEach((el) => {
+            const on = !!used && used.has(el.dataset.rule);
+            const rows = on ? used.get(el.dataset.rule) : undefined;
+            el.classList.toggle('used', on);
+            el.querySelectorAll('.rb-entries > li').forEach((li) => li.classList.toggle('used', on && (rows === null || rows.has(Number(li.dataset.pos)))));
+        });
     }
 
     L.rulebook = { load, info, stats, entriesFor, pattern, pair, render, mark };
