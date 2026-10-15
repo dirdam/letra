@@ -118,16 +118,15 @@ kbd { font-family: var(--sans); font-size: 0.72em; opacity: 0.85; padding: 1px 6
 .info:hover, .info:focus-visible { color: var(--ink); }
 
 .book {
-    padding: 7px 18px 8px;
+    padding: 8px 18px;
     font-size: 1.02rem;
     background: var(--glass);
     border: 1px solid var(--line);
-    border-bottom: 3px solid var(--gold-soft);
-    border-radius: 8px 8px 4px 4px;
+    border-radius: 10px;
     transition: background 0.15s, color 0.15s, border-color 0.15s, transform 0.15s;
 }
 .book:hover { border-color: var(--rubric); transform: translateY(-1px); }
-.book[aria-checked="true"] { background: var(--rubric); color: #fff; border-color: var(--rubric); border-bottom-color: var(--gold); }
+.book[aria-checked="true"] { background: var(--rubric); color: #fff; border-color: var(--rubric); }
 .book.empty { border-style: dashed; color: var(--dim); }
 
 /* the workbench: one card holding the folder tabs and the active tab's content (the rule set is a card of its own above it) */
