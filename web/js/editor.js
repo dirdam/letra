@@ -201,7 +201,7 @@
 
     function setText(text, name) {
         els.text.value = text;
-        if (name) S.mineName = name;
+        if (name) { S.mineName = name; els.name.value = name; }
         S.mine = text;
         L.state.saveMine();
         if (hooks.onDraftChange) hooks.onDraftChange();
@@ -365,8 +365,24 @@
         onInput();
     }
 
+    // ---------- the file name (what Download calls the file) ----------
+
+    const DEFAULT_NAME = 'my-rules.json';
+
+    /* A name a file can have anywhere: no path or reserved characters, not empty, ending in .json. */
+    function fileName(text) {
+        const base = text.replace(/[\\/:*?"<>|\u0000-\u001f]/g, '-').trim().replace(/^\.+/, '').replace(/\.json$/i, '');
+        return (base || DEFAULT_NAME.replace(/\.json$/, '')) + '.json';
+    }
+
+    function onName() {
+        S.mineName = els.name.value.trim() ? els.name.value.replace(/[\\/:*?"<>|\u0000-\u001f]/g, '-') : S.mineName;
+        L.state.saveMine();
+        if (hooks.onDraftChange) hooks.onDraftChange();
+    }
+
     function download() {
-        L.exporter.download(els.text.value, 'application/json', S.mineName || 'my-rules.json');
+        L.exporter.download(els.text.value, 'application/json', fileName(S.mineName || DEFAULT_NAME));
     }
 
     async function run() {
@@ -418,7 +434,7 @@
         els = {
             text: $('edText'), hl: $('edHl'), gutter: $('edGutter'), marks: $('edMarks'), note: $('edNote'),
             summary: $('edSummary'), issues: $('edIssues'), copyOf: $('edCopyOf'), file: $('edFile'),
-            panel: $('edPanel'), expand: $('edExpand'),
+            panel: $('edPanel'), expand: $('edExpand'), name: $('edName'),
         };
         els.box = els.text.closest('.editor');
         els.text.value = S.mine;
@@ -432,6 +448,9 @@
         $('edDownload').addEventListener('click', download);
         $('edRun').addEventListener('click', run);
         els.expand.addEventListener('click', () => setFull(!isFull()));
+        els.name.value = S.mineName;
+        els.name.addEventListener('input', onName);
+        els.name.addEventListener('change', () => { S.mineName = fileName(els.name.value); els.name.value = S.mineName; L.state.saveMine(); if (hooks.onDraftChange) hooks.onDraftChange(); });          // leaving the field: the name as it will download
         document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setFull(false); });
         refresh();
         if (S.mine.trim()) validateNow();
