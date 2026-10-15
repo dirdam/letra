@@ -143,7 +143,7 @@
                 <input type="file" id="edFile" accept=".json,application/json" hidden>
                 <p class="hint" id="edNote" role="status"></p>
                 <div class="editor">
-                    <div class="editor-gutter" aria-hidden="true"><div class="editor-nums" id="edGutter"></div></div>
+                    <div class="editor-gutter"><div class="editor-nums" id="edGutter"></div></div>
                     <div class="editor-code">
                         <div class="editor-marks" id="edMarks" aria-hidden="true"></div>
                         <pre class="editor-hl" id="edHl" aria-hidden="true"></pre>
@@ -152,7 +152,7 @@
                     </div>
                 </div>
                 <p class="editor-summary" id="edSummary" role="status"></p>
-                <ul class="issues" id="edIssues"></ul>
+                <ul class="issues sr-only" id="edIssues"></ul>          <!-- for screen readers: the problems are shown as symbols next to the line numbers -->
             </div>
         </section>
             </div>

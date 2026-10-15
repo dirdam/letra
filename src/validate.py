@@ -247,13 +247,13 @@ def _check(text, add, pos, issues):
             for ref in _refs(key):
                 if ref not in all_names:
                     add('error', 'unknown_group', f'Group "{ref}" is not defined.', path, name=ref)
-            # A replacement with no <...> at all is plain text (legal). One that has some, but not as many as
-            # the pattern, probably forgot a <> for a deleted group.
+            # Every <...> of the pattern pairs with the <...> in the same position of the replacement: the same name keeps
+            # it, an empty <> drops it. So both sides need the same number (a plain-text replacement is no exception).
             na, nb = len(_PLACEHOLDER.findall(key)), len(_PLACEHOLDER.findall(value))
-            if nb and nb != na:
+            if nb != na:
                 add('warning', 'placeholder_count',
                     f'"{key}" has {len(_PLACEHOLDER.findall(key))} <…> but its replacement has {len(_PLACEHOLDER.findall(value))}; '
-                    'use <> for a deleted group.', path, key=key, a=len(_PLACEHOLDER.findall(key)), b=len(_PLACEHOLDER.findall(value)))
+                    'each one needs a counterpart (use an empty <> where a group disappears).', path, key=key, a=len(_PLACEHOLDER.findall(key)), b=len(_PLACEHOLDER.findall(value)))
 
     # order: every named rule must exist
     for i, step in enumerate(order):

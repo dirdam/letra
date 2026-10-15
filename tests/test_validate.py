@@ -115,8 +115,10 @@ def test_placeholder_count_mismatch_is_a_warning():
     assert r['ok'] and any(i['code'] == 'placeholder_count' for i in r['issues'])
 
 
-def test_replacing_a_group_by_plain_text_is_fine():
-    assert validate.check('{"groups": {"g": ["a"]}, "rules": {"r": {"<g>b": "c"}}, "order": ["r"]}') == {'ok': True, 'issues': []}
+def test_replacing_a_group_by_plain_text_needs_an_empty_bracket():
+    r = validate.check('{"groups": {"g": ["a"]}, "rules": {"r": {"<g>b": "c"}}, "order": ["r"]}')
+    assert r['ok'] and [i['code'] for i in r['issues']] == ['placeholder_count']
+    assert validate.check('{"groups": {"g": ["a"]}, "rules": {"r": {"<g>b": "<>c"}}, "order": ["r"]}') == {'ok': True, 'issues': []}
 
 
 def test_exponential_groups_are_refused():

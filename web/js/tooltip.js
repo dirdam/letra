@@ -84,9 +84,9 @@
     });
     document.addEventListener('focusin', (e) => { const el = owner(e.target); if (el) show(el, true); });
     document.addEventListener('focusout', hide);
-    document.addEventListener('click', (e) => {          // a tap on an info icon opens its tooltip (no hover on touch screens); a tap elsewhere closes it
+    document.addEventListener('click', (e) => {          // a tap on an info icon or an editor flag opens its tooltip (no hover on touch screens); a tap elsewhere closes it
         const el = owner(e.target);
-        if (el && el.classList.contains('info')) show(el, true); else hide();
+        if (el && (el.classList.contains('info') || el.hasAttribute('data-tip-rich'))) show(el, true); else hide();
     });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') hide(); });
     window.addEventListener('scroll', () => { if (tip && tip.classList.contains('show')) hide(); }, true);          // a bubble that is about to open is not cancelled by a scroll that was already under way
