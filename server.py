@@ -18,7 +18,7 @@ import unicodedata
 import markdown
 from flask import Flask, jsonify, request, send_from_directory
 
-from src import letra, validate
+from src import letra, marks, validate
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 WEB = os.path.join(BASE, 'web')
@@ -124,6 +124,12 @@ def _build(preset=None, rules_text=None):
         raise RulesError('invalid_rules')
 
 
+def _pieces(t, edge):
+    """The pieces of the word the edge's rule replaced, as [[was, now], ...] (see src/marks.py); None if they do not add up to the engine's result."""
+    cut = marks.pieces(t.json_dict['rules'][edge['rule']], edge['from'])
+    return cut if ''.join(now for _, now in cut) == edge['to'] else None
+
+
 def _apply(t, term):
     """Transform one word with an already compiled Transformer."""
     try:
@@ -143,9 +149,9 @@ def _apply(t, term):
         'final': final,
         'all': list(t.transformations),
         'terms': terms,
-        # every change applied, as [step, rule, from, to, entries]: unlike `terms`, keeps all paths when branches meet;
-        # `entries` are the positions of the rule's entries that changed the word
-        'edges': [[e['step'], e['rule'], e['from'], e['to'], e['entries']] for e in t.edges],
+        # every change applied, as [step, rule, from, to, entries, pieces]: unlike `terms`, keeps all paths when branches meet;
+        # `entries` are the positions of the rule's entries that changed the word, `pieces` what they replaced
+        'edges': [[e['step'], e['rule'], e['from'], e['to'], e['entries'], _pieces(t, e)] for e in t.edges],
     }
 
 

@@ -162,7 +162,7 @@ def test_normal_nested_groups_are_fine(client):
 
 def test_transform_returns_edges_as_step_rule_from_to(client):
     data = post(client, preset='sample', term='lítteram').get_json()
-    assert data['edges'] and all(len(e) == 5 and isinstance(e[0], int) for e in data['edges'])
+    assert data['edges'] and all(len(e) == 6 and isinstance(e[0], int) for e in data['edges'])
     first = data['edges'][0]
     assert first[2] == ' lítteram ' and first[1] == 'remove_m'
 

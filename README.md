@@ -52,7 +52,7 @@ python3 -m venv .venv
 
 | Request | Answer |
 | --- | --- |
-| `POST /api/transform` `{"terms": [...], "preset": "sample"}` or `{"terms": [...], "rules": "<rules JSON text>"}` | `{"results": [...], "truncated": false}`: for each word its final forms, every intermediate form, the derivation tree and `edges` (`[step, rule, from, to]`, every change applied). `{"term": "..."}` (one word) answers with that word's result alone |
+| `POST /api/transform` `{"terms": [...], "preset": "sample"}` or `{"terms": [...], "rules": "<rules JSON text>"}` | `{"results": [...], "truncated": false}`: for each word its final forms, every intermediate form, the derivation tree and `edges` (`[step, rule, from, to, entries, pieces]`, every change applied: the rule's entries that changed the word, and the pieces they replaced as `[[was, now], ...]`). `{"term": "..."}` (one word) answers with that word's result alone |
 | `POST /api/rulebook` (`preset` or `rules`) | The steps in order, the rules with their entries, and the members of each group |
 | `POST /api/validate` `{"rules": "..."}` | `{"ok": bool, "issues": [{severity, code, message, params, path, line, col}]}` |
 | `GET /api/presets`, `GET /api/rules/<preset>` | The bundled rule files |

@@ -37,20 +37,71 @@
         };
     }
 
-    /* "was → now" with the part that changed marked. */
-    function changeNode(from, to) {
-        const d = diff(show(from), show(to));
-        const side = (cls, mid, other) => {
+    /* A string as its letters, each with its combining marks (a letter is never split from its mark). */
+    function letters(s) {
+        const out = [];
+        Array.from(s).forEach((ch) => { if (isMark(ch) && out.length) out[out.length - 1] += ch; else out.push(ch); });
+        return out;
+    }
+
+    /* Compares two strings letter by letter (longest common subsequence). For each side: its pieces as {text, changed}.
+       A letter that is on both sides, in the same order, is not marked, even in the middle of what changed around it.
+       The letters are matched from the end, so when one repeats (the "i" of gü → gui in pinguiini) the new copy is the earlier one,
+       next to the other new letters. */
+    function pieces(a, b) {
+        const A = letters(a);
+        const B = letters(b);
+        const common = Array.from({ length: A.length + 1 }, () => new Array(B.length + 1).fill(0));          // common[i][j]: length of the best match of the first i letters of A and the first j of B
+        for (let i = 1; i <= A.length; i++) {
+            for (let j = 1; j <= B.length; j++) common[i][j] = A[i - 1] === B[j - 1] ? common[i - 1][j - 1] + 1 : Math.max(common[i - 1][j], common[i][j - 1]);
+        }
+        const changedA = new Array(A.length).fill(true);
+        const changedB = new Array(B.length).fill(true);
+        let i = A.length;
+        let j = B.length;
+        while (i > 0 && j > 0) {
+            if (A[i - 1] === B[j - 1]) { changedA[--i] = false; changedB[--j] = false; }
+            else if (common[i - 1][j] >= common[i][j - 1]) i--;
+            else j--;
+        }
+        const group = (U, changed) => {
+            const out = [];
+            U.forEach((u, k) => {
+                const last = out[out.length - 1];
+                if (last && last.changed === changed[k]) last.text += u; else out.push({ text: u, changed: changed[k] });
+            });
+            return out;
+        };
+        return { a: group(A, changedA), b: group(B, changedB) };
+    }
+
+    /* The server's pieces ([[was, now], ...]: what the rule replaced) as the two sides' pieces, with the word boundary shown as its mark. */
+    function piecesOf(cut) {
+        const side = (k) => {
+            const texts = cut.map((c) => c[k]);
+            const first = texts.findIndex((t) => t);
+            const last = texts.length - 1 - [...texts].reverse().findIndex((t) => t);
+            if (first >= 0) {
+                texts[first] = texts[first].replace(/^ /, L.state.BOUNDARY);
+                texts[last] = texts[last].replace(/ $/, L.state.BOUNDARY);
+            }
+            return texts.map((text, k2) => ({ text, changed: cut[k2][0] !== cut[k2][1] })).filter((p) => p.text);
+        };
+        return { a: side(0), b: side(1) };
+    }
+
+    /* "was → now" with only what the rule replaced marked. `cut` is the server's pieces for the step; without them the two words are compared. */
+    function changeNode(from, to, cut) {
+        const p = cut ? piecesOf(cut) : pieces(show(from), show(to));
+        const side = (cls, list) => {
             const w = el('span', 'form-text');
-            w.appendChild(document.createTextNode(d.pre));
-            if (mid) w.appendChild(el('span', cls, mid));          // an empty side stays empty (no ∅ here)
-            w.appendChild(document.createTextNode(d.post));
+            list.forEach((piece) => w.appendChild(piece.changed ? el('span', cls, piece.text) : document.createTextNode(piece.text)));
             return w;
         };
         const wrap = el('span', 'change');
-        wrap.appendChild(side('del', d.aMid, d.bMid));
+        wrap.appendChild(side('del', p.a));
         wrap.appendChild(el('span', 'arrow', ' → '));
-        wrap.appendChild(side('ins', d.bMid, d.aMid));
+        wrap.appendChild(side('ins', p.b));
         return wrap;
     }
 
@@ -66,7 +117,7 @@
             const alsoApplied = {};          // for each of the other rules that give the same result: the entries of it that applied (null: unknown)
             alsoEdges.forEach((e) => { alsoApplied[e[1]] = e[4] == null || alsoApplied[e[1]] === null ? null : [...new Set([...(alsoApplied[e[1]] || []), ...e[4]])]; });
             const edge = r.edges.find((e) => e[1] === info.rule && e[2] === info.mother && e[3] === cur);
-            steps.push({ rule: info.rule, from: info.mother, to: cur, also, alsoApplied, applied: edge ? edge[4] : null });
+            steps.push({ rule: info.rule, from: info.mother, to: cur, also, alsoApplied, applied: edge ? edge[4] : null, pieces: edge ? edge[5] : null });
             cur = info.mother;
         }
         return steps.reverse();
@@ -114,7 +165,7 @@
                 });
                 body.appendChild(ul);
             }
-            body.appendChild(changeNode(st.from, st.to));
+            body.appendChild(changeNode(st.from, st.to, st.pieces));
             li.appendChild(body);
             ol.appendChild(li);
         });
@@ -260,5 +311,5 @@
         announceUsed();
     }
 
-    L.entries = { renderAll, chainFor, selectedOf, used, diff, show, plain, handlers };
+    L.entries = { renderAll, chainFor, selectedOf, used, diff, pieces, show, plain, handlers };
 })();
