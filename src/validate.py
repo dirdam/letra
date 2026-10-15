@@ -18,7 +18,6 @@ from src import description, letra
 MAX_ITEMS = 1000            # entries in each of groups / rules / order
 MAX_GROUP_VALUES = 20000    # expanded size of any one group
 
-_COMMENT = re.compile(r'//[^\n]*')
 _PLACEHOLDER = re.compile(r'<([^<>]*)>')
 _BALANCED = re.compile(r'^[^<>]*(?:<[^<>]*>[^<>]*)*$')
 _LITERAL = re.compile(r'-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?|true|false|null')
@@ -26,7 +25,7 @@ _LITERAL = re.compile(r'-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?|true|false|null')
 
 def blank_comments(text):
     """Replace every // comment by spaces of the same length (newlines are kept)."""
-    return _COMMENT.sub(lambda m: ' ' * len(m.group(0)), text)
+    return letra.strip_comments(text, keep_length=True)
 
 
 def group_sizes(groups):

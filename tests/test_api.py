@@ -296,3 +296,10 @@ def test_without_a_description_the_rule_book_says_none(client):
 def test_bundled_sets_get_their_description_from_their_own_file(client, preset):
     d = client.post('/api/rulebook', json={'preset': preset}).get_json()['description']
     assert d and all(d.values())          # (a plain list, as in ES_Miquitrifi, is the key '*': for every language)
+
+
+def test_uploaded_rules_may_have_a_link_with_double_slashes_in_a_string(client):
+    rules = '{"description": ["[a](https://example.org/x)"], "groups": {}, "rules": {"r": {"a": "b"}}, "order": ["r"]} // done'
+    d = client.post('/api/rulebook', json={'rules': rules}).get_json()
+    assert d['description'] == {'*': ['<a href="https://example.org/x" target="_blank" rel="noopener noreferrer">a</a>']}
+    assert post(client, rules=rules, term='a').get_json()['final'] == [' b ']

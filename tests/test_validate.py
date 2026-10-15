@@ -190,3 +190,9 @@ def test_a_group_is_used_when_a_used_group_includes_it_but_not_when_only_an_unus
     assert unused_groups(used) == []
     unused = '{"groups": {"a": ["x"], "ab": ["<a>", "y"], "v": ["z"]}, "rules": {"r": {"<v>": "<v>"}}, "order": ["r"]}'
     assert unused_groups(unused) == ['a', 'ab']
+
+
+def test_a_link_in_the_description_is_not_taken_for_a_comment():
+    text = '{\n  "description": ["see [it](https://example.org/a)"], // a real comment\n  "groups": {},\n  "rules": {"r": {"a": "b"}},\n  "order": ["r", "ghost"]\n}'
+    i = issue(text, 'unknown_rule_in_order')
+    assert i['line'] == 5 and validate.check(text.replace(', "ghost"', ''))['issues'] == []
