@@ -91,12 +91,6 @@ en,explain_mine,"Your own rules, written or opened in the Editor. They stay in t
 es,explain_mine,"Tus propias reglas, escritas o abiertas en el Editor. Se quedan en este navegador."
 en,set_stats,{groups} groups · {rules} rules · {steps} steps
 es,set_stats,{groups} grupos · {rules} reglas · {steps} pasos
-en,open_rulebook,Open rule book
-es,open_rulebook,Abrir libro de reglas
-en,edit_copy,Edit a copy
-es,edit_copy,Editar una copia
-en,edit_mine,Edit these rules
-es,edit_mine,Editar estas reglas
 en,export,Export
 es,export,Exportar
 en,export_what,What
@@ -241,6 +235,14 @@ en,ed_replace_q,Replace what is in the editor?
 es,ed_replace_q,¿Reemplazar lo que hay en el editor?
 en,ed_replace_yes,Replace
 es,ed_replace_yes,Reemplazar
+en,ed_replace_body,The rules you have in the editor will be replaced by the new content.
+es,ed_replace_body,Las reglas que tienes en el editor se reemplazarán por el contenido nuevo.
+en,ed_replace_unsaved,You have not downloaded the current file yet. If you want to keep it: download it before replacing.
+es,ed_replace_unsaved,Aún no has descargado el archivo actual. Si quieres conservarlo: descárgalo antes de reemplazar.
+en,ed_save_first,Download current file
+es,ed_save_first,Descargar el archivo actual
+en,ed_replace_saved,Downloaded as {name}. You can replace it now.
+es,ed_replace_saved,Descargado como {name}. Ya puedes reemplazarlo.
 en,ed_empty,Write or open rules to start.
 es,ed_empty,Escribe o abre reglas para empezar.
 en,ed_checking,Checking…
