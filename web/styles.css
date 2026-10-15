@@ -77,12 +77,12 @@ kbd { font-family: var(--sans); font-size: 0.72em; opacity: 0.85; padding: 1px 6
 .logo { display: inline-flex; align-items: baseline; justify-content: center; line-height: 0.9; }
 .initial {
     font-weight: 700;
-    font-size: 5.6rem;
+    font-size: 4.6rem;          /* the five letters are the same size (.logo-rest too) */
     color: var(--rubric);
     -webkit-text-stroke: 0.7px var(--gold);
     text-shadow: 3px 3px 0 var(--gold-soft);
 }
-.logo-rest { font-size: 2.5rem; letter-spacing: 0.2em; margin-left: 4px; font-variant: small-caps; }
+.logo-rest { font-size: 4.6rem; letter-spacing: 0.08em; margin-left: 4px; font-variant: small-caps; font-weight: 700; color: var(--rubric); -webkit-text-stroke: 0.7px var(--gold); text-shadow: 3px 3px 0 var(--gold-soft); }          /* exactly the initial's lettering, at the same size */
 .acronym { margin-top: 6px; font-size: 1.25rem; letter-spacing: 0.06em; font-variant: small-caps; }
 .acronym b { color: var(--rubric); font-weight: 700; }
 .tagline { margin-top: 4px; color: var(--dim); font-style: italic; }
@@ -468,8 +468,7 @@ footer a:hover { text-decoration: underline; }
     body { font-size: 17px; }
     .search-row .words { height: 52px; padding: 0 14px; font-size: 1.3rem; }
     .search-row .btn { height: 52px; padding: 0 18px; }
-    .initial { font-size: 4.2rem; }
-    .logo-rest { font-size: 1.9rem; }
+    .initial, .logo-rest { font-size: 3.4rem; }
     .strip-form { font-size: 2.1rem; }
     .panel { padding: 16px; }
     .entry { padding: 14px 14px 16px; }
