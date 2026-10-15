@@ -1,6 +1,13 @@
 import os
 import re
 
+STRING_OR_COMMENT = re.compile(r'("(?:[^"\\\n]|\\.)*")|//[^\n]*') # A "string" (kept as it is) or a `//` comment (to the end of the line)
+
+def strip_comments(text, keep_length=False):
+    '''Removes the `//` comments of a rules text. A `//` inside a "string" (such as in a link) is not a comment.
+    With `keep_length` the comments are blanked with spaces instead, so lines and columns still match the original text.'''
+    return STRING_OR_COMMENT.sub(lambda m: m.group(1) or (' ' * len(m.group(0)) if keep_length else ''), text)
+
 class Transformer():
     '''Class to handle all transformations.'''
     json_dict_original = {} # Dictionary with all changes (with original names)
@@ -44,9 +51,9 @@ class Transformer():
         # print(json_dict)
         if json_path != '':
             with open(json_path, 'r', encoding='utf-8') as raw_file:
-                json_content = re.sub(r'(?://[^\n]*)', '', raw_file.read())
+                json_content = strip_comments(raw_file.read())
         else:
-            json_content = re.sub(r'(?://[^\n]*)', '', json_dict)
+            json_content = strip_comments(json_dict)
         # Load as json dict
         return json.loads(json_content)
 
