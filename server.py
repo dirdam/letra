@@ -91,7 +91,7 @@ def _normalize(text):
 def _check_rules_text(text):
     """Cheap structural checks on a user-supplied rules file, before the engine compiles it."""
     try:
-        data = json.loads(re.sub(r'(?://[^\n]*)', '', text))  # same comment stripping as the engine
+        data = json.loads(letra.strip_comments(text))  # the engine's own comment stripping
     except ValueError:
         raise RulesError('invalid_json')
     if not isinstance(data, dict) or any(k not in data for k in ('groups', 'rules', 'order')):

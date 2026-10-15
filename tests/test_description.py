@@ -3,7 +3,7 @@ import json
 
 import pytest
 
-from src import description, validate
+from src import description, letra, validate
 
 
 def test_a_list_is_for_every_language_and_an_object_has_one_list_per_language():
@@ -39,17 +39,11 @@ def test_the_validator_warns_about_a_description_of_the_wrong_shape_and_not_abou
         assert r['ok'] and [(i['severity'], i['code']) for i in r['issues']] == [('warning', 'description_type')]
 
 
-@pytest.mark.parametrize('name', ['sample', 'LA_ES', 'ES_IPA'])
+@pytest.mark.parametrize('name', ['sample', 'LA_ES', 'ES_IPA', 'ES_Miquitrifi'])
 def test_every_bundled_set_describes_itself_in_both_languages(name):
-    import os, re
+    import os
     text = open(os.path.join(os.path.dirname(__file__), '..', 'transformations', f'{name}.json'), encoding='utf-8').read()
-    data = json.loads(re.sub(r'(?://[^\n]*)', '', text))
+    data = json.loads(letra.strip_comments(text))
     html = description.to_html(data['description'])
     assert set(html) == {'en', 'es'} and all(html[lang] for lang in html)
 
-
-def test_a_plain_list_description_is_shown_in_every_language():
-    import os, re
-    text = open(os.path.join(os.path.dirname(__file__), '..', 'transformations', 'ES_Miquitrifi.json'), encoding='utf-8').read()
-    html = description.to_html(json.loads(re.sub(r'(?://[^\n]*)', '', text))['description'])
-    assert list(html) == ['*'] and html['*']

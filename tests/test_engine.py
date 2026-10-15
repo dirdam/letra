@@ -87,3 +87,23 @@ def test_halagueno_applies_only_one_entry_of_its_rule():
         assert e['entries'] and all(0 <= n < len(entries) for n in e['entries'])
     g = [e for e in t.edges if e['rule'] == 'g']
     assert g and len(g[0]['entries']) == 1 and list(original['g'].items())[g[0]['entries'][0]][0].startswith('gü')
+
+
+# ---------- comments: a // inside a "string" is not one ----------
+
+def test_a_double_slash_inside_a_string_is_kept_and_a_comment_after_it_is_dropped():
+    text = '{"a": "see https://example.org/x", // a comment with "quotes" and https://too.org\n "b": 1}'
+    assert json.loads(letra.strip_comments(text)) == {'a': 'see https://example.org/x', 'b': 1}
+
+
+def test_blanking_comments_keeps_lines_and_columns_and_the_strings():
+    text = '{"a": "x//y", // c\n"b": "\\"//"} // end'
+    blank = letra.strip_comments(text, keep_length=True)
+    assert len(blank) == len(text) and blank.count('\n') == text.count('\n')
+    assert '"x//y"' in blank and '"\\"//"' in blank and 'c' not in blank.split('\n')[0][10:] and blank.rstrip().endswith('}')
+
+
+def test_rules_with_a_link_in_their_description_load():
+    t = letra.Transformer('{"description": ["[x](https://example.org/a//b)"], "groups": {}, "rules": {"r": {"a": "b"}}, "order": ["r"]}')
+    assert t.transform('a') == [' b ']
+    assert t.json_dict_original['description'] == ['[x](https://example.org/a//b)']

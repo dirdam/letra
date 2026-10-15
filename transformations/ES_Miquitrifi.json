@@ -1,7 +1,8 @@
 {
-  "description": [
-    "Convierte todas las palabras en palabras pronunciadas únicamente con la `i`."
-  ],
+  "description": {
+    "es": ["Convierte todas las palabras en palabras pronunciadas únicamente con la `i`."],
+    "en": ["Converts every Spanish word into the same word pronounced only using the letter `i`."]
+  },
   "groups": {
     "vocal_átona": ["a", "e", "i", "o"],
     "vocal_tónica": ["á", "é", "í", "ó"],

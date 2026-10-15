@@ -215,7 +215,7 @@ en,ed_howto,"A rules file is **JSON that also allows `//` comments**. It has thr
     - `<g1|g2>`: either group. `<g*>`: any run of its members. `<g=>`: the same member twice (`<g==>` three times).
     - A leading space is the start of the word, a trailing space is its end.
 - **`order`**: the rule names in the order they apply. `""rule_a|rule_b""` means only one of the two applies.
-- **`description`** (optional): a list of texts in Markdown, shown as bullets under the set's name in Evolve: `""description"": [""First **point**."", ""Second point.""]`. For one list per language use `""description"": {""en"": [...], ""es"": [...]}`. In a link write the slashes as `\/\/` (`https:\/\/…`), because `//` starts a comment.
+- **`description`** (optional): a list of texts in Markdown, shown as bullets under the set's name in Evolve: `""description"": [""First **point**."", ""Second point.""]`. For one list per language use `""description"": {""en"": [...], ""es"": [...]}`.
 
 Example: `""<cons>í<cons>"": ""<cons>é<cons>""` changes a stressed **í** between consonants into **é**."
 es,ed_howto,"Un archivo de reglas es **JSON que además admite comentarios `//`**. Tiene tres secciones, todas obligatorias:
@@ -230,7 +230,7 @@ es,ed_howto,"Un archivo de reglas es **JSON que además admite comentarios `//`*
     - `<g1|g2>`: cualquiera de los dos grupos. `<g*>`: una secuencia de miembros. `<g=>`: el mismo miembro dos veces (`<g==>` tres veces).
     - Un espacio al principio es el inicio de la palabra y un espacio al final es su fin.
 - **`order`**: los nombres de las reglas en el orden en que se aplican. `""regla_a|regla_b""` significa que solo se aplica una de las dos.
-- **`description`** (opcional): una lista de textos en Markdown, que se muestran como viñetas bajo el nombre del conjunto en Evolucionar: `""description"": [""Primer **punto**."", ""Segundo punto.""]`. Para una lista por idioma usa `""description"": {""en"": [...], ""es"": [...]}`. En un enlace escribe las barras como `\/\/` (`https:\/\/…`), porque `//` empieza un comentario.
+- **`description`** (opcional): una lista de textos en Markdown, que se muestran como viñetas bajo el nombre del conjunto en Evolucionar: `""description"": [""Primer **punto**."", ""Segundo punto.""]`. Para una lista por idioma usa `""description"": {""en"": [...], ""es"": [...]}`.
 
 Ejemplo: `""<cons>í<cons>"": ""<cons>é<cons>""` cambia una **í** tónica entre consonantes por **é**."
 en,ed_replace_q,Replace what is in the editor?
