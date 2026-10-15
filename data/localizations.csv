@@ -195,6 +195,10 @@ en,ed_expand,Edit in full page
 es,ed_expand,Editar a página completa
 en,ed_collapse,Exit full page
 es,ed_collapse,Salir de página completa
+en,ed_filename,File name
+es,ed_filename,Nombre del archivo
+en,ed_filename_placeholder,my-rules.json
+es,ed_filename_placeholder,mis-reglas.json
 en,ed_format,Format
 es,ed_format,Dar formato
 en,ed_run,Run
