@@ -379,8 +379,34 @@
     }
 
     /* Text of the "edit a copy" button and its availability, for the set now in use. */
+    // ---------- full page ----------
+
+    const COLLAPSE_ICON = ['m14 10 7-7', 'M20 10h-6V4', 'm3 21 7-7', 'M4 14h6v6'];          // Lucide "minimize-2"; the tree viewer's expand icon is "maximize-2"
+
+    const isFull = () => els.panel.classList.contains('editor-full');
+
+    function renderExpand() {
+        const label = I.t(isFull() ? 'ed_collapse' : 'ed_expand');
+        els.expand.textContent = '';
+        els.expand.appendChild(L.viewer.icon(isFull() ? COLLAPSE_ICON : L.viewer.ICONS.max));
+        els.expand.setAttribute('aria-label', label);
+        els.expand.setAttribute('data-tip', label);
+        els.expand.setAttribute('aria-pressed', String(isFull()));
+    }
+
+    /* The editor panel (title, buttons, notes, editor, summary) fills the window; the page behind does not scroll, as in the tree viewer. */
+    function setFull(on) {
+        if (!els || isFull() === on) return;
+        els.panel.classList.toggle('editor-full', on);
+        document.documentElement.classList.toggle('viewer-open', on);
+        renderExpand();
+        sync();
+        if (on) els.text.focus();
+    }
+
     function refresh() {
         if (!els) return;
+        renderExpand();
         const isPreset = S.setId !== 'mine';
         els.copyOf.hidden = !isPreset;
         if (isPreset && hooks.setLabel) els.copyOf.textContent = I.fmt('ed_copy_of', { set: hooks.setLabel(S.setId) });
@@ -392,6 +418,7 @@
         els = {
             text: $('edText'), hl: $('edHl'), gutter: $('edGutter'), marks: $('edMarks'), note: $('edNote'),
             summary: $('edSummary'), issues: $('edIssues'), copyOf: $('edCopyOf'), file: $('edFile'),
+            panel: $('edPanel'), expand: $('edExpand'),
         };
         els.box = els.text.closest('.editor');
         els.text.value = S.mine;
@@ -404,9 +431,11 @@
         $('edFormat').addEventListener('click', format);
         $('edDownload').addEventListener('click', download);
         $('edRun').addEventListener('click', run);
+        els.expand.addEventListener('click', () => setFull(!isFull()));
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setFull(false); });
         refresh();
         if (S.mine.trim()) validateNow();
     }
 
-    L.editor = { init, refresh, run, fork, hooks, validateNow, highlight, formatText, setText, focus: () => els && els.text.focus() };
+    L.editor = { init, refresh, run, fork, hooks, validateNow, highlight, formatText, setText, collapse: () => setFull(false), focus: () => els && els.text.focus() };
 })();
