@@ -392,10 +392,16 @@ summary.btn::-webkit-details-marker { display: none; }
 
 /* ---------- editor ---------- */
 .editor-actions { display: flex; flex-wrap: wrap; gap: 8px; }
-.editor { position: relative; display: grid; grid-template-columns: 48px minmax(0, 1fr); height: 62vh; min-height: 360px; max-height: 720px; background: #fffdf6; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.editor { position: relative; display: grid; grid-template-columns: 56px minmax(0, 1fr); height: 62vh; min-height: 360px; max-height: 720px; background: #fffdf6; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
 .editor-gutter, .editor-hl, .editor-text, .editor-marks { font-family: var(--mono); font-size: 14px; line-height: 22px; tab-size: 2; }
 .editor-gutter { color: var(--dim); background: rgba(110, 70, 30, 0.07); border-right: 1px solid var(--line); overflow: hidden; user-select: none; }
-.editor-nums { padding: 12px 8px 12px 0; text-align: right; white-space: pre; will-change: transform; }
+.editor-nums { padding: 12px 0; white-space: pre; will-change: transform; }
+.editor-gutter .ln { display: flex; align-items: center; height: 22px; padding: 0 8px 0 5px; }
+.editor-gutter .ln-num { margin-left: auto; }
+.editor-gutter .flag { display: inline-flex; align-items: center; height: 22px; padding: 0; line-height: 0; background: none; border: 0; cursor: help; color: inherit; }
+.editor-gutter .flag .icon { width: 15px; height: 15px; }
+.editor-gutter .flag:focus-visible { outline: none; box-shadow: var(--focus); border-radius: 4px; }
+.tip > div + div { margin-top: 4px; }
 .editor-gutter .ln.error { color: var(--danger); font-weight: 700; }
 .editor-gutter .ln.warning { color: var(--gold-text); font-weight: 700; }
 .editor-code { position: relative; overflow: hidden; }

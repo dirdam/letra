@@ -54,19 +54,56 @@
         const text = els.text.value;
         els.hl.innerHTML = highlight(text);
         const lines = text.split('\n').length;
-        const bad = new Map();
-        last.issues.forEach((i) => { if (bad.get(i.line) !== 'error') bad.set(i.line, i.severity); });
-        let nums = '';
-        for (let n = 1; n <= lines; n++) nums += '<span class="ln ' + (bad.get(n) || '') + '">' + n + '</span>\n';
-        els.gutter.innerHTML = nums;
+        const byLine = new Map();          // line -> its issues
+        last.issues.forEach((i) => { if (!byLine.has(i.line)) byLine.set(i.line, []); byLine.get(i.line).push(i); });
+        const severityOf = (issues) => (issues.some((i) => i.severity === 'error') ? 'error' : 'warning');
+        els.gutter.textContent = '';
+        for (let n = 1; n <= lines; n++) {
+            const issues = byLine.get(n);
+            const row = document.createElement('div');
+            row.className = 'ln ' + (issues ? severityOf(issues) : '');
+            if (issues) row.appendChild(flag(issues));
+            const num = document.createElement('span');
+            num.className = 'ln-num';
+            num.setAttribute('aria-hidden', 'true');
+            num.textContent = String(n);
+            row.appendChild(num);
+            els.gutter.appendChild(row);
+        }
         els.marks.textContent = '';
-        bad.forEach((severity, line) => {
+        byLine.forEach((issues, line) => {
             const m = document.createElement('div');
-            m.className = 'mark ' + severity;
+            m.className = 'mark ' + severityOf(issues);
             m.style.top = (PAD + (line - 1) * LINE) + 'px';
             els.marks.appendChild(m);
         });
         sync();
+    }
+
+    // Lucide "circle-alert" (an error) and "triangle-alert" (a warning)
+    const FLAG_ICON = {
+        error: '<circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/>',
+        warning: '<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/>',
+    };
+
+    /* The alert symbol next to a line number; its tooltip (hover, tap or focus) gives the message of every issue on that line. */
+    function flag(issues) {
+        const severity = issues.some((i) => i.severity === 'error') ? 'error' : 'warning';
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'flag ' + severity;
+        b.innerHTML = '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + FLAG_ICON[severity] + '</svg>';
+        b.setAttribute('aria-label', issues.map(issueText).join(' '));
+        L.tooltip.rich(b, () => {
+            const box = document.createElement('div');
+            issues.forEach((i) => {
+                const p = document.createElement('div');
+                p.textContent = issueText(i);
+                box.appendChild(p);
+            });
+            return box;
+        });
+        return b;
     }
 
     // ---------- validation ----------
