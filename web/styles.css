@@ -130,9 +130,8 @@ kbd { font-family: var(--sans); font-size: 0.72em; opacity: 0.85; padding: 1px 6
 .book[aria-checked="true"] { background: var(--rubric); color: #fff; border-color: var(--rubric); border-bottom-color: var(--gold); }
 .book.empty { border-style: dashed; color: var(--dim); }
 
-/* the workbench: one card holding the rule set, folder tabs and the active tab's content */
+/* the workbench: one card holding the folder tabs and the active tab's content (the rule set is a card of its own above it) */
 .workbench { --wb-bg: #fcf7e9; padding: 0; background: var(--wb-bg); -webkit-backdrop-filter: none; backdrop-filter: none; }
-.workbench .shelf { padding: 16px 22px 14px; background: rgba(110, 70, 30, 0.06); border-radius: 15px 15px 0 0; }
 .tabs { display: flex; gap: 6px; padding: 12px 22px 0; border-bottom: 1px solid var(--line); overflow-x: auto; scrollbar-width: none; }
 .tabs::-webkit-scrollbar { display: none; }
 .tab {
@@ -486,7 +485,6 @@ footer a:hover { text-decoration: underline; }
     .strip-trail { display: none; }
     .tabs { gap: 4px; padding-left: 14px; padding-right: 14px; }
     .tab { gap: 6px; padding: 8px 10px 9px; }
-    .workbench .shelf { padding: 14px 16px 12px; }
     .hero { padding-top: 44px; }
 }
 
