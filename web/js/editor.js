@@ -123,6 +123,9 @@
         else summary = [errors ? I.count('ed_errors', errors) : '', warnings ? I.count('ed_warnings', warnings) : ''].filter(Boolean).join(' · ');
         els.summary.textContent = summary;
         els.summary.className = 'editor-summary ' + (errors ? 'bad' : last.checked && els.text.value.trim() ? 'good' : '');
+        // the coloured line on the editor's left: red with errors, amber with warnings, green when valid; it keeps its colour while a new check runs
+        if (!els.text.value.trim()) delete els.box.dataset.state;
+        else if (last.checked) els.box.dataset.state = errors ? 'error' : warnings ? 'warning' : 'ok';
         els.issues.textContent = '';
         last.issues.forEach((i) => {
             const li = document.createElement('li');
@@ -390,6 +393,7 @@
             text: $('edText'), hl: $('edHl'), gutter: $('edGutter'), marks: $('edMarks'), note: $('edNote'),
             summary: $('edSummary'), issues: $('edIssues'), copyOf: $('edCopyOf'), file: $('edFile'),
         };
+        els.box = els.text.closest('.editor');
         els.text.value = S.mine;
         els.text.addEventListener('input', onInput);
         els.text.addEventListener('scroll', sync);
