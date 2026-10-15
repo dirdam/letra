@@ -22,7 +22,7 @@ The set of rules used to transform the script. It will be given as a _**json** f
   - `!` can be used in front of a `character` or a `<group_name>` to exclude it from the list.
 - **`rules`**: transformation rules; what (_source side_) transforms into what (_transformed side_). 
   - Each rule must be given a name.
-  - All transformations included under the same rule apply at the same time.
+  - The transformations of a rule apply one after another, in the order they are written.
   - Plain `characters` mean those exact characters.
   - `groups` can be called using `<group_name>`.
     - The number of brackets (`<>`) used on both sides of the definition must be the same. If a group disappears on the _transformed side_ it should still be represented by the empty brackets `<>` .
