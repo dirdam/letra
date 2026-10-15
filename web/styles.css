@@ -391,7 +391,10 @@ summary.btn::-webkit-details-marker { display: none; }
 .rb-group .members { display: block; flex: 1 1 0; min-width: 0; font-size: 0.95rem; color: var(--dim); overflow-wrap: anywhere; }
 
 /* ---------- editor ---------- */
-.editor-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.editor-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+/* the editor panel in full page: everything in it stays, the editor takes the room that is left */
+.wb-card .panel.editor-full { position: fixed; inset: 0; z-index: 55; display: flex; flex-direction: column; padding: 14px 18px; background: var(--wb-bg); overflow: auto; overscroll-behavior: contain; }
+.editor-full .editor { flex: 1; height: auto; min-height: 0; max-height: none; }
 .editor { position: relative; display: grid; grid-template-columns: 56px minmax(0, 1fr); height: 62vh; min-height: 360px; max-height: 720px; background: #fffdf6; border: 1px solid var(--line); border-left-width: 5px; border-radius: 12px; overflow: hidden; transition: border-left-color 0.2s; }      /* the thick left line shows the validation state */
 .editor[data-state="error"] { border-left-color: var(--danger); }
 .editor[data-state="warning"] { border-left-color: var(--gold); }

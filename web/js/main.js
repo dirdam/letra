@@ -228,7 +228,7 @@
         });
         if (name === 'rulebook') renderRulebookTab();
         if (name === 'about') renderAbout();
-        if (name === 'editor') L.editor.refresh();
+        if (name === 'editor') L.editor.refresh(); else L.editor.collapse();
         ST.writeHash();
     }
 

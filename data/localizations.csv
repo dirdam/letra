@@ -203,6 +203,10 @@ en,ed_copy_of,Edit a copy of {set}
 es,ed_copy_of,Editar una copia de {set}
 en,ed_open,Open file…
 es,ed_open,Abrir archivo…
+en,ed_expand,Edit in full page
+es,ed_expand,Editar a página completa
+en,ed_collapse,Exit full page
+es,ed_collapse,Salir de página completa
 en,ed_format,Format
 es,ed_format,Dar formato
 en,ed_run,Run
