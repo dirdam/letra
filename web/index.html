@@ -65,10 +65,6 @@
             <details class="panel setinfo" id="setInfo">
                 <summary><span class="set-name" id="setTitle"></span><span class="set-stats" id="setStats"></span></summary>
                 <div class="explain" id="setExplain"></div>
-                <div class="set-actions">
-                    <button type="button" class="btn small" id="setToRulebook" data-i18n="open_rulebook"></button>
-                    <button type="button" class="btn small" id="setToEditor" data-i18n="edit_copy"></button>
-                </div>
             </details>
 
             <div class="panel evolution" id="evolution">
@@ -133,7 +129,6 @@
                         <button type="button" class="btn small has-icon" id="edFormat"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 5H3"/><path d="M21 12H8"/><path d="M21 19H8"/><path d="M3 12v7"/></svg><span data-i18n="ed_format"></span></button>
                         <button type="button" class="btn small has-icon" id="edDownload"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/></svg><span data-i18n="download"></span></button>
                         <button type="button" class="btn small primary has-icon" id="edRun"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"/></svg><span data-i18n="ed_run"></span></button>
-                        <button type="button" class="icon-btn" id="edExpand"></button>          <!-- full page; its icon and label are set by editor.js -->
                     </div>
                 </div>
                 <p class="hint" data-i18n-html="ed_comments_note"></p>
@@ -144,6 +139,7 @@
                 <div class="ed-name">
                     <label for="edName" data-i18n="ed_filename"></label>
                     <input id="edName" class="field" type="text" maxlength="100" spellcheck="false" autocapitalize="off" autocomplete="off" data-i18n="ed_filename_placeholder" data-i18n-attr="placeholder">
+                    <button type="button" class="icon-btn" id="edExpand"></button>          <!-- full page; its icon and label are set by editor.js -->
                 </div>
                 <input type="file" id="edFile" accept=".json,application/json" hidden>
                 <p class="hint" id="edNote" role="status"></p>

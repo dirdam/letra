@@ -201,6 +201,7 @@
 
     function setText(text, name) {
         els.text.value = text;
+        savedText = text;          // it comes from a file or a bundled set: nothing to lose until it is edited
         if (name) { S.mineName = name; els.name.value = name; }
         S.mine = text;
         L.state.saveMine();
@@ -220,24 +221,90 @@
         scheduleValidate();
     }
 
-    function confirmReplace(onYes) {
-        els.note.textContent = '';
-        const span = document.createElement('span');
-        span.textContent = I.t('ed_replace_q') + ' ';
-        const yes = document.createElement('button');
-        yes.type = 'button';
-        yes.className = 'btn small primary';
-        yes.textContent = I.t('ed_replace_yes');
+    // ---------- replacing what is in the editor ----------
+
+    const DOWNLOAD_ICON = ['M12 15V3', 'M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4', 'm7 10 5 5 5-5'];          // Lucide "download"
+    let savedText = null;          // the text as it was last downloaded or loaded from a file or a bundled set; null: not yet
+    const isSaved = () => savedText !== null && savedText === els.text.value;
+
+    /* A modal over a semi-transparent backdrop: the text in the editor is about to be replaced. If it has not been downloaded
+       since it last changed, it says so and offers to download it first. `onYes` runs only on "Replace". */
+    function askReplace(onYes) {
+        const previous = document.activeElement;
+        const back = document.createElement('div');
+        back.className = 'modal-backdrop';
+        const box = document.createElement('div');
+        box.className = 'modal';
+        box.setAttribute('role', 'alertdialog');
+        box.setAttribute('aria-modal', 'true');
+        const title = document.createElement('h3');
+        title.className = 'modal-title';
+        title.id = 'edModalTitle';
+        title.textContent = I.t('ed_replace_q');
+        box.setAttribute('aria-labelledby', title.id);
+        const body = document.createElement('p');
+        body.textContent = I.t('ed_replace_body');
+        box.appendChild(title);
+        box.appendChild(body);
+        let save = null;
+        if (!isSaved()) {
+            const warn = document.createElement('p');
+            warn.className = 'modal-warn';
+            warn.textContent = I.t('ed_replace_unsaved');
+            save = document.createElement('button');
+            save.type = 'button';
+            save.className = 'btn has-icon modal-save';
+            const icon = L.viewer.icon(DOWNLOAD_ICON);
+            icon.setAttribute('class', 'icon');          // sized and outlined like the icons of the other buttons
+            ['fill:none', 'stroke:currentColor', 'stroke-width:2', 'stroke-linecap:round', 'stroke-linejoin:round'].forEach((a) => icon.setAttribute(a.split(':')[0], a.split(':')[1]));
+            save.appendChild(icon);
+            save.appendChild(document.createTextNode(I.t('ed_save_first')));
+            save.addEventListener('click', () => {
+                download();
+                warn.textContent = I.fmt('ed_replace_saved', { name: fileName(S.mineName || DEFAULT_NAME) });
+                warn.classList.remove('modal-warn');
+                save.remove();
+            });
+            box.appendChild(warn);
+        }
+        const actions = document.createElement('div');
+        actions.className = 'modal-actions';
+        if (save) actions.appendChild(save);          // on the left; Cancel and Replace on the right
         const no = document.createElement('button');
         no.type = 'button';
-        no.className = 'btn small';
+        no.className = 'btn';
         no.textContent = I.t('cancel');
-        yes.addEventListener('click', () => { els.note.textContent = ''; onYes(); });
-        no.addEventListener('click', () => { els.note.textContent = ''; });
-        els.note.appendChild(span);
-        els.note.appendChild(yes);
-        els.note.appendChild(document.createTextNode(' '));
-        els.note.appendChild(no);
+        const yes = document.createElement('button');
+        yes.type = 'button';
+        yes.className = 'btn primary';
+        yes.textContent = I.t('ed_replace_yes');
+        actions.appendChild(no);
+        actions.appendChild(yes);
+        box.appendChild(actions);
+        back.appendChild(box);
+
+        const close = () => {
+            document.removeEventListener('keydown', onKey, true);
+            document.documentElement.classList.remove('modal-open');
+            back.remove();
+            if (previous && previous.focus) previous.focus();
+        };
+        const onKey = (e) => {
+            if (e.key === 'Escape') { e.stopPropagation(); close(); return; }
+            if (e.key !== 'Tab') return;
+            const items = Array.from(box.querySelectorAll('button')).filter((b) => !b.disabled);          // Tab stays inside the dialog
+            const at = items.indexOf(document.activeElement);
+            const next = e.shiftKey ? (at <= 0 ? items.length - 1 : at - 1) : (at === items.length - 1 ? 0 : at + 1);
+            e.preventDefault();
+            items[next].focus();
+        };
+        no.addEventListener('click', close);
+        yes.addEventListener('click', () => { close(); onYes(); });
+        back.addEventListener('mousedown', (e) => { if (e.target === back) close(); });
+        document.addEventListener('keydown', onKey, true);
+        document.documentElement.classList.add('modal-open');
+        document.body.appendChild(back);
+        no.focus();          // the safe choice has the focus
     }
 
     /* "Edit a copy of <set>": the bundled set's own text (with its comments) becomes the draft. */
@@ -250,7 +317,7 @@
             setText(res.text, 'my-' + id + '.json');
             els.text.focus();
         };
-        if (els.text.value.trim()) confirmReplace(doFork);
+        if (els.text.value.trim()) askReplace(doFork);
         else doFork();
     }
 
@@ -258,7 +325,12 @@
         if (!file) return;
         if (file.size > L.state.MAX_RULES_BYTES) { els.note.textContent = I.t('err_file_too_big'); return; }
         const reader = new FileReader();
-        reader.onload = () => setText(String(reader.result), file.name);
+        reader.onload = () => {
+            const text = String(reader.result);
+            const load = () => setText(text, file.name);
+            if (els.text.value.trim() && els.text.value !== text) askReplace(load);
+            else load();
+        };
         reader.readAsText(file, 'utf-8');
     }
 
@@ -383,6 +455,7 @@
 
     function download() {
         L.exporter.download(els.text.value, 'application/json', fileName(S.mineName || DEFAULT_NAME));
+        savedText = els.text.value;
     }
 
     async function run() {
