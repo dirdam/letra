@@ -13,7 +13,7 @@ import copy
 import json
 import re
 
-from src import letra
+from src import description, letra
 
 MAX_ITEMS = 1000            # entries in each of groups / rules / order
 MAX_GROUP_VALUES = 20000    # expanded size of any one group
@@ -214,6 +214,9 @@ def _check(text, add, pos, issues):
             add('error', 'order_items', 'Every entry in "order" must be a string (a rule name, or names joined by |).', ('order', i), n=i + 1)
     if _has_errors(issues):
         return
+
+    if 'description' in data and not description.is_valid(data['description']):
+        add('warning', 'description_type', 'The "description" must be a list of texts (or an object with one list per language); it is ignored.', ('description',))
 
     # group references: must be defined, and before they are used (the engine reads groups in order)
     defined = set()

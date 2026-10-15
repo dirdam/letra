@@ -1,4 +1,14 @@
 {
+    "description": {
+        "en": [
+            "The transformation is based on Spanish general rules of conversion of orthography to pronunciation and does not make an exhaustive analysis of syllable division nor accounts for exceptions.",
+            "Allophones are included for reference."
+        ],
+        "es": [
+            "La transformación se basa en reglas generales de conversión de ortografía a pronunciación y no hace un análisis exhaustivo de la división en sílabas ni atiende a excepciones.",
+            "Se incluyen alófonos."
+        ]
+    },
     "groups": {
         "voc_átona": ["a", "e", "i", "o", "u"],
         "voc_tónica": ["á", "é", "í", "ó", "ú"],

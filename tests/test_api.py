@@ -277,3 +277,22 @@ def test_version_changes_when_any_page_file_changes(tmp_path, monkeypatch):
     assert server._version() == v1
     (web / 'app.js').write_text('b')
     assert server._version() != v1
+
+
+# ---------- the description of a rules file ----------
+
+def test_the_rule_book_carries_the_files_description(client):
+    rules = '{"description": {"en": ["Hi **there**"], "es": ["Hola"]}, "groups": {}, "rules": {"r": {"a": "b"}}, "order": ["r"]}'
+    data = client.post('/api/rulebook', json={'rules': rules}).get_json()
+    assert data['description'] == {'en': ['Hi <strong>there</strong>'], 'es': ['Hola']}
+
+
+def test_without_a_description_the_rule_book_says_none(client):
+    rules = '{"groups": {}, "rules": {"r": {"a": "b"}}, "order": ["r"]}'
+    assert client.post('/api/rulebook', json={'rules': rules}).get_json()['description'] is None
+
+
+@pytest.mark.parametrize('preset', ['sample', 'LA_ES', 'ES_IPA'])
+def test_bundled_sets_get_their_description_from_their_own_file(client, preset):
+    d = client.post('/api/rulebook', json={'preset': preset}).get_json()['description']
+    assert d and d['en'] and d['es']

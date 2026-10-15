@@ -1,16 +1,4 @@
 lang,key,value
-en,explain_sample,This example illustrates the transformation of the Latin term **`lítteram`**. (The accent mark is used to indicate the stressed vowel).
-es,explain_sample,Este ejemplo ilustra la transformación del término latino **`lítteram`**. (La tilde marca la vocal tónica).
-en,explain_LA_ES,"- The rules used for this transformation have been extracted from ""_[Verba. Ejercicios de etimología
-latina](https://www.unex.es/organizacion/gobierno/vicerrectorados/vicealumn/funciones/car_20050411_001/coordinacion-ebau-2022-23/materias/latin-ii-1/leyes_evolucion_fonetica_modif_.pdf)_"" (PDF). However, not all rules have been implemented for this demonstration.
-- Use the accent mark to denote the stressed vowel in Latin."
-es,explain_LA_ES,"- Las reglas para esta transformación se han extraido de «_[Verba. Ejercicios de etimología
-latina](https://www.unex.es/organizacion/gobierno/vicerrectorados/vicealumn/funciones/car_20050411_001/coordinacion-ebau-2022-23/materias/latin-ii-1/leyes_evolucion_fonetica_modif_.pdf)_» (PDF). No obstante, no todas las reglas han sido implementadas para esta demostración.
-- Usa la tilde para denotar la vocal tónica latina."
-en,explain_ES_IPA,"- The transformation is based on Spanish general rules of conversion of orthography to pronunciation and does not make an exhaustive analysis of syllable division nor accounts for exceptions.
-- Allophones are included for reference."
-es,explain_ES_IPA,"- La transformación se basa en reglas generales de conversión de ortografía a pronunciación y no hace un análisis exhaustivo de la división en sílabas ni atiende a excepciones.
-- Se incluyen alófonos."
 en,err_invalid_json,This file is not valid JSON. Check commas and quotes.
 es,err_invalid_json,Este archivo no es un JSON válido. Revisa las comas y las comillas.
 en,err_missing_sections,"The file must contain `groups`, `rules` and `order`."
@@ -227,6 +215,7 @@ en,ed_howto,"A rules file is **JSON that also allows `//` comments**. It has thr
     - `<g1|g2>`: either group. `<g*>`: any run of its members. `<g=>`: the same member twice (`<g==>` three times).
     - A leading space is the start of the word, a trailing space is its end.
 - **`order`**: the rule names in the order they apply. `""rule_a|rule_b""` means only one of the two applies.
+- **`description`** (optional): a list of texts in Markdown, shown as bullets under the set's name in Evolve: `""description"": [""First **point**."", ""Second point.""]`. For one list per language use `""description"": {""en"": [...], ""es"": [...]}`. In a link write the slashes as `\/\/` (`https:\/\/…`), because `//` starts a comment.
 
 Example: `""<cons>í<cons>"": ""<cons>é<cons>""` changes a stressed **í** between consonants into **é**."
 es,ed_howto,"Un archivo de reglas es **JSON que además admite comentarios `//`**. Tiene tres secciones, todas obligatorias:
@@ -241,6 +230,7 @@ es,ed_howto,"Un archivo de reglas es **JSON que además admite comentarios `//`*
     - `<g1|g2>`: cualquiera de los dos grupos. `<g*>`: una secuencia de miembros. `<g=>`: el mismo miembro dos veces (`<g==>` tres veces).
     - Un espacio al principio es el inicio de la palabra y un espacio al final es su fin.
 - **`order`**: los nombres de las reglas en el orden en que se aplican. `""regla_a|regla_b""` significa que solo se aplica una de las dos.
+- **`description`** (opcional): una lista de textos en Markdown, que se muestran como viñetas bajo el nombre del conjunto en Evolucionar: `""description"": [""Primer **punto**."", ""Segundo punto.""]`. Para una lista por idioma usa `""description"": {""en"": [...], ""es"": [...]}`. En un enlace escribe las barras como `\/\/` (`https:\/\/…`), porque `//` empieza un comentario.
 
 Ejemplo: `""<cons>í<cons>"": ""<cons>é<cons>""` cambia una **í** tónica entre consonantes por **é**."
 en,ed_replace_q,Replace what is in the editor?
@@ -307,6 +297,8 @@ en,issue_rule_unused,"Rule ""{name}"" is never used in ""order""."
 es,issue_rule_unused,"La regla ""{name}"" nunca se usa en ""order""."
 en,issue_group_unused,"Group ""{name}"" is defined but never used."
 es,issue_group_unused,"El grupo ""{name}"" está definido pero nunca se usa."
+en,issue_description_type,"The ""description"" must be a list of texts (or an object with one list per language); it is ignored."
+es,issue_description_type,"La ""description"" debe ser una lista de textos (o un objeto con una lista por idioma); se ignora."
 en,issue_group_too_large,"Group ""{name}"" expands to more than {limit} values."
 es,issue_group_too_large,"El grupo ""{name}"" se expande a más de {limit} valores."
 en,issue_groups_error,The groups could not be expanded ({detail}).

@@ -32,6 +32,13 @@
 
     const info = () => (current && current.data) || null;
 
+    /* The description the rules file carries (a list of ready-made HTML bullets) for the set in use and the page's language;
+       null when the file has none or the set's rule book is not the one loaded. */
+    function description(set, lang) {
+        const d = current && set && current.key === keyOf(set) && current.data && current.data.description;
+        return d ? (d[lang] || d['*'] || d.en || d[Object.keys(d)[0]] || null) : null;
+    }
+
     function stats() {
         const d = info();
         return d ? { groups: Object.keys(d.groups).length, rules: Object.keys(d.rules).length, steps: d.order.length } : null;
@@ -255,5 +262,5 @@
         });
     }
 
-    L.rulebook = { load, info, stats, entriesFor, pattern, pair, render, mark };
+    L.rulebook = { load, info, description, stats, entriesFor, pattern, pair, render, mark };
 })();

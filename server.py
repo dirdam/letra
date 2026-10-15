@@ -18,7 +18,7 @@ import unicodedata
 import markdown
 from flask import Flask, jsonify, request, send_from_directory
 
-from src import letra, marks, validate
+from src import description, letra, marks, validate
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 WEB = os.path.join(BASE, 'web')
@@ -302,6 +302,8 @@ def api_rulebook():
         'rules': {name: [[k, v] for k, v in entries.items()] for name, entries in original['rules'].items()},
         'groups': {name: {'members': values[:GROUP_MEMBERS_SHOWN], 'total': len(values)}
                    for name, values in t.groups_expanded.items()},
+        # the file's own "description" as safe HTML, {language: [bullet, ...]} ('*': for every language), or null
+        'description': description.to_html(original.get('description')),
     })
 
 
