@@ -28,7 +28,7 @@ GOOD = '''{
   },
   "rules": {
     "drop_m": {"m ": " "},
-    "swap": {"<vow>": "<vow>"}
+    "swap": {"<vow>": "<vow>", "<cons>": "<cons>"}
   },
   "order": ["drop_m", "swap"]
 }'''
@@ -54,7 +54,7 @@ def test_syntax_error_line_ignores_comment_lines():
 
 
 def test_comments_do_not_shift_later_lines_or_columns():
-    text = GOOD.replace('"swap": {"<vow>": "<vow>"}', '"swap": {"<nope>": "<vow>"}')
+    text = GOOD.replace('"swap": {"<vow>": "<vow>", "<cons>": "<cons>"}', '"swap": {"<nope>": "<vow>", "<cons>": "<cons>"}')
     i = issue(text, 'unknown_group')
     assert i['line'] == 9                                  # the rule's key, after the comment on line 2
     assert i['path'] == 'rules.swap.<nope>'
@@ -166,3 +166,27 @@ def test_every_issue_carries_params_for_translation():
     assert by_code['unknown_rule_in_order']['params'] == {'step': 2, 'name': 'ghost'}
     assert all(isinstance(i['params'], dict) for i in validate.check(text)['issues'])
     assert validate.check('{ nope')['issues'][0]['params']['detail']
+
+
+# ---------- groups nothing uses ----------
+
+def unused_groups(text):
+    return [i['params']['name'] for i in validate.check(text)['issues'] if i['code'] == 'group_unused']
+
+
+def test_a_group_no_rule_uses_is_a_warning_on_its_line():
+    text = '{\n  "groups": {\n    "v": ["a"],\n    "spare": ["b"]\n  },\n  "rules": {"r": {"<v>": "<v>"}},\n  "order": ["r"]\n}'
+    r = validate.check(text)
+    assert r['ok'] and [(i['severity'], i['code'], i['line']) for i in r['issues']] == [('warning', 'group_unused', 4)]
+
+
+def test_a_group_is_used_by_a_rule_through_modifiers_alternatives_and_aliases():
+    text = '{"groups": {"a": ["x"], "b": ["y"], "c|d": ["z"], "e": ["w"]}, "rules": {"r": {"<a*><b|e><d=>": "<a*><><d>"}}, "order": ["r"]}'
+    assert unused_groups(text) == []
+
+
+def test_a_group_is_used_when_a_used_group_includes_it_but_not_when_only_an_unused_one_does():
+    used = '{"groups": {"a": ["x"], "ab": ["<a>", "y"]}, "rules": {"r": {"<ab>": "<ab>"}}, "order": ["r"]}'
+    assert unused_groups(used) == []
+    unused = '{"groups": {"a": ["x"], "ab": ["<a>", "y"], "v": ["z"]}, "rules": {"r": {"<v>": "<v>"}}, "order": ["r"]}'
+    assert unused_groups(unused) == ['a', 'ab']

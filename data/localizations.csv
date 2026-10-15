@@ -301,6 +301,8 @@ en,issue_order_empty,"""order"" is empty, so nothing will be applied."
 es,issue_order_empty,"""order"" está vacío, así que no se aplicará nada."
 en,issue_rule_unused,"Rule ""{name}"" is never used in ""order""."
 es,issue_rule_unused,"La regla ""{name}"" nunca se usa en ""order""."
+en,issue_group_unused,"Group ""{name}"" is defined but never used."
+es,issue_group_unused,"El grupo ""{name}"" está definido pero nunca se usa."
 en,issue_group_too_large,"Group ""{name}"" expands to more than {limit} values."
 es,issue_group_too_large,"El grupo ""{name}"" se expande a más de {limit} valores."
 en,issue_groups_error,The groups could not be expanded ({detail}).
