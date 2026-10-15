@@ -371,15 +371,16 @@ summary.btn::-webkit-details-marker { display: none; }
 .rb-brace path { fill: none; stroke: var(--gold); stroke-width: 1.6; stroke-linecap: round; vector-effect: non-scaling-stroke; }
 .rb-branch-note { font-family: var(--sans); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold-text); }
 .rb-rule { padding: 6px 12px; border-left: 3px solid transparent; border-radius: 8px; break-inside: avoid; }
-.rb-rule.used { border-left-color: var(--rubric); background: var(--rubric-soft); }
 .rb-rule.unused { opacity: 0.75; margin-bottom: 6px; }
 .rb-rule-head { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; }
 .rb-rule-head .rule-name { padding: 1px 9px; border: 1px solid var(--rubric); border-radius: 4px; background: var(--rubric-soft); }      /* the rule's name, boxed like a badge */
 .used-badge { display: none; padding: 1px 9px; font-family: var(--sans); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #fff; background: var(--rubric); border-radius: 999px; cursor: help; }
-.rb-rule.used .used-badge { display: inline-block; }
-.rb-entries { list-style: none; margin: 4px 0 0 22px; }
-.rb-entries li { position: relative; padding: 1px 0; }
-.rb-entries li::before { content: ''; position: absolute; left: -14px; top: 0.78em; width: 4px; height: 4px; background: var(--rubric); border-radius: 50%; }      /* one small bullet per transformation */
+.rb-entries { list-style: none; margin: 4px 0 0; }
+/* a row (one transformation); the ones being applied get the red callout and the badge */
+.rb-entries li { position: relative; display: flex; flex-wrap: wrap; align-items: center; gap: 2px 10px; padding: 2px 8px 2px 19px; border-left: 3px solid transparent; border-radius: 6px; }
+.rb-entries li.used { border-left-color: var(--rubric); background: var(--rubric-soft); }
+.rb-entries li.used .used-badge { display: inline-block; margin-left: auto; }
+.rb-entries li::before { content: ''; position: absolute; left: 5px; top: 1em; width: 4px; height: 4px; background: var(--rubric); border-radius: 50%; }      /* one small bullet per transformation */
 .rb-unused { margin-top: 18px; }
 .rb-groups { margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--line); }      /* separates the rules from the groups */
 .rb-unused summary, .rb-groups summary { cursor: pointer; font-family: var(--sans); font-size: 0.85rem; font-weight: 700; color: var(--dim); }

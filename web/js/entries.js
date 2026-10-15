@@ -61,9 +61,12 @@
         let guard = 0;
         while (cur !== r.start && r.terms[cur] && guard++ < 500) {
             const info = r.terms[cur];
-            const also = [...new Set(r.edges.filter((e) => e[2] === info.mother && e[3] === cur && e[1] !== info.rule).map((e) => e[1]))];
+            const alsoEdges = r.edges.filter((e) => e[2] === info.mother && e[3] === cur && e[1] !== info.rule);
+            const also = [...new Set(alsoEdges.map((e) => e[1]))];
+            const alsoApplied = {};          // for each of the other rules that give the same result: the entries of it that applied (null: unknown)
+            alsoEdges.forEach((e) => { alsoApplied[e[1]] = e[4] == null || alsoApplied[e[1]] === null ? null : [...new Set([...(alsoApplied[e[1]] || []), ...e[4]])]; });
             const edge = r.edges.find((e) => e[1] === info.rule && e[2] === info.mother && e[3] === cur);
-            steps.push({ rule: info.rule, from: info.mother, to: cur, also, applied: edge ? edge[4] : null });
+            steps.push({ rule: info.rule, from: info.mother, to: cur, also, alsoApplied, applied: edge ? edge[4] : null });
             cur = info.mother;
         }
         return steps.reverse();
@@ -231,14 +234,22 @@
         return card;
     }
 
-    /* The rules used by the derivations currently shown. */
+    /* The rules used by the derivations currently shown, and which of their entries (rows) applied:
+       a Map rule -> Set of entry positions, or null when it is not known which rows applied (then every row counts). */
     function used() {
-        const set = new Set();
+        const map = new Map();
+        const add = (rule, positions) => {
+            if (positions == null) { map.set(rule, null); return; }
+            if (map.get(rule) === null) return;
+            const set = map.get(rule) || new Set();
+            positions.forEach((p) => set.add(p));
+            map.set(rule, set);
+        };
         S.results.forEach((r) => {
             if (r.error || !r.final.length) return;
-            chainFor(r, selectedOf(r)).forEach((st) => { set.add(st.rule); st.also.forEach((a) => set.add(a)); });
+            chainFor(r, selectedOf(r)).forEach((st) => { add(st.rule, st.applied); st.also.forEach((a) => add(a, st.alsoApplied[a])); });
         });
-        return set;
+        return map;
     }
 
     function announceUsed() { if (handlers.onUsedChange) handlers.onUsedChange(used()); }
