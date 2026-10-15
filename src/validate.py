@@ -267,6 +267,20 @@ def _check(text, add, pos, issues):
         if rule not in used:
             add('warning', 'rule_unused', f'Rule "{rule}" is never used in "order".', ('rules', rule), name=rule)
 
+    # groups nothing uses: a group counts as used when a rule's pattern names it (under any of its `a|b` names),
+    # or when a group that is itself used includes it
+    owner = {part: name for name in groups for part in name.split('|')}
+    used_groups = set()
+    pending = [owner[ref] for entries in rules.values() for key in entries for ref in _refs(key) if ref in owner]
+    while pending:
+        group = pending.pop()
+        if group not in used_groups:
+            used_groups.add(group)
+            pending.extend(owner[ref] for v in groups[group] for ref in _refs(v) if ref in owner)
+    for name in groups:
+        if name not in used_groups:
+            add('warning', 'group_unused', f'Group "{name}" is defined but never used.', ('groups', name), name=name)
+
     if _has_errors(issues):
         return
 
