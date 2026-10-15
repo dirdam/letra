@@ -9,8 +9,8 @@
 
     const $ = (id) => document.getElementById(id);
     const TABS = ['evolve', 'rulebook', 'editor'];          // the working tabs, left to right; Evolve is the one open by default. About is a page of its own (link in the hero)
-    const SETS = ['sample', 'LA_ES', 'ES_IPA', 'mine'];
-    const SET_LABEL = { sample: 'set_sample', LA_ES: 'set_la_es', ES_IPA: 'set_es_ipa', mine: 'set_mine' };
+    const SETS = ['sample', 'LA_ES', 'ES_IPA', 'ES_Miquitrifi', 'mine'];
+    const SET_LABEL = { sample: 'set_sample', LA_ES: 'set_la_es', ES_IPA: 'set_es_ipa', ES_Miquitrifi: 'set_es_miquitrifi', mine: 'set_mine' };
     const setLabel = (id) => I.t(SET_LABEL[id]);
 
     let runTimer = null;

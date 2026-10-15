@@ -47,7 +47,7 @@ def test_dynamic_keys_exist():
     dynamic = ['explain_mine']          # (the other sets' descriptions are in their rule files)
     dynamic += [f'err_{c}' for c in ('invalid_json', 'missing_sections', 'too_large', 'invalid_rules', 'term_too_long', 'bad_term',
                                      'timeout', 'server', 'file_too_big', 'too_many_terms', 'not_found')]
-    dynamic += [f'set_{x}' for x in ('sample', 'la_es', 'es_ipa', 'mine')]
+    dynamic += [f'set_{x}' for x in ('sample', 'la_es', 'es_ipa', 'es_miquitrifi', 'mine')]
     assert not [k for k in dynamic if k not in t['en']]
 
 

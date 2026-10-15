@@ -4,7 +4,7 @@
     'use strict';
     const L = (window.Letra = window.Letra || {});
 
-    const PRESETS = ['sample', 'LA_ES', 'ES_IPA'];
+    const PRESETS = ['sample', 'LA_ES', 'ES_IPA', 'ES_Miquitrifi'];
     const KEY = 'letra.v2';
     const MINE_KEY = 'letra.mine';
     const MINE_NAME_KEY = 'letra.mineName';
@@ -16,6 +16,7 @@
         sample: ['lítteram'],          // the word the sample puts in the bar (it has no "Try" chips)
         LA_ES: ['lítteram', 'trophaéum', 'óperam', 'dóminum', 'quinquagínta', 'dígitum'],
         ES_IPA: ['civilización', 'chascarrillo', 'halagüeño', 'verdad', 'rejuvenecer', 'water'],
+        ES_Miquitrifi: ['gato', 'cuerno', 'pingüino', 'zapato', 'queso', 'guerra'],
         mine: [],
     };
 

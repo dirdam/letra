@@ -1,0 +1,36 @@
+{
+  "description": [
+    "Convierte todas las palabras en palabras pronunciadas únicamente con la `i`."
+  ],
+  "groups": {
+    "vocal_átona": ["a", "e", "i", "o"],
+    "vocal_tónica": ["á", "é", "í", "ó"],
+    "aou_átona": ["a", "o", "u"],
+    "aou_tónica": ["á", "ó", "ú"],
+    "cons": ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "ñ", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z"],
+    "gq": ["g", "q"],
+    "cons_normal": ["<cons>", "!<gq>"]
+  },
+  "rules": {
+    "vocal→i": {
+      "<vocal_átona>": "<>i",
+      "<vocal_tónica>": "<>í",
+      "gü": "gui",
+      "<cons_normal>u": "<cons_normal>i",
+      "<cons_normal>ú": "<cons_normal>í"
+    },
+    "c": {
+      "c<aou_átona>": "qui<>",
+      "c<aou_tónica>": "quí<>"
+    },
+    "g": {
+      "g<aou_átona>": "gui<>",
+      "g<aou_tónica>": "guí<>"
+    },
+    "z": {
+      "z<aou_átona>": "ci<>",
+      "z<aou_tónica>": "cí<>"
+    }
+  },
+  "order": ["c", "g", "z", "vocal→i"]
+}

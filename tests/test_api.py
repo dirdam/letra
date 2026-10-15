@@ -123,8 +123,8 @@ def test_about_unknown_language_falls_back_to_english(client):
 
 
 def test_presets_and_downloads(client):
-    assert client.get('/api/presets').get_json() == ['sample', 'LA_ES', 'ES_IPA']
-    for p in ('sample', 'LA_ES', 'ES_IPA'):
+    assert client.get('/api/presets').get_json() == ['sample', 'LA_ES', 'ES_IPA', 'ES_Miquitrifi']
+    for p in ('sample', 'LA_ES', 'ES_IPA', 'ES_Miquitrifi'):
         r = client.get(f'/api/rules/{p}')
         assert r.status_code == 200 and b'"rules"' in r.data
     assert client.get('/api/rules/nope').status_code == 404
@@ -292,7 +292,7 @@ def test_without_a_description_the_rule_book_says_none(client):
     assert client.post('/api/rulebook', json={'rules': rules}).get_json()['description'] is None
 
 
-@pytest.mark.parametrize('preset', ['sample', 'LA_ES', 'ES_IPA'])
+@pytest.mark.parametrize('preset', ['sample', 'LA_ES', 'ES_IPA', 'ES_Miquitrifi'])
 def test_bundled_sets_get_their_description_from_their_own_file(client, preset):
     d = client.post('/api/rulebook', json={'preset': preset}).get_json()['description']
-    assert d and d['en'] and d['es']
+    assert d and all(d.values())          # (a plain list, as in ES_Miquitrifi, is the key '*': for every language)

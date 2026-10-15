@@ -35,6 +35,8 @@ en,set_la_es,Latin → Spanish
 es,set_la_es,Latín → español
 en,set_es_ipa,Spanish → IPA
 es,set_es_ipa,Español → AFI
+en,set_es_miquitrifi,Spanish → Spinish
+es,set_es_miquitrifi,Español → Ispiñil
 en,set_mine,My rules
 es,set_mine,Mis reglas
 en,mine_empty_hint,Write or open rules in the Editor first

@@ -46,3 +46,10 @@ def test_every_bundled_set_describes_itself_in_both_languages(name):
     data = json.loads(re.sub(r'(?://[^\n]*)', '', text))
     html = description.to_html(data['description'])
     assert set(html) == {'en', 'es'} and all(html[lang] for lang in html)
+
+
+def test_a_plain_list_description_is_shown_in_every_language():
+    import os, re
+    text = open(os.path.join(os.path.dirname(__file__), '..', 'transformations', 'ES_Miquitrifi.json'), encoding='utf-8').read()
+    html = description.to_html(json.loads(re.sub(r'(?://[^\n]*)', '', text))['description'])
+    assert list(html) == ['*'] and html['*']

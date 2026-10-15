@@ -28,7 +28,7 @@ TRANSFORMATIONS = os.path.join(BASE, 'transformations')
 LANGS = ('en', 'es')
 
 # Rule files bundled with the app, as offered in the page: id -> file name.
-PRESETS = {'sample': 'sample.json', 'LA_ES': 'LA_ES.json', 'ES_IPA': 'ES_IPA.json'}
+PRESETS = {'sample': 'sample.json', 'LA_ES': 'LA_ES.json', 'ES_IPA': 'ES_IPA.json', 'ES_Miquitrifi': 'ES_Miquitrifi.json'}
 
 # Limits, because user-supplied rules are compiled to regular expressions here.
 MAX_BODY_BYTES = 256 * 1024     # request body (an uploaded rules file is inside it)
