@@ -229,6 +229,8 @@ summary.btn::-webkit-details-marker { display: none; }
 .example:hover { background: var(--rubric-soft); border-style: solid; }
 .explain { font-size: 0.95rem; color: var(--dim); margin-top: 10px; }
 .explain p { margin: 6px 0; }
+.explain ul, .explain ol { margin: 6px 0 6px 20px; }          /* the bullets sit inside the box, the text lines up under the set name */
+.explain li { margin: 3px 0; }
 .explain a { color: var(--rubric); }
 .explain code { font-family: var(--mono); font-size: 0.88em; color: var(--ink); }
 /* the search bar: one wide field for the word or words, like a search box */

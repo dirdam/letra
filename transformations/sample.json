@@ -1,4 +1,12 @@
 {
+	"description": {
+		"en": [
+			"This example illustrates the transformation of the Latin term **`lítteram`**. (The accent mark is used to indicate the stressed vowel)."
+		],
+		"es": [
+			"Este ejemplo ilustra la transformación del término latino **`lítteram`**. (La tilde marca la vocal tónica)."
+		]
+	},
 	"groups": {
 		// Vowels
 		"unstressed_vow": ["a", "e", "i", "o", "u"],

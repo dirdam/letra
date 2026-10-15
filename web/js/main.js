@@ -54,7 +54,9 @@
 
     function renderSetPanel() {
         $('setTitle').textContent = setLabel(S.setId);
-        $('setExplain').innerHTML = I.h(S.setId === 'mine' ? 'explain_mine' : 'explain_' + S.setId);
+        // what the rules file says about itself ("description": bullets of Markdown); My rules without one gets a standard line
+        const bullets = L.rulebook.description(ST.currentSet(), I.lang);
+        $('setExplain').innerHTML = bullets ? '<ul>' + bullets.map((b) => '<li>' + b + '</li>').join('') + '</ul>' : S.setId === 'mine' ? I.h('explain_mine') : '';
         $('setToEditor').textContent = S.setId === 'mine' ? I.t('edit_mine') : I.t('edit_copy');
         const st = L.rulebook.stats();
         $('setStats').textContent = rulebookError ? I.t('err_' + rulebookError) : st ? I.fmt('set_stats', st) : '…';
