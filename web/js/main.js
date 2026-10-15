@@ -42,7 +42,7 @@
         const box = $('shelfSets');
         box.textContent = '';
         SETS.forEach((id) => {
-            const b = el('button', 'book' + (id === 'mine' && !S.mine.trim() ? ' empty' : ''), setLabel(id));
+            const b = el('button', 'book' + (id === 'mine' && !S.mine.trim() ? ' empty' : ''), (id === 'mine' ? '★ ' : '') + setLabel(id));          // the user's own set is starred
             b.type = 'button';
             b.setAttribute('role', 'radio');
             b.setAttribute('aria-checked', String(S.setId === id));
@@ -216,7 +216,8 @@
         if (name !== 'about' && !TABS.includes(name)) name = 'evolve';
         S.tab = name;
         if (name !== 'about') lastTab = name;
-        $('workbench').hidden = name === 'about';          // About does not depend on the rule set: no rule set bar, no tabs
+        $('shelfBar').hidden = name === 'about';          // About does not depend on the rule set: no rule set bar, no tabs
+        $('workbench').hidden = name === 'about';
         $('panel-about').hidden = name !== 'about';
         TABS.forEach((t) => {
             const on = t === name;
