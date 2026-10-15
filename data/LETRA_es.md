@@ -22,7 +22,7 @@ El conjunto reglas que se usa para tranformar la escritura. Se dará como un arc
   - `!` puede usarse delante de un `caracter` o un `<nombre_de_grupo>` para excluirlo de la lista.
 - **`rules`**: reglas de transformación; qué (_lado fuente_) se transforma en qué (_lado transformado_). 
   - Cada regla debe recibir un nombre.
-  - Todas las transformaciones bajo la misma regla se aplican a la vez.
+  - Las transformaciones de una regla se aplican una tras otra, en el orden en que están escritas.
   - `caracteres` sencillos significan exactamente esos caracteres.
   - Se pueden llamar a grupos de `groups` usando el `<nombre_de_grupo>`.
     - El número de paréntesis (`<>`) usados a ambos lados de la definición ha de ser el mismo. Si un grupo desaparece en el _lado transformado_ se reprensentará con paréntesis vacíos `<>` .

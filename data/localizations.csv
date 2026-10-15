@@ -217,7 +217,7 @@ en,ed_howto,"A rules file is **JSON that also allows `//` comments**. It has thr
     - Reuse a group inside another with `<name>`: `""vow"": [""<stressed>"", ""<unstressed>""]`. Define it before using it.
     - `!` removes a character or a group: `[""<cons>"", ""!l"", ""!n""]` is every consonant except **l** and **n**.
     - Give a group several names with `|`: `""a|b"": [...]`.
-- **`rules`**: each rule has a name and `""search"": ""replacement""` pairs, all applied together.
+- **`rules`**: each rule has a name and `""search"": ""replacement""` pairs, applied one after another in the order they are written.
     - Plain characters stand for themselves; `<name>` stands for any member of that group.
     - Both sides must have the same number of `<>`. Where a group disappears, leave an empty `<>`.
     - `<g1|g2>`: either group. `<g*>`: any run of its members. `<g=>`: the same member twice (`<g==>` three times).
@@ -231,7 +231,7 @@ es,ed_howto,"Un archivo de reglas es **JSON que además admite comentarios `//`*
     - Reutiliza un grupo dentro de otro con `<nombre>`: `""vow"": [""<stressed>"", ""<unstressed>""]`. Defínelo antes de usarlo.
     - `!` quita un carácter o un grupo: `[""<cons>"", ""!l"", ""!n""]` son todas las consonantes menos **l** y **n**.
     - Un grupo puede tener varios nombres con `|`: `""a|b"": [...]`.
-- **`rules`**: cada regla tiene un nombre y pares `""buscar"": ""reemplazo""`, que se aplican todos a la vez.
+- **`rules`**: cada regla tiene un nombre y pares `""buscar"": ""reemplazo""`, que se aplican uno tras otro, en el orden en que están escritos.
     - Los caracteres normales se representan a sí mismos; `<nombre>` representa cualquier miembro de ese grupo.
     - Ambos lados deben tener el mismo número de `<>`. Donde un grupo desaparece, deja un `<>` vacío.
     - `<g1|g2>`: cualquiera de los dos grupos. `<g*>`: una secuencia de miembros. `<g=>`: el mismo miembro dos veces (`<g==>` tres veces).
