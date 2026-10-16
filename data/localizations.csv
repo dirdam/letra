@@ -187,6 +187,16 @@ en,ed_copy_of,Edit a copy of {set}
 es,ed_copy_of,Editar una copia de {set}
 en,ed_open,Open file…
 es,ed_open,Abrir archivo…
+en,ed_new,New
+es,ed_new,Nuevo
+en,tpl_comment,"Run test with word ""xabxyz"""
+es,tpl_comment,"Prueba con la palabra ""xabxyz"""
+en,tpl_description,Converts _abx_ into _aby_
+es,tpl_description,Convierte _abx_ en _aby_
+en,tpl_group,group_ab
+es,tpl_group,grupo_ab
+en,tpl_rule,rule_abx
+es,tpl_rule,regla_abx
 en,ed_expand,Edit in full page
 es,ed_expand,Editar a página completa
 en,ed_collapse,Exit full page

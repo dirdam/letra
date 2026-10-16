@@ -480,6 +480,42 @@
         if (hooks.onDraftChange) hooks.onDraftChange();
     }
 
+    // ---------- a new file ----------
+
+    /* What "New" writes: a small rules file that works, with each section in the shape it takes. The comment, the description
+       text and the group and rule names are in the page's language. */
+    const template = () => `{
+  // ${I.t('tpl_comment')}
+  "description": [
+    "${I.t('tpl_description')}"
+  ],
+  "groups": {
+    "${I.t('tpl_group')}": ["a", "b"]
+  },
+  "rules": {
+    "${I.t('tpl_rule')}": {
+      "<${I.t('tpl_group')}>x": "<${I.t('tpl_group')}>y"
+    }
+  },
+  "order": ["${I.t('tpl_rule')}"]
+}
+`;
+    let lastTemplate = null;          // the template New wrote last: while it is untouched, New does not ask before writing a new one
+
+    function newFile() {
+        const make = () => {
+            const text = template();
+            setText(text, I.t('ed_filename_placeholder'));
+            lastTemplate = text;
+            els.text.focus();
+            const sample = I.t('tpl_description');          // selected, so the first thing typed replaces it
+            const at = text.indexOf(sample);
+            els.text.setSelectionRange(at, at + sample.length);
+        };
+        if (els.text.value.trim() && els.text.value !== lastTemplate) askReplace(make);
+        else make();
+    }
+
     function download() {
         L.exporter.download(els.text.value, 'application/json', fileName(S.mineName || DEFAULT_NAME));
         savedText = els.text.value;
@@ -542,6 +578,7 @@
         els.text.addEventListener('scroll', sync);
         els.text.addEventListener('keydown', (e) => { if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { e.preventDefault(); run(); } });
         els.copyOf.addEventListener('click', fork);
+        $('edNew').addEventListener('click', newFile);
         $('edOpen').addEventListener('click', () => { els.file.value = ''; els.file.click(); });
         els.file.addEventListener('change', () => openFile(els.file.files[0]));
         $('edFormat').addEventListener('click', format);
