@@ -51,8 +51,8 @@ en,tab_editor,Editor
 es,tab_editor,Editor
 en,tab_about,About
 es,tab_about,Acerca de
-en,about_back,Back to LETRA
-es,about_back,Volver a LETRA
+en,about_app,App
+es,about_app,App
 en,shelf_sub,Choose the transformation you want to apply.
 es,shelf_sub,Elige la transformación que quieres aplicar.
 en,words_sub,Type the words you want to transform. Results update as you type.
