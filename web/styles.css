@@ -399,16 +399,16 @@ summary.btn::-webkit-details-marker { display: none; }
 /* the editor panel in full page: everything in it stays, the editor takes the room that is left */
 .wb-card .panel.editor-full { position: fixed; inset: 0; z-index: 55; display: flex; flex-direction: column; padding: 14px 18px; background: var(--wb-bg); overflow: auto; overscroll-behavior: contain; }
 .editor-full .editor { flex: 1; height: auto; min-height: 0; max-height: none; }
-.editor { position: relative; display: grid; grid-template-columns: 56px minmax(0, 1fr); height: 62vh; min-height: 360px; max-height: 720px; background: #fffdf6; border: 1px solid var(--line); border-left-width: 5px; border-radius: 12px; overflow: hidden; transition: border-left-color 0.2s; }      /* the thick left line shows the validation state */
+.editor-full .issues { max-height: 22vh; }          /* an open list leaves the editor most of the room */
+.editor { position: relative; display: grid; grid-template-columns: max-content minmax(0, 1fr); height: 62vh; min-height: 360px; max-height: 720px; background: #fffdf6; border: 1px solid var(--line); border-left-width: 5px; border-radius: 12px; overflow: hidden; transition: border-left-color 0.2s; }      /* the thick left line shows the validation state */
 .editor[data-state="error"] { border-left-color: var(--danger); }
 .editor[data-state="warning"] { border-left-color: var(--gold); }
 .editor[data-state="ok"] { border-left-color: #2f6b3a; }
 .editor-gutter, .editor-hl, .editor-text, .editor-marks { font-family: var(--mono); font-size: 14px; line-height: 22px; tab-size: 2; }
 .editor-gutter { color: var(--dim); background: rgba(110, 70, 30, 0.07); border-right: 1px solid var(--line); overflow: hidden; user-select: none; }
 .editor-nums { padding: 12px 0; white-space: pre; will-change: transform; }
-.editor-gutter .ln { display: flex; align-items: center; height: 22px; padding: 0 8px 0 5px; }
-.editor-gutter .ln-num { margin-left: auto; }
-.editor-gutter .flag { display: inline-flex; align-items: center; height: 22px; padding: 0; line-height: 0; background: none; border: 0; cursor: help; color: inherit; }
+.editor-gutter .ln { display: flex; align-items: center; justify-content: flex-end; gap: 4px; height: 22px; padding: 0 6px 0 4px; }          /* the symbol sits right next to its number; the numbers stay in one column */
+.editor-gutter .flag { display: inline-flex; align-items: center; gap: 3px; height: 22px; padding: 0; line-height: 0; background: none; border: 0; cursor: help; color: inherit; }
 .editor-gutter .flag .icon { width: 15px; height: 15px; }
 .editor-gutter .flag:focus-visible { outline: none; box-shadow: var(--focus); border-radius: 4px; }
 .tip > div + div { margin-top: 4px; }
@@ -429,16 +429,26 @@ summary.btn::-webkit-details-marker { display: none; }
 .editor-hl .p { color: var(--dim); }
 .editor-hl .c { color: #9a8458; font-style: italic; }
 .editor-hl .g { color: var(--lapis); font-weight: 700; }
-.editor-summary { margin: 10px 2px 4px; font-family: var(--sans); font-size: 0.86rem; font-weight: 600; color: var(--dim); }
+.editor-problems { margin: 10px 2px 4px; }
+.editor-summary { font-family: var(--sans); font-size: 0.86rem; font-weight: 600; color: var(--dim); list-style: none; }
+.editor-summary::-webkit-details-marker { display: none; }
+.editor-problems.has-issues > summary { cursor: pointer; }
+.editor-problems.has-issues > summary::before { content: '▸'; display: inline-block; width: 1.1em; }
+.editor-problems[open] > summary::before { content: '▾'; }
 .editor-summary.bad { color: var(--danger); }
+.editor-summary.warn { color: var(--gold-text); }
 .editor-summary.good { color: #2f6b3a; }
-.issues { list-style: none; display: grid; gap: 4px; }
-.issue { display: grid; grid-template-columns: 62px minmax(0, 1fr); gap: 10px; width: 100%; padding: 6px 10px; text-align: left; font-family: var(--sans); font-size: 0.86rem; background: rgba(255, 255, 255, 0.6); border: 1px solid var(--line); border-left-width: 4px; border-radius: 8px; }
+.issues { list-style: none; display: grid; gap: 4px; margin-top: 8px; max-height: 32vh; overflow: auto; }
+.issue { display: grid; grid-template-columns: 16px 62px minmax(0, 1fr); gap: 10px; width: 100%; padding: 6px 10px; text-align: left; font-family: var(--sans); font-size: 0.86rem; background: rgba(255, 255, 255, 0.6); border: 1px solid var(--line); border-left-width: 4px; border-radius: 8px; }
 .issues .error .issue { border-left-color: var(--danger); }
 .issues .warning .issue { border-left-color: var(--gold); }
 .issue:hover { background: #fffdf6; }
 .issue .pos { font-family: var(--mono); color: var(--dim); }
-.issue .path { grid-column: 2; font-family: var(--mono); font-size: 0.76rem; color: var(--dim); overflow-wrap: anywhere; }
+.issue .sev { display: inline-flex; align-items: center; }
+.issue .sev .icon { width: 15px; height: 15px; }
+.issues .error .sev { color: var(--danger); }
+.issues .warning .sev { color: var(--gold-text); }
+.issue .path { grid-column: 3; font-family: var(--mono); font-size: 0.76rem; color: var(--dim); overflow-wrap: anywhere; }
 #edNote button { margin-left: 4px; }
 
 /* ---------- about ---------- */

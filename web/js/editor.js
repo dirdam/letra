@@ -80,6 +80,26 @@
         sync();
     }
 
+    const svgIcon = (paths, cls) => '<svg class="icon' + (cls ? ' ' + cls : '') + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + paths + '</svg>';
+
+    // Lucide icons for the kind of warning (a warning shows only its kind; an error shows the circle-alert)
+    const KIND_ICON = {
+        duplicate_key: '<rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>',          // copy
+        description_type: '<path d="M16 3h3a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1h-3"/><path d="M8 21H5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h3"/>',          // brackets
+        placeholder_count: '<path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/>',          // code
+        order_empty: '<path d="M11 5h10"/><path d="M11 12h10"/><path d="M11 19h10"/><path d="M4 4h1v5"/><path d="M4 9h2"/><path d="M6.5 20H3.4c0-1 2.6-1.925 2.6-3.5a1.5 1.5 0 0 0-2.6-1.02"/>',          // list-ordered
+        rule_unused: '<path d="M20.4 20.4a2 2 0 01-1.4.6H5a2 2 0 01-2-2V5a2 2 0 01.59-1.41"/><path d="M21 15.3V5a2 2 0 00-2-2H8.7"/><path d="M22 22 2 2"/>',          // square-off
+        group_unused: '<path d="m2 2 20 20"/><path d="M8.35 2.69A10 10 0 0 1 21.3 15.65"/><path d="M19.08 19.08A10 10 0 1 1 4.92 4.92"/>',          // circle-off
+    };
+    const MAX_ICONS = 2;          // symbols shown next to one line number (the tooltip lists every message)
+
+    /* The symbols for some issues: an error has the circle-alert (then its kind, if it has one); warnings have only their kind. */
+    function symbolsOf(issues) {
+        const kinds = [...new Set(issues.map((i) => i.code).filter((code) => KIND_ICON[code]))].map((code) => KIND_ICON[code]);
+        const symbols = issues.some((i) => i.severity === 'error') ? [FLAG_ICON.error, ...kinds] : kinds.length ? kinds : [FLAG_ICON.warning];
+        return symbols.slice(0, MAX_ICONS);
+    }
+
     // Lucide "circle-alert" (an error) and "triangle-alert" (a warning)
     const FLAG_ICON = {
         error: '<circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/>',
@@ -92,7 +112,7 @@
         const b = document.createElement('button');
         b.type = 'button';
         b.className = 'flag ' + severity;
-        b.innerHTML = '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + FLAG_ICON[severity] + '</svg>';
+        b.innerHTML = symbolsOf(issues).map((paths) => svgIcon(paths)).join('');          // one tooltip for all of it
         b.setAttribute('aria-label', issues.map(issueText).join(' '));
         L.tooltip.rich(b, () => {
             const box = document.createElement('div');
@@ -122,7 +142,10 @@
         else if (!last.issues.length) summary = I.t('ed_ok');
         else summary = [errors ? I.count('ed_errors', errors) : '', warnings ? I.count('ed_warnings', warnings) : ''].filter(Boolean).join(' · ');
         els.summary.textContent = summary;
-        els.summary.className = 'editor-summary ' + (errors ? 'bad' : last.checked && els.text.value.trim() ? 'good' : '');
+        // red with errors, amber with only warnings, green only when there is nothing to report
+        els.summary.className = 'editor-summary ' + (errors ? 'bad' : warnings ? 'warn' : last.checked && els.text.value.trim() ? 'good' : '');
+        els.problems.classList.toggle('has-issues', last.issues.length > 0);          // only a list with something in it opens
+        if (!last.issues.length) els.problems.open = false;
         // the coloured line on the editor's left: red with errors, amber with warnings, green when valid; it keeps its colour while a new check runs
         if (!els.text.value.trim()) delete els.box.dataset.state;
         else if (last.checked) els.box.dataset.state = errors ? 'error' : warnings ? 'warning' : 'ok';
@@ -133,6 +156,10 @@
             const b = document.createElement('button');
             b.type = 'button';
             b.className = 'issue';
+            const sev = document.createElement('span');          // the same symbol as next to the line number
+            sev.className = 'sev';
+            sev.innerHTML = svgIcon(i.severity === 'error' ? FLAG_ICON.error : KIND_ICON[i.code] || FLAG_ICON.warning);
+            b.appendChild(sev);
             const pos = document.createElement('span');
             pos.className = 'pos';
             pos.textContent = i.line + ':' + i.col;
@@ -507,7 +534,7 @@
         els = {
             text: $('edText'), hl: $('edHl'), gutter: $('edGutter'), marks: $('edMarks'), note: $('edNote'),
             summary: $('edSummary'), issues: $('edIssues'), copyOf: $('edCopyOf'), file: $('edFile'),
-            panel: $('edPanel'), expand: $('edExpand'), name: $('edName'),
+            panel: $('edPanel'), expand: $('edExpand'), name: $('edName'), problems: $('edProblems'),
         };
         els.box = els.text.closest('.editor');
         els.text.value = S.mine;
@@ -521,6 +548,7 @@
         $('edDownload').addEventListener('click', download);
         $('edRun').addEventListener('click', run);
         els.expand.addEventListener('click', () => setFull(!isFull()));
+        els.summary.addEventListener('click', (e) => { if (!last.issues.length) e.preventDefault(); });          // nothing to list: it does not open
         els.name.value = S.mineName;
         els.name.addEventListener('input', onName);
         els.name.addEventListener('change', () => { S.mineName = fileName(els.name.value); els.name.value = S.mineName; L.state.saveMine(); if (hooks.onDraftChange) hooks.onDraftChange(); });          // leaving the field: the name as it will download

@@ -152,8 +152,10 @@
                                   data-i18n="ed_label" data-i18n-attr="aria-label"></textarea>
                     </div>
                 </div>
-                <p class="editor-summary" id="edSummary" role="status"></p>
-                <ul class="issues sr-only" id="edIssues"></ul>          <!-- for screen readers: the problems are shown as symbols next to the line numbers -->
+                <details class="editor-problems" id="edProblems">          <!-- the count; opens to the list of problems, each one a link to its line -->
+                    <summary class="editor-summary" id="edSummary"></summary>
+                    <ul class="issues" id="edIssues"></ul>
+                </details>
             </div>
         </section>
             </div>
