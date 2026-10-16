@@ -211,7 +211,23 @@
 
     // ---------- tabs ----------
 
-    let lastTab = 'evolve';          // the working tab the About page's Back button returns to
+    let lastTab = 'evolve';          // the working tab the corner link returns to from the About page
+
+    // The link in the hero's corner goes to the About page ("About", question mark) and, from there, back to the app ("App", play).
+    const LINK_ICONS = {
+        about: '<circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/>',          // Lucide circle-question-mark
+        app: '<path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"/>',          // Lucide play
+    };
+
+    function renderAboutLink() {
+        const inAbout = S.tab === 'about';
+        const key = inAbout ? 'about_app' : 'tab_about';
+        $('aboutLink').querySelector('svg').innerHTML = LINK_ICONS[inAbout ? 'app' : 'about'];
+        const label = $('aboutLink').querySelector('span');
+        label.setAttribute('data-i18n', key);
+        label.textContent = I.t(key);
+        $('aboutLink').setAttribute('href', inAbout ? '#' : '#t=about');
+    }
 
     function switchTab(name) {
         if (name !== 'about' && !TABS.includes(name)) name = 'evolve';
@@ -220,6 +236,7 @@
         $('shelfBar').hidden = name === 'about';          // About does not depend on the rule set: no rule set bar, no tabs
         $('workbench').hidden = name === 'about';
         $('panel-about').hidden = name !== 'about';
+        renderAboutLink();
         TABS.forEach((t) => {
             const on = t === name;
             $('panel-' + t).hidden = !on;
@@ -324,8 +341,7 @@
             if (S.results.length) renderResults();          // the trees are drawn again the other way round
         }));
         $('rbSearch').addEventListener('input', renderRulebookTab);
-        $('aboutLink').addEventListener('click', (e) => { e.preventDefault(); switchTab('about'); });
-        $('aboutBack').addEventListener('click', () => switchTab(lastTab));
+        $('aboutLink').addEventListener('click', (e) => { e.preventDefault(); switchTab(S.tab === 'about' ? lastTab : 'about'); });
         document.querySelectorAll('.tab').forEach((b) => {
             b.addEventListener('click', () => switchTab(b.dataset.tab));
             b.addEventListener('keydown', (e) => {

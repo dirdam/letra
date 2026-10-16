@@ -163,7 +163,6 @@ kbd { font-family: var(--sans); font-size: 0.72em; opacity: 0.85; padding: 1px 6
 .about-link { position: absolute; top: 14px; right: max(20px, calc((100% - 1180px) / 2 + 20px)); display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; font-family: var(--sans); font-size: 0.82rem; font-weight: 700; color: var(--dim); text-decoration: none; border: 1px solid transparent; border-radius: 999px; }
 .about-link .icon { width: 17px; height: 17px; flex: none; }
 .about-link:hover, .about-link:focus-visible { color: var(--rubric); border-color: var(--line); background: var(--glass); }
-.about-bar { margin-bottom: 14px; }
 
 main { max-width: 1180px; margin: 0 auto; padding: 0 20px 10px; }
 
