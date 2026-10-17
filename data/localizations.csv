@@ -23,8 +23,8 @@ en,footer_more_tools,See more tools
 es,footer_more_tools,Ver más herramientas
 en,footer_source,Source
 es,footer_source,Código
-en,tagline,Rewrite rules that turn one script into another
-es,tagline,Reglas de reescritura que convierten una escritura en otra
+en,tagline,Define transformation rules to turn one script into another
+es,tagline,Define reglas de transformación para convertir una escritura en otra
 en,skip,Skip to content
 es,skip,Saltar al contenido
 en,shelf_label,Rule set
@@ -53,6 +53,8 @@ en,tab_about,About
 es,tab_about,Acerca de
 en,about_app,App
 es,about_app,App
+en,report_link,Report / Suggestion
+es,report_link,Informar / Sugerencia
 en,shelf_sub,Choose the transformation you want to apply.
 es,shelf_sub,Elige la transformación que quieres aplicar.
 en,words_sub,Type the words you want to transform. Results update as you type.

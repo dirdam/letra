@@ -361,6 +361,14 @@
         };
         $('rbSearch').addEventListener('input', renderRulebookTab);
         $('aboutLink').addEventListener('click', (e) => { e.preventDefault(); switchTab(S.tab === 'about' ? lastTab : 'about'); });
+        // on a phone the links of the hero's corner (Report / Suggestion, About) live in the footer instead
+        const narrow = window.matchMedia('(max-width: 860px)');
+        const placeLinks = () => {
+            if (narrow.matches) $('footerLinks').appendChild($('heroLinks'));
+            else $('hero').insertBefore($('heroLinks'), $('hero').firstChild);
+        };
+        placeLinks();
+        if (narrow.addEventListener) narrow.addEventListener('change', placeLinks);
         document.querySelectorAll('.tab').forEach((b) => {
             b.addEventListener('click', () => switchTab(b.dataset.tab));
             b.addEventListener('keydown', (e) => {

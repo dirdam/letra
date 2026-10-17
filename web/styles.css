@@ -160,7 +160,13 @@ kbd { font-family: var(--sans); font-size: 0.72em; opacity: 0.85; padding: 1px 6
 .wb-card .panel + .panel { border-top: 1px dashed var(--line); }
 /* the About link in the hero's corner (absolute, so the logo stays centred) and its page */
 .hero { position: relative; }
-.about-link { position: absolute; top: 14px; right: max(20px, calc((100% - 1180px) / 2 + 20px)); display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; font-family: var(--sans); font-size: 0.82rem; font-weight: 700; color: var(--dim); text-decoration: none; border: 1px solid transparent; border-radius: 999px; }
+.hero > .hero-links { position: absolute; top: 14px; right: max(20px, calc((100% - 1180px) / 2 + 20px)); display: flex; gap: 4px; }          /* the links in the hero's corner (absolute, so the logo stays centred) */
+.footer-links:empty { display: none; }
+.footer-links { margin-bottom: 12px; }
+.footer-links .hero-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 6px; }
+.footer-links .about-link { border-color: var(--line); background: var(--glass); }
+footer .about-link:hover { text-decoration: none; }
+.about-link { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; font-family: var(--sans); font-size: 0.82rem; font-weight: 700; color: var(--dim); text-decoration: none; border: 1px solid transparent; border-radius: 999px; }
 .about-link .icon { width: 17px; height: 17px; flex: none; }
 .about-link:hover, .about-link:focus-visible { color: var(--rubric); border-color: var(--line); background: var(--glass); }
 
@@ -511,7 +517,7 @@ footer a:hover { text-decoration: underline; }
     .strip-trail { display: none; }
     .tabs { gap: 4px; padding-left: 18px; }
     .tab { gap: 6px; padding: 8px 10px 9px; }
-    .hero { padding-top: 44px; }
+    .hero > .hero-links { display: none; }          /* on a phone the links go to the footer (main.js moves them) */
 }
 
 @media (prefers-reduced-motion: reduce) {
