@@ -16,7 +16,10 @@
     <a class="skip" href="#main" data-i18n="skip"></a>
 
     <header class="hero" id="hero">
-        <a class="about-link" id="aboutLink" href="#t=about"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg><span data-i18n="tab_about"></span></a>
+        <div class="hero-links" id="heroLinks">
+            <a class="about-link" id="reportLink" href="https://dirdam.squadro.app/contact.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg><span data-i18n="report_link"></span></a>
+            <a class="about-link" id="aboutLink" href="#t=about"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg><span data-i18n="tab_about"></span></a>
+        </div>
         <div class="hero-inner">
             <h1 class="logo" aria-label="LETRA"><span class="initial" aria-hidden="true">L</span><span class="logo-rest" aria-hidden="true">ETRA</span></h1>
             <p class="acronym" aria-label="LanguagE TRAnsformations"><b>L</b>anguag<b>E</b> <b>TRA</b>nsformations</p>
@@ -172,6 +175,7 @@
     </main>
 
     <footer>
+        <div class="footer-links" id="footerLinks"></div>          <!-- on a phone the links of the hero's corner are moved here -->
         <div class="lang-toggle" id="langToggle" role="group" aria-label="Language"></div>
         <p>
             &copy; <span id="footerYear"></span>
