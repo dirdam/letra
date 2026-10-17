@@ -30,6 +30,7 @@
         max: ['M15 3h6v6', 'M9 21H3v-6', 'M21 3l-7 7', 'M3 21l7-7'],
         fit: ['M8 3H5a2 2 0 0 0-2 2v3', 'M21 8V5a2 2 0 0 0-2-2h-3', 'M16 21h3a2 2 0 0 0 2-2v-3', 'M3 16v3a2 2 0 0 0 2 2h3'],
         close: ['M18 6 6 18', 'm6 6 12 12'],
+        split: ['M16 3h5v5', 'M8 3H3v5', 'M12 22v-8.3a4 4 0 0 0-1.172-2.872L3 3', 'm15 9 6-6'],
         plus: ['M5 12h14', 'M12 5v14'],
         minus: ['M5 12h14'],
     };
@@ -43,7 +44,7 @@
         return b;
     }
 
-    /* opts: {title, orient, draw(box, orient) -> {choose, size: {w, h}}, returnFocus} */
+    /* opts: {title, orient, draw(box, orient) -> {choose, size: {w, h}}, returnFocus, split: {available, onChange(value)}, onClose} */
     function open(opts) {
         if (current) return;
         let orient = opts.orient === 'h' ? 'h' : 'v';
@@ -72,6 +73,20 @@
             return b;
         });
         bar.appendChild(seg);
+        if (opts.split && opts.split.available) {          // "Split on identity", as in the toolbar: the same choice, kept in step with it
+            const toggle = el('button', 'btn has-icon toggle');
+            toggle.type = 'button';
+            const mark = icon(ICONS.split);
+            mark.setAttribute('class', 'icon');
+            [['fill', 'none'], ['stroke', 'currentColor'], ['stroke-width', '2'], ['stroke-linecap', 'round'], ['stroke-linejoin', 'round']].forEach(([k, val]) => mark.setAttribute(k, val));
+            toggle.appendChild(mark);
+            toggle.appendChild(el('span', '', I.t('split_identity')));
+            toggle.setAttribute('data-tip', I.t('split_identity_tip'));
+            const sync = () => toggle.setAttribute('aria-pressed', String(L.state.s.splitIdentity));
+            sync();
+            toggle.addEventListener('click', () => { opts.split.onChange(!L.state.s.splitIdentity); sync(); draw(); });
+            bar.appendChild(toggle);
+        }
         bar.appendChild(el('span', 'grow'));
         const zoomOut = button('', 'minus', I.t('viewer_zoom_out'));
         const zoomIn = button('', 'plus', I.t('viewer_zoom_in'));
@@ -214,6 +229,7 @@
             document.documentElement.classList.remove('viewer-open');
             L.tooltip && L.tooltip.hide();
             current = null;
+            if (opts.onClose) opts.onClose();
             if (opts.returnFocus && document.contains(opts.returnFocus)) opts.returnFocus.focus();
         }
 
