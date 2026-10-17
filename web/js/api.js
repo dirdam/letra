@@ -23,6 +23,7 @@
     L.api = {
         about: (lang) => request('api/about?lang=' + encodeURIComponent(lang)),
         ruleText: (preset) => request('api/rules/' + encodeURIComponent(preset)),
+        template: (lang) => request('api/template?lang=' + encodeURIComponent(lang)),
         transform: (set, words, signal) =>
             request('api/transform', Object.assign({ terms: words }, source(set)), signal),
         rulebook: (set) => request('api/rulebook', source(set)),

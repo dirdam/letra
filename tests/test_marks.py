@@ -65,4 +65,4 @@ def test_the_pieces_add_up_to_what_the_engine_did(preset, term):
         c = cut(t.json_dict['rules'][e['rule']], e['from'])
         assert ''.join(was for was, _ in c) == e['from']
         assert ''.join(now for _, now in c) == e['to']
-        assert any(was != now for was, now in c)
+        assert any(was != now for was, now in c) == (e['from'] != e['to'])          # a change replaces something; a way that leaves the term as it is replaces nothing

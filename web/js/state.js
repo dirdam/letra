@@ -32,6 +32,7 @@
         collapsed: {},                // word -> true when its card is folded up
         chainFolded: {},              // word -> true when its chain of changes is folded up
         treeView: 'v',                // 'v' = tree grows downwards, 'h' = to the right
+        splitIdentity: false,         // draw the identity alternatives as branches of the tree (only offered for sets that have an identity rule)
         error: '',                    // error code of the last request
         loading: false,
     };
@@ -44,6 +45,7 @@
             const saved = JSON.parse(stored(KEY) || '{}');
             ['setId', 'words'].forEach((k) => { if (k in saved) s[k] = saved[k]; });
             if (saved.treeView === 'h' || saved.treeView === 'v') s.treeView = saved.treeView;
+            if (saved.splitIdentity === true) s.splitIdentity = true;
         } catch (e) { /* ignore a damaged value */ }
         s.mine = stored(MINE_KEY) || '';
         s.mineName = stored(MINE_NAME_KEY) || s.mineName;
@@ -57,7 +59,7 @@
     }
 
     function save() {
-        store(KEY, JSON.stringify({ setId: s.setId, words: s.words, treeView: s.treeView }));
+        store(KEY, JSON.stringify({ setId: s.setId, words: s.words, treeView: s.treeView, splitIdentity: s.splitIdentity }));
     }
 
     function saveMine() {

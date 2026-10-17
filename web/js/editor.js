@@ -482,35 +482,19 @@
 
     // ---------- a new file ----------
 
-    /* What "New" writes: a small rules file that works, with each section in the shape it takes. The comment, the description
-       text and the group and rule names are in the page's language. */
-    const template = () => `{
-  // ${I.t('tpl_comment')}
-  "description": [
-    "${I.t('tpl_description')}"
-  ],
-  "groups": {
-    "${I.t('tpl_group')}": ["a", "b"]
-  },
-  "rules": {
-    "${I.t('tpl_rule')}": {
-      "<${I.t('tpl_group')}>x": "<${I.t('tpl_group')}>y"
-    }
-  },
-  "order": ["${I.t('tpl_rule')}"]
-}
-`;
+    /* What "New" writes: transformations/template_en.json or template_es.json (a small rules file that works), from the server. */
     let lastTemplate = null;          // the template New wrote last: while it is untouched, New does not ask before writing a new one
 
     function newFile() {
-        const make = () => {
-            const text = template();
-            setText(text, I.t('ed_filename_placeholder'));
-            lastTemplate = text;
+        const make = async () => {
+            let res = null;
+            try { res = await L.api.template(I.lang); } catch (e) { /* network failure */ }
+            if (!res || !res.ok) { els.note.textContent = I.t('err_server'); return; }
+            setText(res.text, I.t('ed_filename_placeholder'));
+            lastTemplate = res.text;
             els.text.focus();
-            const sample = I.t('tpl_description');          // selected, so the first thing typed replaces it
-            const at = text.indexOf(sample);
-            els.text.setSelectionRange(at, at + sample.length);
+            const m = /"description"\s*:\s*\[\s*"([^"\n]*)"/.exec(res.text);          // the example description is selected, so the first thing typed replaces it
+            if (m) { const at = res.text.indexOf(m[1], m.index); els.text.setSelectionRange(at, at + m[1].length); }
         };
         if (els.text.value.trim() && els.text.value !== lastTemplate) askReplace(make);
         else make();

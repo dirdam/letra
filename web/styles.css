@@ -529,6 +529,8 @@ footer a:hover { text-decoration: underline; }
 
 /* the full-screen tree viewer */
 html.viewer-open, html.viewer-open body, html.modal-open, html.modal-open body { overflow: hidden; }
+.check { display: inline-flex; align-items: center; gap: 7px; font-family: var(--sans); font-size: 0.82rem; font-weight: 700; color: var(--dim); cursor: pointer; user-select: none; }
+.check input { width: 16px; height: 16px; accent-color: var(--rubric); cursor: pointer; }
 .deriv-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 6px; }
 .deriv-head .deriv-title { margin: 0; }
 .icon-btn { display: inline-grid; place-items: center; width: 32px; height: 32px; padding: 0; color: var(--dim); background: var(--glass); border: 1px solid var(--line); border-radius: 9px; cursor: pointer; }

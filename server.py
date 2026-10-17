@@ -27,6 +27,9 @@ TRANSFORMATIONS = os.path.join(BASE, 'transformations')
 
 LANGS = ('en', 'es')
 
+# The file the editor's "New" button writes: a small rules file that works, one per language (it is not a rule set of the page).
+TEMPLATES = {'en': 'template_en.json', 'es': 'template_es.json'}
+
 # Rule files bundled with the app, as offered in the page: id -> file name.
 PRESETS = {'sample': 'sample.json', 'LA_ES': 'LA_ES.json', 'ES_IPA': 'ES_IPA.json', 'ES_Miquitrifi': 'ES_Miquitrifi.json'}
 
@@ -239,6 +242,13 @@ def api_rules(preset):
     return send_from_directory(TRANSFORMATIONS, PRESETS[preset], mimetype='application/json')
 
 
+@app.get('/api/template')
+def api_template():
+    """The rules file the editor's New button writes, in the page's language (English when there is none for it)."""
+    lang = request.args.get('lang', 'en')
+    return send_from_directory(TRANSFORMATIONS, TEMPLATES.get(lang, TEMPLATES['en']), mimetype='application/json')
+
+
 @app.post('/api/transform')
 def api_transform():
     """Evolve one word ({"term": ...}: the answer is that word's result) or many
@@ -304,6 +314,8 @@ def api_rulebook():
                    for name, values in t.groups_expanded.items()},
         # the file's own "description" as safe HTML, {language: [bullet, ...]} ('*': for every language), or null
         'description': description.to_html(original.get('description')),
+        # the identity rules (rules that change nothing): the page offers to split the tree on them
+        'identity': sorted(t.identity_rules()),
     })
 
 

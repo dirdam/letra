@@ -32,8 +32,9 @@ El conjunto reglas que se usa para tranformar la escritura. Se dará como un arc
   - Para representar el principio de un término se usa un espacio blanco inicial: `␣abc`.
   - Para representar el final de un término se usa un espacion blanco final: `xyz␣`.
 - **`order`**: lista especificando el orden en que las reglas (`rules`) se aplican.
-- **`description`** (opcional): lista de textos, en Markdown, que se muestran como viñetas bajo el nombre del conjunto en la pestaña Evolucionar. Usa `{"en": [...], "es": [...]}` para una lista por idioma.
   - Si sólo una de múltiples reglas ha de aplicarse en cierto paso las alternativas se separan con `|`: `regla_1|regla_2|regla_3`.
+  - Una regla que no cambia nada (su única entrada es `"": ""`, o un grupo equivalente) es la identidad: como alternativa (`regla_0|regla_1`) permite dividir el árbol en la pestaña Evolucionar ("Dividir en identidad").
+- **`description`** (opcional): lista de textos, en Markdown, que se muestran como viñetas bajo el nombre del conjunto en la pestaña Evolucionar. Usa `{"en": [...], "es": [...]}` para una lista por idioma.
 
 A diferencia de los archivos _json_ tradicionales, el archivo acepta comentarios que comiencen con dos barras (`//`).
 
