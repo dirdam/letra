@@ -16,7 +16,7 @@
         sample: ['lítteram'],          // the word the sample puts in the bar (it has no "Try" chips)
         LA_ES: ['lítteram', 'trophaéum', 'óperam', 'dóminum', 'quinquagínta', 'dígitum'],
         ES_IPA: ['civilización', 'chascarrillo', 'halagüeño', 'verdad', 'rejuvenecer', 'water'],
-        ES_Miquitrifi: ['gato', 'cuerno', 'pingüino', 'zapato', 'queso', 'guerra'],
+        ES_Miquitrifi: ['mequetrefe', 'mamá', 'cagón', 'yo no he sido'],
         mine: [],
     };
 
