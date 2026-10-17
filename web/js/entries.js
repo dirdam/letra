@@ -125,7 +125,7 @@
 
     const selectedOf = (r) => (S.selected[r.term] && r.final.includes(S.selected[r.term]) ? S.selected[r.term] : r.final[0]);
 
-    const handlers = { onRule: null, onUsedChange: null };
+    const handlers = { onRule: null, onUsedChange: null, onSplit: null, onViewerClose: null };
 
     function chainEl(r, form) {
         const steps = chainFor(r, form);
@@ -178,6 +178,8 @@
             title: r.term,
             orient: S.treeView,
             returnFocus: button,
+            split: { available: L.rulebook.identity(L.state.currentSet()).length > 0, onChange: (value) => handlers.onSplit && handlers.onSplit(value) },
+            onClose: () => handlers.onViewerClose && handlers.onViewerClose(),
             draw: (box, orient) => {
                 const handle = L.tree.render(box, r, selectedOf(r), (f) => { select(card, r, f); handle.choose(f); }, orient, { bare: true });
                 return handle;

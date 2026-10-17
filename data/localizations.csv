@@ -69,6 +69,8 @@ en,tree_horizontal,Horizontal tree
 es,tree_horizontal,Árbol horizontal
 en,split_identity,Split on identity
 es,split_identity,Dividir en identidad
+en,split_identity_tip,Show the branch where the identity rule leaves the word unchanged.
+es,split_identity_tip,Mostrar la rama en la que la regla de identidad deja la palabra sin cambios.
 en,tree_max,Maximize the tree
 es,tree_max,Maximizar el árbol
 en,viewer_close,Close

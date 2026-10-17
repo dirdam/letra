@@ -55,7 +55,7 @@
     function renderSetPanel() {
         $('setTitle').textContent = setLabel(S.setId);
         // what the rules file says about itself ("description": bullets of Markdown); My rules without one gets a standard line
-        $('splitLabel').hidden = !L.rulebook.identity(ST.currentSet()).length;          // the checkbox only exists for sets that have an identity rule
+        $('splitIdentity').hidden = !L.rulebook.identity(ST.currentSet()).length;          // the toggle only exists for sets that have an identity rule
         const bullets = L.rulebook.description(ST.currentSet(), I.lang);
         $('setExplain').innerHTML = bullets ? '<ul>' + bullets.map((b) => '<li>' + b + '</li>').join('') + '</ul>' : S.setId === 'mine' ? I.h('explain_mine') : '';
         const st = L.rulebook.stats();
@@ -184,6 +184,12 @@
         let text = I.count('n_words', S.results.length) + ' → ' + I.count('n_forms', forms);
         if (S.truncated) { text += ' ' + I.t('status_truncated'); s.classList.add('warn'); }
         s.textContent = text;
+    }
+
+    function setSplit(value) {
+        S.splitIdentity = value;
+        $('splitIdentity').setAttribute('aria-pressed', String(value));
+        ST.save();
     }
 
     function syncTreeView() {
@@ -341,12 +347,18 @@
             syncTreeView();
             if (S.results.length) renderResults();          // the trees are drawn again the other way round
         }));
-        $('splitIdentity').checked = S.splitIdentity;
-        $('splitIdentity').addEventListener('change', () => {
-            S.splitIdentity = $('splitIdentity').checked;
-            ST.save();
+        $('splitIdentity').setAttribute('aria-pressed', String(S.splitIdentity));
+        $('splitIdentity').addEventListener('click', () => {
+            setSplit(!S.splitIdentity);
             if (S.results.length) renderResults();          // the trees are drawn again, with or without the identity branches
         });
+        // the same choice from the full-screen viewer: the viewer redraws its own tree; the cards behind are redrawn when it closes
+        let splitChangedInViewer = false;
+        L.entries.handlers.onSplit = (value) => { setSplit(value); splitChangedInViewer = true; };
+        L.entries.handlers.onViewerClose = () => {
+            if (splitChangedInViewer && S.results.length) renderResults();
+            splitChangedInViewer = false;
+        };
         $('rbSearch').addEventListener('input', renderRulebookTab);
         $('aboutLink').addEventListener('click', (e) => { e.preventDefault(); switchTab(S.tab === 'about' ? lastTab : 'about'); });
         document.querySelectorAll('.tab').forEach((b) => {
