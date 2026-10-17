@@ -39,6 +39,12 @@
         return d ? (d[lang] || d['*'] || d.en || d[Object.keys(d)[0]] || null) : null;
     }
 
+    /* The identity rules (rules that change nothing) of the set in use; empty when the set has none or its rule book is not the one loaded. */
+    function identity(set) {
+        const d = current && set && current.key === keyOf(set) && current.data && current.data.identity;
+        return d || [];
+    }
+
     function stats() {
         const d = info();
         return d ? { groups: Object.keys(d.groups).length, rules: Object.keys(d.rules).length, steps: d.order.length } : null;
@@ -113,9 +119,9 @@
         block.dataset.rule = name;
         const head = document.createElement('div');
         head.className = 'rb-rule-head';
-        head.appendChild(span('rule-name', name === 'iden' ? I.t('rb_iden') : name));
+        head.appendChild(span('rule-name', name));
         block.appendChild(head);
-        if (name !== 'iden') {
+        if (entriesFor(name).length) {          // (the built-in `iden`, when the file does not define it, has no entries)
             const ul = document.createElement('ul');
             ul.className = 'rb-entries';
             entriesFor(name).forEach((entry, position) => {
@@ -262,5 +268,5 @@
         });
     }
 
-    L.rulebook = { load, info, description, stats, entriesFor, pattern, pair, render, mark };
+    L.rulebook = { load, info, description, identity, stats, entriesFor, pattern, pair, render, mark };
 })();

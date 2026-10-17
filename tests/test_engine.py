@@ -38,7 +38,7 @@ def test_edges_include_every_recorded_step(key, expected):
     for name, mother, rule in expected['transformations']:
         if mother:                                       # every first-path step is also an edge
             assert (rule, mother, name) in edges
-    assert all(e['from'] != e['to'] for e in t.edges)
+    assert all(e['from'] != e['to'] or e['entries'] == [] for e in t.edges)          # (an alternative that leaves the term as it is is an edge to itself)
     assert all(0 <= e['step'] < len(t.json_dict['order']) for e in t.edges)
 
 
@@ -54,7 +54,7 @@ def test_edges_keep_the_paths_the_tree_loses():
 def test_edges_are_a_tree_when_branches_do_not_meet():
     t = letra.Transformer(json_path='LA_ES.json')
     t.transform('quinquagínta')
-    assert len(t.transformations) == len(t.edges) + 1      # every term but the start has one edge
+    assert len(t.transformations) == len([e for e in t.edges if e['from'] != e['to']]) + 1      # every term but the start has one edge (an edge to itself is a way through a step that leaves the term as it is)
 
 
 def test_groups_are_kept_as_lists_of_values():
@@ -83,6 +83,9 @@ def test_halagueno_applies_only_one_entry_of_its_rule():
     t.transform('halagüeño')
     original = t.json_dict_original['rules']
     for e in t.edges:
+        if e['from'] == e['to']:                 # a way through a step that leaves the term as it is: no entry applied
+            assert e['entries'] == []
+            continue
         entries = list(original[e['rule']].items())
         assert e['entries'] and all(0 <= n < len(entries) for n in e['entries'])
     g = [e for e in t.edges if e['rule'] == 'g']
@@ -107,3 +110,76 @@ def test_rules_with_a_link_in_their_description_load():
     t = letra.Transformer('{"description": ["[x](https://example.org/a//b)"], "groups": {}, "rules": {"r": {"a": "b"}}, "order": ["r"]}')
     assert t.transform('a') == [' b ']
     assert t.json_dict_original['description'] == ['[x](https://example.org/a//b)']
+
+
+# ---------- alternatives that leave the term as it is are edges too ----------
+
+def test_an_alternative_that_leaves_the_term_unchanged_is_an_edge_to_itself():
+    rules = '{"groups": {}, "rules": {"r": {"a": "b"}}, "order": ["iden|r"]}'
+    t = letra.Transformer(rules)
+    assert sorted(x.strip() for x in t.transform('a')) == ['a', 'b']
+    assert {(e['step'], e['rule'], e['from'], e['to'], tuple(e['entries'])) for e in t.edges} == {(0, 'iden', ' a ', ' a ', ()), (0, 'r', ' a ', ' b ', (0,))}
+
+
+def test_a_rule_named_identity_is_a_branch_too_but_only_where_another_alternative_changes_the_term():
+    rules = '{"groups": {}, "rules": {"identity": {"": ""}, "r": {"a": "b"}}, "order": ["identity|r"]}'
+    t = letra.Transformer(rules)
+    t.transform('ac')
+    assert {(e['rule'], e['from'], e['to']) for e in t.edges} == {('identity', ' ac ', ' ac '), ('r', ' ac ', ' bc ')}
+    t.transform('cc')          # r does not apply here: nothing splits, so there is nothing to draw
+    assert t.edges == []
+
+
+def test_the_branches_of_a_step_keep_the_order_the_alternatives_are_written_in():
+    rules = '{"groups": {}, "rules": {"first": {"": ""}, "second": {"a": "b"}, "third": {"a": "c"}}, "order": ["first|second|third"]}'
+    t = letra.Transformer(rules)
+    t.transform('a')
+    assert [e['rule'] for e in t.edges] == ['first', 'second', 'third']          # the one that leaves the term as it is comes first, as written
+    t2 = letra.Transformer(rules.replace('first|second|third', 'second|first|third'))
+    t2.transform('a')
+    assert [e['rule'] for e in t2.edges] == ['second', 'first', 'third']
+
+
+def test_alternatives_that_none_of_which_changes_the_term_leave_no_edge():
+    t = letra.Transformer('{"groups": {}, "rules": {"p": {"x": "y"}, "q": {"z": "w"}}, "order": ["p|q"]}')
+    assert t.transform('a') == [' a ']
+    assert t.edges == []
+
+
+def test_a_step_with_a_single_rule_has_no_edge_for_a_word_it_does_not_change():
+    t = letra.Transformer('{"groups": {}, "rules": {"r": {"x": "y"}}, "order": ["r"]}')
+    t.transform('a')
+    assert t.edges == []
+
+
+# ---------- which rules are the identity: the ones that change nothing ----------
+
+def identity_of(rules_json):
+    return letra.Transformer(rules_json).identity_rules()
+
+
+def test_a_rule_whose_only_entry_is_empty_to_empty_is_an_identity_rule_whatever_its_name_and_comments():
+    rules = '{"groups": {}, "rules": {"rule_0": {"": "" // identity\n}, "r": {"a": "b"}}, "order": ["rule_0|r"]}'
+    assert identity_of(rules) == {'rule_0'}
+
+
+def test_a_group_that_is_only_the_empty_string_makes_an_identity_rule_too():
+    rules = '{"groups": {"iden": [""], "ab": ["a", "b"]}, "rules": {"keep": {"<iden>": "<iden>"}, "also": {"<>": "<>"}, "r": {"a": "b"}, "g": {"<ab>": "<ab>"}}, "order": ["keep|r"]}'
+    assert identity_of(rules) == {'keep', 'also'}          # `g` keeps a letter: a rule that maps a group to itself is not the identity
+
+
+def test_a_rule_with_any_other_entry_is_not_the_identity():
+    rules = '{"groups": {}, "rules": {"mixed": {"": "", "a": "b"}, "same": {"a": "a"}, "empty": {}}, "order": ["mixed"]}'
+    assert identity_of(rules) == set()
+
+
+def test_the_builtin_iden_counts_when_the_order_uses_it():
+    assert identity_of('{"groups": {}, "rules": {"r": {"a": "b"}}, "order": ["iden|r"]}') == {'iden'}
+    assert identity_of('{"groups": {}, "rules": {"r": {"a": "b"}}, "order": ["r"]}') == set()
+
+
+def test_only_identity_rules_split_a_step_where_another_alternative_changes_the_term():
+    rules = '{"groups": {"iden": [""]}, "rules": {"nothing": {"<iden>": "<iden>"}, "r": {"a": "b"}, "other": {"x": "y"}}, "order": ["nothing|other|r"]}'
+    t = letra.Transformer(rules)
+    t.transform('a')
+    assert [(e['rule'], e['from'] == e['to']) for e in t.edges] == [('nothing', True), ('r', False)]          # `other` changes nothing but is no identity rule: no branch

@@ -32,8 +32,9 @@ The set of rules used to transform the script. It will be given as a _**json** f
   - To represent the begining of a term use a leading white space: `␣abc`.
   - To represent the end of a term use a tailing white space: `xyz␣`.
 - **`order`**: list specifying the order in which the `rules` are applied.
-- **`description`** (optional): list of texts, in Markdown, shown as bullets under the rule set's name in the Evolve tab. Use `{"en": [...], "es": [...]}` for one list per language.
   - If only one out of multiple rules may be applied at a certain step, the alternatives are separated by `|`: `rule_1|rule_2|rule_3`.
+  - A rule that changes nothing (its only entry is `"": ""`, or an equivalent group) is the identity: as an alternative (`rule_0|rule_1`) it lets the tree split in the Evolve tab ("Split on identity").
+- **`description`** (optional): list of texts, in Markdown, shown as bullets under the rule set's name in the Evolve tab. Use `{"en": [...], "es": [...]}` for one list per language.
 
 Unlike traditional _json_ files, the file accepts comments begining with two slashes (`//`).
 

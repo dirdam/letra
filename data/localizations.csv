@@ -67,6 +67,8 @@ en,tree_vertical,Vertical tree
 es,tree_vertical,Árbol vertical
 en,tree_horizontal,Horizontal tree
 es,tree_horizontal,Árbol horizontal
+en,split_identity,Split on identity
+es,split_identity,Dividir en identidad
 en,tree_max,Maximize the tree
 es,tree_max,Maximizar el árbol
 en,viewer_close,Close
@@ -165,8 +167,6 @@ en,rb_hint,"Rules in the order they apply. Alternatives (separated by | in the r
 es,rb_hint,"Las reglas en el orden en que se aplican. Las alternativas (separadas por | en el archivo) ramifican la derivación: cada una se prueba sobre cada forma. Pasa el cursor sobre un ⟨grupo⟩ para ver sus miembros; ␣ es el límite de palabra. Las reglas marcadas ""Usada ahora"" cambiaron la forma que elegiste en la pestaña Evolucionar."
 en,rb_alternatives,alternatives (only one applies)
 es,rb_alternatives,alternativas (solo se aplica una)
-en,rb_iden,(leave unchanged)
-es,rb_iden,(dejar sin cambios)
 en,rb_no_match,Nothing matches.
 es,rb_no_match,Nada coincide.
 en,rb_unavailable,The rule book is not available for these rules.
@@ -189,14 +189,6 @@ en,ed_open,Open file…
 es,ed_open,Abrir archivo…
 en,ed_new,New
 es,ed_new,Nuevo
-en,tpl_comment,"Run test with word ""xabxyz"""
-es,tpl_comment,"Prueba con la palabra ""xabxyz"""
-en,tpl_description,Converts _abx_ into _aby_
-es,tpl_description,Convierte _abx_ en _aby_
-en,tpl_group,group_ab
-es,tpl_group,grupo_ab
-en,tpl_rule,rule_abx
-es,tpl_rule,regla_abx
 en,ed_expand,Edit in full page
 es,ed_expand,Editar a página completa
 en,ed_collapse,Exit full page
@@ -224,7 +216,7 @@ en,ed_howto,"A rules file is **JSON that also allows `//` comments**. It has thr
     - Both sides must have the same number of `<>`. Where a group disappears, leave an empty `<>`.
     - `<g1|g2>`: either group. `<g*>`: any run of its members. `<g=>`: the same member twice (`<g==>` three times).
     - A leading space is the start of the word, a trailing space is its end.
-- **`order`**: the rule names in the order they apply. `""rule_a|rule_b""` means only one of the two applies.
+- **`order`**: the rule names in the order they apply. `""rule_a|rule_b""` means only one of the two applies. A rule that changes nothing (its only entry is `""""`: `""""`) is the identity: as an alternative (`""rule_0|rule_a""`) it lets the tree split in Evolve (""Split on identity"").
 - **`description`** (optional): a list of texts in Markdown, shown as bullets under the set's name in Evolve: `""description"": [""First **point**."", ""Second point.""]`. For one list per language use `""description"": {""en"": [...], ""es"": [...]}`.
 
 Example: `""<cons>í<cons>"": ""<cons>é<cons>""` changes a stressed **í** between consonants into **é**."
@@ -239,7 +231,7 @@ es,ed_howto,"Un archivo de reglas es **JSON que además admite comentarios `//`*
     - Ambos lados deben tener el mismo número de `<>`. Donde un grupo desaparece, deja un `<>` vacío.
     - `<g1|g2>`: cualquiera de los dos grupos. `<g*>`: una secuencia de miembros. `<g=>`: el mismo miembro dos veces (`<g==>` tres veces).
     - Un espacio al principio es el inicio de la palabra y un espacio al final es su fin.
-- **`order`**: los nombres de las reglas en el orden en que se aplican. `""regla_a|regla_b""` significa que solo se aplica una de las dos.
+- **`order`**: los nombres de las reglas en el orden en que se aplican. `""regla_a|regla_b""` significa que solo se aplica una de las dos. Una regla que no cambia nada (su única entrada es `""""`: `""""`) es la identidad: como alternativa (`""regla_0|regla_a""`) permite dividir el árbol en Evolucionar (""Dividir en identidad"").
 - **`description`** (opcional): una lista de textos en Markdown, que se muestran como viñetas bajo el nombre del conjunto en Evolucionar: `""description"": [""Primer **punto**."", ""Segundo punto.""]`. Para una lista por idioma usa `""description"": {""en"": [...], ""es"": [...]}`.
 
 Ejemplo: `""<cons>í<cons>"": ""<cons>é<cons>""` cambia una **í** tónica entre consonantes por **é**."

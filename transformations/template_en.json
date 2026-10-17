@@ -1,0 +1,15 @@
+{
+  // Run test with word "xabxyz". It should become "xabyyz"
+  "description": [
+    "Converts _abx_ into _aby_"
+  ],
+  "groups": {
+    "group_ab": ["a", "b"]
+  },
+  "rules": {
+    "rule_abx": {
+      "<group_ab>x": "<group_ab>y"
+    }
+  },
+  "order": ["rule_abx"]
+}

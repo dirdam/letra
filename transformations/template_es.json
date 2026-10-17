@@ -1,0 +1,15 @@
+{
+  // Prueba con la palabra "xabxyz". Debería convertirse en "xabyyz"
+  "description": [
+    "Convierte _abx_ en _aby_"
+  ],
+  "groups": {
+    "grupo_ab": ["a", "b"]
+  },
+  "rules": {
+    "regla_abx": {
+      "<grupo_ab>x": "<grupo_ab>y"
+    }
+  },
+  "order": ["regla_abx"]
+}

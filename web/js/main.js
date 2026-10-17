@@ -55,6 +55,7 @@
     function renderSetPanel() {
         $('setTitle').textContent = setLabel(S.setId);
         // what the rules file says about itself ("description": bullets of Markdown); My rules without one gets a standard line
+        $('splitLabel').hidden = !L.rulebook.identity(ST.currentSet()).length;          // the checkbox only exists for sets that have an identity rule
         const bullets = L.rulebook.description(ST.currentSet(), I.lang);
         $('setExplain').innerHTML = bullets ? '<ul>' + bullets.map((b) => '<li>' + b + '</li>').join('') + '</ul>' : S.setId === 'mine' ? I.h('explain_mine') : '';
         const st = L.rulebook.stats();
@@ -340,6 +341,12 @@
             syncTreeView();
             if (S.results.length) renderResults();          // the trees are drawn again the other way round
         }));
+        $('splitIdentity').checked = S.splitIdentity;
+        $('splitIdentity').addEventListener('change', () => {
+            S.splitIdentity = $('splitIdentity').checked;
+            ST.save();
+            if (S.results.length) renderResults();          // the trees are drawn again, with or without the identity branches
+        });
         $('rbSearch').addEventListener('input', renderRulebookTab);
         $('aboutLink').addEventListener('click', (e) => { e.preventDefault(); switchTab(S.tab === 'about' ? lastTab : 'about'); });
         document.querySelectorAll('.tab').forEach((b) => {

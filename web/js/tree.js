@@ -33,15 +33,29 @@
         return measureCtx.measureText(text).width;
     }
 
-    /* Nodes, merged edges and depths of the derivation graph of a result. */
+    /* Nodes, merged edges and depths of the derivation graph of a result.
+       A step with alternatives can leave a form as it is (an edge from a form to itself, such as `iden` or any alternative
+       that does not change it): that way through the step is drawn as a copy of the form, so the step shows as a split.
+       A node id is the form, plus "\0k" for its k-th copy. */
     function graph(r) {
+        const shownEdges = L.state.s.splitIdentity ? r.edges : r.edges.filter((e) => e[2] !== e[3]);          // without "Split on identity" the identity branches are left out
+        const stays = new Map();                // form -> the steps at which it passes through unchanged
+        shownEdges.forEach((e) => { if (e[2] === e[3]) { if (!stays.has(e[2])) stays.set(e[2], new Set()); stays.get(e[2]).add(e[0]); } });
+        const stepsOf = (form) => Array.from(stays.get(form) || []).sort((a, b) => a - b);
+        const idAt = (form, k) => (k ? form + '\u0000' + k : form);
+        const before = (form, step) => idAt(form, stepsOf(form).filter((s) => s < step).length);          // the form as it enters a step
+        const after = (form, step) => idAt(form, stepsOf(form).filter((s) => s <= step).length);          // and as it leaves it
+        const formOf = (id) => id.split('\u0000')[0];
+        const lastId = (form) => idAt(form, stepsOf(form).length);          // the copy of a final form that ends the path
         const nodes = new Set([r.start]);
-        const merged = new Map();               // "from\0to" -> {from, to, rules: [...], items: [{rule, applied}], step}
-        r.edges.forEach((e) => {
-            nodes.add(e[2]);
-            nodes.add(e[3]);
-            const key = e[2] + '\u0000' + e[3];
-            if (!merged.has(key)) merged.set(key, { from: e[2], to: e[3], rules: [], items: [], step: e[0] });
+        const merged = new Map();               // {from, to} -> {from, to, rules: [...], items: [{rule, applied}], step}
+        shownEdges.forEach((e) => {
+            const from = before(e[2], e[0]);
+            const to = after(e[3], e[0]);
+            nodes.add(from);
+            nodes.add(to);
+            const key = JSON.stringify([from, to]);
+            if (!merged.has(key)) merged.set(key, { from, to, rules: [], items: [], step: e[0] });
             const m = merged.get(key);
             if (!m.rules.includes(e[1])) { m.rules.push(e[1]); m.items.push({ rule: e[1], applied: e[4] || null }); }
         });
@@ -59,7 +73,7 @@
             if (!parents.has(e.to)) parents.set(e.to, new Set());
             parents.get(e.to).add(e.from);
         });
-        return { nodes, edges, depth, parents };
+        return { nodes, edges, depth, parents, formOf, lastId };
     }
 
     const fits = (r) => graph(r).nodes.size <= MAX_NODES;
@@ -95,7 +109,7 @@
         items.forEach((it) => {
             const item = el('div', 'tl-item');
             if (items.length > 1) item.appendChild(el('span', 'tl-name', it.rule));
-            const entries = L.rulebook.entriesFor(it.rule).filter((_, n) => !it.applied || it.applied.includes(n));
+            const entries = L.rulebook.entriesFor(it.rule).filter((_, n) => !it.applied || !it.applied.length || it.applied.includes(n));          // no entry applied (a branch that leaves the form as it is): the rule as in the rule book
             const ul = el('ul', 'tl-entries');
             entries.forEach((entry) => {
                 const li = el('li');
@@ -125,13 +139,13 @@
         const g = graph(r);
         if (g.nodes.size > MAX_NODES) { box.appendChild(Object.assign(document.createElement('p'), { className: 'dim', textContent: I.t('tree_too_big') })); return null; }
         const id = 'tr' + (++uid);
-        const finals = new Set(r.final);
+        const finals = new Set(r.final.map(g.lastId));
 
         const maxDepth = Math.max(...Array.from(g.nodes).map((n) => g.depth.get(n) || 0));
         const rows = Array.from({ length: maxDepth + 1 }, () => []);
         g.nodes.forEach((n) => rows[g.depth.get(n) || 0].push(n));
 
-        const label = (n) => L.entries.plain(n);          // no word-boundary mark on the forms of the tree
+        const label = (n) => L.entries.plain(g.formOf(n));          // no word-boundary mark on the forms of the tree
         const nodeW = new Map();
         g.nodes.forEach((n) => nodeW.set(n, Math.max(46, width(label(n), '17px Gentium, serif') + 2 * PAD_X)));
 
@@ -289,8 +303,8 @@
                 grp.setAttribute('tabindex', '0');
                 grp.setAttribute('role', 'button');
                 grp.setAttribute('aria-label', label(n));
-                grp.addEventListener('click', () => onSelect(n));
-                grp.addEventListener('keydown', (ev) => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); onSelect(n); } });
+                grp.addEventListener('click', () => onSelect(g.formOf(n)));
+                grp.addEventListener('keydown', (ev) => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); onSelect(g.formOf(n)); } });
             }
             nodeEls.set(n, grp);
             nodeLayer.appendChild(grp);
@@ -308,14 +322,14 @@
         nodeEls.forEach((grp, n) => {
             grp.addEventListener('mouseenter', () => highlight(n));
             grp.addEventListener('focus', () => highlight(n));
-            grp.addEventListener('mouseleave', () => highlight(current));
-            grp.addEventListener('blur', () => highlight(current));
+            grp.addEventListener('mouseleave', () => highlight(g.lastId(current)));
+            grp.addEventListener('blur', () => highlight(g.lastId(current)));
         });
         const choose = (f) => {
             current = f;
             nodeEls.forEach((grp) => grp.classList.remove('chosen'));
-            if (nodeEls.has(f)) nodeEls.get(f).classList.add('chosen');
-            highlight(f);
+            if (nodeEls.has(g.lastId(f))) nodeEls.get(g.lastId(f)).classList.add('chosen');
+            highlight(g.lastId(f));
         };
         choose(form);
 
@@ -331,7 +345,7 @@
         legend.textContent = I.t('tree_hint');
         box.appendChild(scroll);
         box.appendChild(legend);
-        const chosen = pos.get(form);                       // bring the chosen form into view (once the box is on the page)
+        const chosen = pos.get(g.lastId(form));             // bring the chosen form into view (once the box is on the page)
         const center = () => { if (chosen) scroll.scrollLeft = Math.max(0, (horiz ? chosen.x + chosen.w / 2 : chosen.c) - scroll.clientWidth / 2); };
         requestAnimationFrame(center);
         return { choose, center };
