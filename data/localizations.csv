@@ -55,6 +55,28 @@ en,about_app,App
 es,about_app,App
 en,report_link,Report / Suggestion
 es,report_link,Informar / Sugerencia
+en,report_message,Send a message
+es,report_message,Enviar un mensaje
+en,report_bug,Report a bug on GitHub
+es,report_bug,Informar de un error en GitHub
+en,issue_body,"**What I did**
+
+
+**What I expected**
+
+
+**What happened**
+
+"
+es,issue_body,"**Qué hice**
+
+
+**Qué esperaba**
+
+
+**Qué pasó**
+
+"
 en,shelf_sub,Choose the transformation you want to apply.
 es,shelf_sub,Elige la transformación que quieres aplicar.
 en,words_sub,Type the words you want to transform. Results update as you type.

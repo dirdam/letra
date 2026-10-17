@@ -338,8 +338,8 @@
         $('exportCopy').addEventListener('click', () => doExport(true));
         $('exportDownload').addEventListener('click', () => doExport(false));
         $('shareBtn').addEventListener('click', share);
-        document.addEventListener('click', (e) => { if (!$('exportMenu').contains(e.target)) $('exportMenu').open = false; });          // a click anywhere else closes the export menu
-        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') $('exportMenu').open = false; });
+        document.addEventListener('click', (e) => { ['exportMenu', 'reportMenu'].forEach((id) => { if (!$(id).contains(e.target)) $(id).open = false; }); });          // a click anywhere else closes the export menu
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') ['exportMenu', 'reportMenu'].forEach((id) => { $(id).open = false; }); });
         document.querySelectorAll('#treeView button').forEach((b) => b.addEventListener('click', () => {
             if (S.treeView === b.dataset.view) return;
             S.treeView = b.dataset.view;
@@ -361,6 +361,19 @@
         };
         $('rbSearch').addEventListener('input', renderRulebookTab);
         $('aboutLink').addEventListener('click', (e) => { e.preventDefault(); switchTab(S.tab === 'about' ? lastTab : 'about'); });
+        // "Report a bug on GitHub": a new issue with a template and the context only the page knows (what was open, the words, the language, the browser)
+        const issueUrl = () => {
+            const own = S.setId === 'mine';
+            const body = I.t('issue_body') + '\n---\nContext (filled in by LETRA)\n'
+                + '- Page: ' + location.href + '\n'
+                + '- Rule set: ' + (own ? 'my own rules (they are not in the link: please paste them here)' : S.setId) + '\n'
+                + '- Words: ' + S.words + '\n'
+                + '- Language: ' + I.lang + '\n'
+                + '- Browser: ' + navigator.userAgent + '\n';
+            return 'https://github.com/dirdam/letra/issues/new?body=' + encodeURIComponent(body);
+        };
+        $('reportMenu').addEventListener('toggle', () => { $('reportIssue').href = issueUrl(); });
+        $('reportIssue').addEventListener('click', () => { $('reportIssue').href = issueUrl(); });
         // on a phone the links of the hero's corner (Report / Suggestion, About) live in the footer instead
         const narrow = window.matchMedia('(max-width: 860px)');
         const placeLinks = () => {
