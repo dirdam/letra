@@ -221,29 +221,50 @@ class Transformer():
                 result += part[1]
         return result
         
+    def identity_rules(self):
+        '''Names of the rules that change nothing: once the groups that are only the empty string are replaced by it (and an
+        empty `<>`), every entry of the rule is `"": ""`. The built-in `iden` counts when `order` uses it.'''
+        empty_groups = {name for name, values in self.groups_expanded.items() if values == ['']}
+        def is_empty(text):
+            def drops(placeholder): # `<>`, or only groups that are the empty string
+                return all(part.replace('*', '').replace('=', '') in empty_groups | {''} for part in placeholder.split('|'))
+            return re.sub(r'<([^<>]*)>', lambda m: '' if drops(m.group(1)) else m.group(0), text) == ''
+        names = {rule for rule, entries in self.json_dict_original['rules'].items() if entries and all(is_empty(k) and is_empty(v) for k, v in entries.items())}
+        if any('iden' in step.split('|') for step in self.json_dict['order']):
+            names.add('iden')
+        return names
+
     def transform(self, term, allow_identity=False, verbose=False):
         '''Applies the all the changes based on `rules` and `order`.
         `allow_indentity` sets whether the rules are compulsory in every step or whether the term can remain as identity.'''
         new_term = f' {term} ' # Set begining and end of term
         self.transformations = {new_term: {'mother': '', 'rule': ''}} # Dictionary of transformations {term: {'mother': mother_term, 'rule': rule}}
         self.edges = [] # Every change applied: {step, rule, from, to}. Unlike `transformations`, keeps all the paths when branches meet
+        identity_rules = self.identity_rules()
         nodes = [new_term] # Nodes (target words) to be transformed
         for step, rules in enumerate(self.json_dict['order']):
             rules = [rules] if '|' not in rules else rules.split('|')
             if allow_identity:
                 rules = ['iden'] + rules # Add identity rule
             last_nodes = [] # Last level of nodes
+            changed_terms = set() # Terms that at least one of the alternatives changes
+            step_edges = [] # (edge, leaves_as_is) in the order of the alternatives, so the branches keep the order they are written in
             for rule in rules:
                 for middle_term in nodes: # For each term in the last level
                     transformed_middle_term = self.apply_rule(rule, middle_term)
                     if transformed_middle_term != middle_term:
-                        self.edges.append({'step': step, 'rule': rule, 'from': middle_term, 'to': transformed_middle_term, 'entries': self.last_applied})
+                        step_edges.append(({'step': step, 'rule': rule, 'from': middle_term, 'to': transformed_middle_term, 'entries': self.last_applied}, False))
+                        changed_terms.add(middle_term)
+                    elif rule in identity_rules:
+                        step_edges.append(({'step': step, 'rule': rule, 'from': middle_term, 'to': middle_term, 'entries': []}, True))
                     if transformed_middle_term not in last_nodes: # If the new term is not yet registered as a last level node
                         last_nodes.append(transformed_middle_term)
                         if transformed_middle_term != middle_term and transformed_middle_term not in self.transformations: # If the transformation is different from the original term (to avoid adding the same term overriding the original one) and not in the transformations dictionary (to avoid loops like 'sello' -> 'sillo' -> 'sello' -> ...)
                             self.transformations[transformed_middle_term] = {'mother': middle_term, 'rule': rule}
                             if verbose:
                                 print(f'{middle_term} --({rule})-> {transformed_middle_term}')
+            # An identity alternative (a rule that changes nothing, or the built-in `iden`) is a way through the step too, but only when another one changes that term
+            self.edges.extend(edge for edge, leaves_as_is in step_edges if not leaves_as_is or edge['from'] in changed_terms)
             nodes = last_nodes
         return last_nodes
 
