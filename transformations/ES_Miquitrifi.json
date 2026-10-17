@@ -8,9 +8,11 @@
     "vocal_tónica": ["á", "é", "í", "ó"],
     "aou_átona": ["a", "o", "u"],
     "aou_tónica": ["á", "ó", "ú"],
+    "aou": ["<aou_átona>", "<aou_tónica>"],
     "cons": ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "ñ", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z"],
     "gq": ["g", "q"],
-    "cons_normal": ["<cons>", "!<gq>"]
+    "cons_normal": ["<cons>", "!<gq>"],
+    "no_ei": ["<cons>", "<aou>"]
   },
   "rules": {
     "vocal→i": {
@@ -25,8 +27,9 @@
       "c<aou_tónica>": "quí<>"
     },
     "g": {
-      "g<aou_átona>": "gui<>",
-      "g<aou_tónica>": "guí<>"
+      "ga|go|gue": "gui",
+      "gá|gó|gué": "guí",
+      "gu<no_ei>": "gui<no_ei>"
     },
     "z": {
       "z<aou_átona>": "ci<>",
