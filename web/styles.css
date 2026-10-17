@@ -540,7 +540,7 @@ html.viewer-open, html.viewer-open body, html.modal-open, html.modal-open body {
 .viewer-title { font-size: 1.35rem; margin-right: 6px; }
 .viewer-stage { position: relative; flex: 1; overflow: hidden; touch-action: none; cursor: grab; background: var(--vellum-1); user-select: none; -webkit-user-select: none; }
 .viewer-stage.dragging { cursor: grabbing; }
-.viewer-canvas { position: absolute; left: 0; top: 0; transform-origin: 0 0; will-change: transform; }
+.viewer-canvas { position: absolute; left: 0; top: 0; transform-origin: 0 0; }          /* no will-change: transform here: it makes the browser keep a bitmap from the starting size and stretch it, so a zoomed tree turned blurry */
 .viewer-canvas svg { display: block; }
 .viewer-hint { margin: 0; padding: 8px 14px; font-family: var(--sans); font-size: 0.8rem; color: var(--dim); background: var(--glass); border-top: 1px solid var(--line); }
 .viewer .seg button { white-space: nowrap; }
