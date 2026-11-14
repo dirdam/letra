@@ -550,6 +550,59 @@
         if (!els.text.value.trim()) validateNow();
     }
 
+    // ---------- auto-closing brackets and quotes ----------
+
+    const PAIRS = { '{': '}', '[': ']', '(': ')', '<': '>', '"': '"' };
+    const CLOSERS = '}])>"';
+
+    /* Types `text` at the caret (or over the selection) the way the user would, so undo still works. */
+    function typeText(text) {
+        const box = els.text;
+        if (document.execCommand && document.execCommand('insertText', false, text)) return;
+        box.setRangeText(text, box.selectionStart, box.selectionEnd, 'end');
+        box.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+
+    function caretTo(pos) {
+        els.text.setSelectionRange(pos, pos);
+    }
+
+    /* Whether the caret is inside a "string" of its line (an odd number of unescaped quotes before it). */
+    function inString(value, pos) {
+        const before = value.slice(value.lastIndexOf('\n', pos - 1) + 1, pos);
+        return (before.replace(/\\./g, '').match(/"/g) || []).length % 2 === 1;
+    }
+
+    /* Typing an opener also types its closer; typing a closer that is already next steps over it; Backspace between an
+       empty pair deletes both. Returns true when it handled the key. */
+    function autoClose(e) {
+        if (e.isComposing || e.ctrlKey || e.metaKey || e.altKey) return false;
+        const box = els.text;
+        const { value, selectionStart: a, selectionEnd: z } = box;
+        const next = value.charAt(z);
+        if (e.key === 'Backspace' && a === z && a > 0 && PAIRS[value.charAt(a - 1)] === next && next) {
+            box.setSelectionRange(a - 1, a + 1);
+            typeText('');
+            return true;
+        }
+        if (a === z && CLOSERS.includes(e.key) && next === e.key && (e.key !== '"' || inString(value, a))) {
+            caretTo(a + 1);
+            return true;
+        }
+        const close = PAIRS[e.key];
+        if (!close || e.key.length !== 1) return false;
+        if (a !== z) {                                               // a selection: wrap it
+            typeText(e.key + value.slice(a, z) + close);
+            box.setSelectionRange(a + 1, z + 1);
+            return true;
+        }
+        if (e.key === '"' && inString(value, a)) return false;       // closing a string that was typed by hand
+        if (next && !/[\s,:\]})>"]/.test(next)) return false;        // in front of text: just the character
+        typeText(e.key + close);
+        caretTo(a + 1);
+        return true;
+    }
+
     function init() {
         els = {
             text: $('edText'), hl: $('edHl'), gutter: $('edGutter'), marks: $('edMarks'), note: $('edNote'),
@@ -560,7 +613,9 @@
         els.text.value = S.mine;
         els.text.addEventListener('input', onInput);
         els.text.addEventListener('scroll', sync);
-        els.text.addEventListener('keydown', (e) => { if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { e.preventDefault(); run(); } });
+        els.text.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { e.preventDefault(); run(); } else if (autoClose(e)) e.preventDefault();
+        });
         els.copyOf.addEventListener('click', fork);
         $('edNew').addEventListener('click', newFile);
         $('edOpen').addEventListener('click', () => { els.file.value = ''; els.file.click(); });
