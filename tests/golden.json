@@ -79,18 +79,24 @@
    " líttera ",
    " líteram ",
    " lítera ",
+   " líttram ",
+   " líttra ",
    " lítram ",
    " lítra ",
    " létteram ",
    " léttera ",
    " léteram ",
    " létera ",
+   " léttram ",
+   " léttra ",
    " létram ",
    " létra ",
    " liétteram ",
    " liéttera ",
    " liéteram ",
    " liétera ",
+   " liéttram ",
+   " liéttra ",
    " liétram ",
    " liétra "
   ],
@@ -116,13 +122,23 @@
     "simplify_double"
    ],
    [
-    " lítram ",
+    " líttram ",
     " lítteram ",
     "remove_unstressed"
    ],
    [
-    " lítra ",
+    " líttra ",
     " líttera ",
+    "remove_unstressed"
+   ],
+   [
+    " lítram ",
+    " líteram ",
+    "remove_unstressed"
+   ],
+   [
+    " lítra ",
+    " lítera ",
     "remove_unstressed"
    ],
    [
@@ -143,6 +159,16 @@
    [
     " létera ",
     " lítera ",
+    "vowel_shift"
+   ],
+   [
+    " léttram ",
+    " líttram ",
+    "vowel_shift"
+   ],
+   [
+    " léttra ",
+    " líttra ",
     "vowel_shift"
    ],
    [
@@ -173,6 +199,16 @@
    [
     " liétera ",
     " létera ",
+    "diphthong"
+   ],
+   [
+    " liéttram ",
+    " léttram ",
+    "diphthong"
+   ],
+   [
+    " liéttra ",
+    " léttra ",
     "diphthong"
    ],
    [
@@ -704,18 +740,24 @@
    " líttera ",
    " líteram ",
    " lítera ",
+   " líttram ",
+   " líttra ",
    " lítram ",
    " lítra ",
    " létteram ",
    " léttera ",
    " léteram ",
    " létera ",
+   " léttram ",
+   " léttra ",
    " létram ",
    " létra ",
    " liétteram ",
    " liéttera ",
    " liéteram ",
    " liétera ",
+   " liéttram ",
+   " liéttra ",
    " liétram ",
    " liétra "
   ],
@@ -741,13 +783,23 @@
     "rule_13"
    ],
    [
-    " lítram ",
+    " líttram ",
     " lítteram ",
     "rule_16"
    ],
    [
-    " lítra ",
+    " líttra ",
     " líttera ",
+    "rule_16"
+   ],
+   [
+    " lítram ",
+    " líteram ",
+    "rule_16"
+   ],
+   [
+    " lítra ",
+    " lítera ",
     "rule_16"
    ],
    [
@@ -768,6 +820,16 @@
    [
     " létera ",
     " lítera ",
+    "rule_21"
+   ],
+   [
+    " léttram ",
+    " líttram ",
+    "rule_21"
+   ],
+   [
+    " léttra ",
+    " líttra ",
     "rule_21"
    ],
    [
@@ -798,6 +860,16 @@
    [
     " liétera ",
     " létera ",
+    "rule_24"
+   ],
+   [
+    " liéttram ",
+    " léttram ",
+    "rule_24"
+   ],
+   [
+    " liéttra ",
+    " léttra ",
     "rule_24"
    ],
    [

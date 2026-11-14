@@ -28,6 +28,7 @@ El conjunto reglas que se usa para tranformar la escritura. Se dará como un arc
     - El número de paréntesis (`<>`) usados a ambos lados de la definición ha de ser el mismo. Si un grupo desaparece en el _lado transformado_ se reprensentará con paréntesis vacíos `<>` .
     - Si se pueden esperar múltiples grupos en la misma posición se pueden incluir todos separándolos por `|`: `<grupo_1|grupo_2>`.
     - `<nombre_de_grupo*>` se usa para representar «_una sucesión de longitud indeterminada de elementos del grupo_».
+    - `<*>` no necesita definición: representa «_cualquier sucesión de uno o más caracteres, salvo el espacio_» (una palabra entera). Para conservarlo, escribe `<*>` en ambos lados; para eliminarlo, `<>`. Un término con espacios necesita uno por palabra: `<*> <*>`.
     - `<nombre_de_grupo=>` se usa para representar «_una repetición del mismo elemento del grupo_». Para más repeticiones también se pueden usar `==` (mismo elemento 3 veces), `===` (mismo elemento 4 veces), etc.
   - Para representar el principio de un término se usa un espacio blanco inicial: `␣abc`.
   - Para representar el final de un término se usa un espacion blanco final: `xyz␣`.

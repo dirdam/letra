@@ -97,6 +97,21 @@ def test_a_dropped_group_followed_by_text_writes_that_text_once():
     assert t.transform('café') == [' cafecit@ ']
 
 
+def test_a_repeated_group_gives_back_the_whole_run_not_its_last_element():
+    t = letra.Transformer('{"groups": {"c": ["p", "l", "n"], "v": ["a"]}, "rules": {"r": {"<c*><v*><c*> ": "<c*><v*><c*>! "}}, "order": ["r"]}')
+    assert t.transform('plan') == [' plan! ']
+
+
+def test_any_word_group_matches_one_or_more_characters_but_the_space():
+    t = letra.Transformer('{"groups": {}, "rules": {"r": {"<*>o ": "<*>ito "}}, "order": ["r"]}')
+    assert t.transform('abrazo') == [' abrazito ']
+    t = letra.Transformer('{"groups": {}, "rules": {"r": {" <*> <*> ": " <*>-<*> "}}, "order": ["r"]}')
+    assert t.transform('yo no') == [' yo-no ']
+    t = letra.Transformer('{"groups": {}, "rules": {"r": {" <*> <*> <*> ": " <*>-<*>-<*> "}}, "order": ["r"]}')
+    assert t.transform('yo no he') == [' yo-no-he ']
+    assert t.transform('yo no') == [' yo no ']            # a space is never part of <*>, so two words do not fit three
+
+
 # ---------- comments: a // inside a "string" is not one ----------
 
 def test_a_double_slash_inside_a_string_is_kept_and_a_comment_after_it_is_dropped():

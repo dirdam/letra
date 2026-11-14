@@ -2,6 +2,7 @@ import os
 import re
 
 STRING_OR_COMMENT = re.compile(r'("(?:[^"\\\n]|\\.)*")|//[^\n]*') # A "string" (kept as it is) or a `//` comment (to the end of the line)
+ANY_CHAR = '([^ ])' # What `<*>` stands for: one character that is not the space (a word boundary); with the star, a run of them
 
 def strip_comments(text, keep_length=False):
     '''Removes the `//` comments of a rules text. A `//` inside a "string" (such as in a link) is not a comment.
@@ -215,8 +216,13 @@ class Transformer():
                 for group_key in groups_keys:
                     group_name = group_key.replace('*', '').replace('=', '') # Remove '*' and '='
                     # symbol = '+' if '*' in group_key else f"{{{1 + group_key.count('=')}}}" if '=' in group_key else '' # Replace adequate symbol
-                    symbol = '+' if '*' in group_key else fr"\{group_key.count('=')}" if '=' in group_key else '' # Replace adequate symbol
-                    result += groups[group_name].replace(')', f'){symbol}').replace('(', '(?:' if len(groups_keys) > 1 else '(') + '|' # Add group
+                    base = groups[group_name] if group_name else ANY_CHAR # `<*>`: no name, any characters but the space
+                    if '*' in group_key: # One capture around the whole run, so that `\1` gives back all of it and not just its last element
+                        piece = '((?:' + base[1:-1] + ')+)'
+                    else:
+                        symbol = fr"\{group_key.count('=')}" if '=' in group_key else '' # Replace adequate symbol
+                        piece = base.replace(')', f'){symbol}')
+                    result += piece.replace('(', '(?:' if len(groups_keys) > 1 else '(') + '|' # Add group
                 result = result[:-1]
                 if len(groups_keys) > 1:
                     result += ')'

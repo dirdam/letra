@@ -28,6 +28,7 @@ The set of rules used to transform the script. It will be given as a _**json** f
     - The number of brackets (`<>`) used on both sides of the definition must be the same. If a group disappears on the _transformed side_ it should still be represented by the empty brackets `<>` .
     - If multiple groups can be expected in the same position, they can all be included using `|` as separator: `<group_1|group_2>`.
     - `<group_name*>` is used to represent "_a sequence of undetermined length of elements of the group_."
+    - `<*>` needs no definition: it stands for "_any sequence of one or more characters, except the space_" (a whole word). To keep it, write `<*>` on both sides; to drop it, `<>`. A term with spaces needs one per word: `<*> <*>`.
     - `<group_name=>` is used to represent "_a repetition of the same element of the group_." For further repetitions `==` (same element 3 times), `===` (same element 4 times), etc. can also be used.
   - To represent the begining of a term use a leading white space: `␣abc`.
   - To represent the end of a term use a tailing white space: `xyz␣`.
