@@ -292,6 +292,14 @@ def api_transform():
     return jsonify({'results': results, 'truncated': truncated})
 
 
+def _samples(value):
+    """The sample words of a rules file: the non-empty texts of its "samples" list, as many and as long as a request may carry."""
+    if not validate.is_samples(value):
+        return []
+    words = [w.strip() for w in value if w.strip() and len(w.strip()) <= MAX_TERM_CHARS]
+    return words[:MAX_WORDS]
+
+
 @app.post('/api/rulebook')
 def api_rulebook():
     """The rules in reading order: steps (with their | alternatives), rules with their entries,
@@ -314,6 +322,8 @@ def api_rulebook():
                    for name, values in t.groups_expanded.items()},
         # the file's own "description" as safe HTML, {language: [bullet, ...]} ('*': for every language), or null
         'description': description.to_html(original.get('description')),
+        # the file's own "samples": the words the page offers to try (a list of texts; anything else is ignored)
+        'samples': _samples(original.get('samples')),
         # the identity rules (rules that change nothing): the page offers to split the tree on them
         'identity': sorted(t.identity_rules()),
     })

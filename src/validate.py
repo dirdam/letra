@@ -216,6 +216,8 @@ def _check(text, add, pos, issues):
 
     if 'description' in data and not description.is_valid(data['description']):
         add('warning', 'description_type', 'The "description" must be a list of texts (or an object with one list per language); it is ignored.', ('description',))
+    if 'samples' in data and not is_samples(data['samples']):
+        add('warning', 'samples_type', 'The "samples" must be a list of words (texts); it is ignored.', ('samples',))
 
     # group references: must be defined, and before they are used (the engine reads groups in order)
     defined = set()
@@ -295,6 +297,11 @@ def _check(text, add, pos, issues):
 
     # compile every entry, as the engine does, to find the one that fails
     _compile_entries(data, add)
+
+
+def is_samples(value):
+    """The "samples" of a rules file: a list of words (texts)."""
+    return isinstance(value, list) and all(isinstance(w, str) for w in value)
 
 
 def _refs(text):

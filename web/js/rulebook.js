@@ -39,6 +39,12 @@
         return d ? (d[lang] || d['*'] || d.en || d[Object.keys(d)[0]] || null) : null;
     }
 
+    /* The sample words the rules file carries ("samples") for the set in use; empty when it has none or its rule book is not the one loaded. */
+    function samples(set) {
+        const d = current && set && current.key === keyOf(set) && current.data && current.data.samples;
+        return d || [];
+    }
+
     /* The identity rules (rules that change nothing) of the set in use; empty when the set has none or its rule book is not the one loaded. */
     function identity(set) {
         const d = current && set && current.key === keyOf(set) && current.data && current.data.identity;
@@ -268,5 +274,5 @@
         });
     }
 
-    L.rulebook = { load, info, description, identity, stats, entriesFor, pattern, pair, render, mark };
+    L.rulebook = { load, info, description, samples, identity, stats, entriesFor, pattern, pair, render, mark };
 })();

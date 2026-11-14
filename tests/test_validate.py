@@ -196,3 +196,10 @@ def test_a_link_in_the_description_is_not_taken_for_a_comment():
     text = '{\n  "description": ["see [it](https://example.org/a)"], // a real comment\n  "groups": {},\n  "rules": {"r": {"a": "b"}},\n  "order": ["r", "ghost"]\n}'
     i = issue(text, 'unknown_rule_in_order')
     assert i['line'] == 5 and validate.check(text.replace(', "ghost"', ''))['issues'] == []
+
+
+def test_samples_must_be_a_list_of_words():
+    text = '{"groups": {}, "rules": {"r": {"a": "b"}}, "order": ["r"], "samples": %s}'
+    assert ('warning', 'samples_type') not in codes(text % '["a", "b"]')
+    assert ('warning', 'samples_type') in codes(text % '"a"')
+    assert ('warning', 'samples_type') in codes(text % '["a", 1]')

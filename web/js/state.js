@@ -12,14 +12,6 @@
     const MAX_WORDS = 100;
     const MAX_RULES_BYTES = 256 * 1024;
 
-    const EXAMPLES = {
-        sample: ['lítteram'],          // the word the sample puts in the bar (it has no "Try" chips)
-        LA_ES: ['lítteram', 'trophaéum', 'óperam', 'dóminum', 'quinquagínta', 'dígitum'],
-        ES_IPA: ['civilización', 'chascarrillo', 'halagüeño', 'verdad', 'rejuvenecer', 'water'],
-        ES_Miquitrifi: ['mequetrefe', 'mamá', 'cagón', 'yo no he sido'],
-        mine: [],
-    };
-
     const s = {
         tab: 'evolve',                // evolve | rulebook | editor | about
         setId: 'sample',              // a preset id, or 'mine'
@@ -87,5 +79,5 @@
         return { id: s.setId, preset: s.setId };
     }
 
-    L.state = { s, PRESETS, EXAMPLES, BOUNDARY, MAX_WORDS, MAX_RULES_BYTES, load, save, saveMine, writeHash, parseWords, currentSet };
+    L.state = { s, PRESETS, BOUNDARY, MAX_WORDS, MAX_RULES_BYTES, load, save, saveMine, writeHash, parseWords, currentSet };
 })();

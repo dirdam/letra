@@ -80,5 +80,6 @@
         "c", "g", "h", "j", "ñ", "q", "r_suave", "v", "y", "z", "i", "u",  // Luego letras
         "iden|seseo|ceceo", "iden|x_aspirada", "iden|ks_elidida", "iden|d_final_elidida", "iden|yeismo", "iden|madrid", // Dialectología
         "fricativización", "n_asimilada", "s_sonora" // Alófonos
-    ]
+    ],
+    "samples": ["civilización", "chascarrillo", "halagüeño", "verdad", "rejuvenecer", "water"]
 }

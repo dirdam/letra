@@ -245,6 +245,7 @@ en,ed_howto,"A rules file is **JSON that also allows `//` comments**. It has thr
     - A leading space is the start of the word, a trailing space is its end.
 - **`order`**: the rule names in the order they apply. `""rule_a|rule_b""` means only one of the two applies. A rule that changes nothing (its only entry is `""""`: `""""`) is the identity: as an alternative (`""rule_0|rule_a""`) it lets the tree split in Evolve (""Split on identity"").
 - **`description`** (optional): a list of texts in Markdown, shown as bullets under the set's name in Evolve: `""description"": [""First **point**."", ""Second point.""]`. For one list per language use `""description"": {""en"": [...], ""es"": [...]}`.
+- **`samples`** (optional, last): a list of words to try, offered as the *Try* buttons under the search bar in Evolve: `""samples"": [""lítteram"", ""dóminum""]`.
 
 Example: `""<cons>í<cons>"": ""<cons>é<cons>""` changes a stressed **í** between consonants into **é**."
 es,ed_howto,"Un archivo de reglas es **JSON que además admite comentarios `//`**. Tiene tres secciones, todas obligatorias:
@@ -261,6 +262,7 @@ es,ed_howto,"Un archivo de reglas es **JSON que además admite comentarios `//`*
     - Un espacio al principio es el inicio de la palabra y un espacio al final es su fin.
 - **`order`**: los nombres de las reglas en el orden en que se aplican. `""regla_a|regla_b""` significa que solo se aplica una de las dos. Una regla que no cambia nada (su única entrada es `""""`: `""""`) es la identidad: como alternativa (`""regla_0|regla_a""`) permite dividir el árbol en Evolucionar (""Dividir en identidad"").
 - **`description`** (opcional): una lista de textos en Markdown, que se muestran como viñetas bajo el nombre del conjunto en Evolucionar: `""description"": [""Primer **punto**."", ""Segundo punto.""]`. Para una lista por idioma usa `""description"": {""en"": [...], ""es"": [...]}`.
+- **`samples`** (opcional, al final): una lista de palabras para probar, que se ofrecen como botones *Prueba* bajo la barra de búsqueda en Evolucionar: `""samples"": [""lítteram"", ""dóminum""]`.
 
 Ejemplo: `""<cons>í<cons>"": ""<cons>é<cons>""` cambia una **í** tónica entre consonantes por **é**."
 en,ed_replace_q,Replace what is in the editor?
@@ -337,6 +339,8 @@ en,issue_group_unused,"Group ""{name}"" is defined but never used."
 es,issue_group_unused,"El grupo ""{name}"" está definido pero nunca se usa."
 en,issue_description_type,"The ""description"" must be a list of texts (or an object with one list per language); it is ignored."
 es,issue_description_type,"La ""description"" debe ser una lista de textos (o un objeto con una lista por idioma); se ignora."
+en,issue_samples_type,"The ""samples"" must be a list of words (texts); it is ignored."
+es,issue_samples_type,"Las ""samples"" deben ser una lista de palabras (textos); se ignoran."
 en,issue_group_too_large,"Group ""{name}"" expands to more than {limit} values."
 es,issue_group_too_large,"El grupo ""{name}"" se expande a más de {limit} valores."
 en,issue_groups_error,The groups could not be expanded ({detail}).
@@ -369,6 +373,7 @@ en,syntax,"## Rule syntax at a glance
 - A space at the start or end of a pattern is the word boundary (shown as `␣`).
 - `""rules""`: named sets of `pattern → replacement` entries.
 - `""order""`: the steps, in sequence. `a|b` makes alternatives: each one is tried on every form and the derivation branches.
+- `""samples""` (optional): words to try, shown as buttons under the search bar.
 - `// comment`: ignored."
 es,syntax,"## La sintaxis de un vistazo
 
@@ -380,6 +385,7 @@ es,syntax,"## La sintaxis de un vistazo
 - Un espacio al principio o al final de un patrón es el límite de palabra (se muestra como `␣`).
 - `""rules""`: conjuntos con nombre de entradas `patrón → reemplazo`.
 - `""order""`: los pasos, en secuencia. `a|b` crea alternativas: cada una se prueba sobre cada forma y la derivación se ramifica.
+- `""samples""` (opcional): palabras para probar, mostradas como botones bajo la barra de búsqueda.
 - `// comentario`: se ignora."
 en,n_words_one,1 word
 en,n_words_other,{n} words

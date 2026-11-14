@@ -11,5 +11,6 @@
       "<grupo_ab>x": "<grupo_ab>y"
     }
   },
-  "order": ["regla_abx"]
+  "order": ["regla_abx"],
+  "samples": ["xabxyz"]
 }

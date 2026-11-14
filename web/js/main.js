@@ -68,7 +68,7 @@
     function renderExamples() {
         const box = $('examples');
         box.textContent = '';
-        const list = S.setId === 'sample' ? [] : ST.EXAMPLES[S.setId] || [];          // the sample already holds its word in the bar
+        const list = S.setId === 'sample' ? [] : L.rulebook.samples(ST.currentSet());          // the file's "samples"; the sample set already holds its word in the bar
         if (!list.length) return;
         box.appendChild(el('span', 'examples-label', I.t('examples')));
         list.forEach((w) => {
@@ -92,6 +92,7 @@
         if (mine !== rulebookSeq) return;
         rulebookError = data && data.error ? data.error : '';
         renderSetPanel();
+        renderExamples();          // the "Try" words come with the rules
         renderRulebookTab();
         if (S.results.length) renderResults();          // chains can now show the rules' entries
     }
@@ -103,7 +104,7 @@
             return;
         }
         S.setId = id;
-        $('words').value = id === 'sample' ? ST.EXAMPLES.sample[0] : '';          // only the sample comes with its word; the other sets show the placeholder
+        $('words').value = '';          // the sample set gets its word once its rules are loaded (below); the other sets show the placeholder
         S.results = [];
         S.selected = {};
         S.collapsed = {};
@@ -114,7 +115,11 @@
         renderSetPanel();
         renderExamples();
         L.editor.refresh();
-        loadRulebook();
+        loadRulebook().then(() => {
+            if (id !== 'sample' || S.setId !== 'sample' || $('words').value) return;
+            const first = L.rulebook.samples(ST.currentSet())[0];          // the sample set puts its first sample in the bar
+            if (first) { $('words').value = first; evolveNow(); }
+        });
         evolveNow();
     }
 

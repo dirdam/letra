@@ -41,5 +41,6 @@
 		"remove_unstressed", 
 		"vowel_shift", 
 		"identity|diphthong" // only one of two will apply
-	]
+	],
+	"samples": ["lítteram"]
 }

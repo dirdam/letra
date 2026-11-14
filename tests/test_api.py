@@ -236,6 +236,16 @@ def test_rulebook_lists_steps_rules_and_groups(client):
     assert g['total'] == len(g['members']) or len(g['members']) == server.GROUP_MEMBERS_SHOWN
 
 
+def test_rulebook_carries_the_samples_of_the_rules_file(client):
+    assert client.post('/api/rulebook', json={'preset': 'LA_ES'}).get_json()['samples'][:2] == ['lítteram', 'trophaéum']
+    rules = lambda samples: json.dumps({'groups': {}, 'rules': {'r': {'a': 'b'}}, 'order': ['r'], 'samples': samples})
+    got = client.post('/api/rulebook', json={'rules': rules(['aa', ' ', 'bb ', 3])}).get_json()
+    assert got['samples'] == []                                  # not a list of texts: ignored
+    got = client.post('/api/rulebook', json={'rules': rules(['aa', ' ', 'bb ', 'x' * 65])}).get_json()
+    assert got['samples'] == ['aa', 'bb']                        # blanks and too long words are left out
+    assert client.post('/api/rulebook', json={'rules': json.dumps({'groups': {}, 'rules': {}, 'order': []})}).get_json()['samples'] == []
+
+
 def test_rulebook_for_uploaded_rules_and_errors(client):
     ok = client.post('/api/rulebook', json={'rules': json.dumps({'groups': {'v': ['a', 'e']}, 'rules': {'r': {'<v>': 'x'}}, 'order': ['r']})})
     assert ok.status_code == 200 and ok.get_json()['groups']['v'] == {'members': ['a', 'e'], 'total': 2}

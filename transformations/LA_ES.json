@@ -292,5 +292,6 @@
 		"rule_42", 
 		"rule_44", 
 		"rule_0|rule_45"
-	]
+	],
+	"samples": ["lítteram", "trophaéum", "óperam", "dóminum", "quinquagínta", "dígitum"]
 }

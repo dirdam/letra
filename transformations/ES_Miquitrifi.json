@@ -36,5 +36,6 @@
       "z<aou_tónica>": "cí<>"
     }
   },
-  "order": ["c", "g", "z", "vocal→i"]
+  "order": ["c", "g", "z", "vocal→i"],
+  "samples": ["mequetrefe", "mamá", "cagón", "yo no he sido"]
 }
