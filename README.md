@@ -8,6 +8,14 @@ spelling to IPA, but the script doesn't need to represent orthography or phoneti
 is up to you. The rule syntax is described in the app's *About* tab (source:
 [`data/LETRA_en.md`](data/LETRA_en.md), [`data/LETRA_es.md`](data/LETRA_es.md)).
 
+**LETRA is not an etymology tool.** It only evolves words by the rules you give it: it knows nothing
+about any language, doesn't check words against a dictionary or highlight forms that "really exist",
+and its results are not a source of truth about where a word comes from. The bundled Latin to Spanish
+set illustrates the idea: with suitable rules, present-day Spanish words can be reconstructed from
+Latin ones, but the results show what the rules do, not what history did. The accents in the Latin
+examples are not Latin spelling (Latin had none): they are this app's convention to mark the stressed
+vowel.
+
 The page is available in English and Spanish.
 
 ## What you can do

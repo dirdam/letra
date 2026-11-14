@@ -1,10 +1,10 @@
 {
 	"description": {
 		"en": [
-			"This example illustrates the transformation of the Latin term **`lítteram`**. (The accent mark is used to indicate the stressed vowel)."
+			"This example illustrates the transformation of the Latin term **`lítteram`**. (Latin had no accent marks: here the accent only marks the stressed vowel, a convention of this app. The rules show how words can evolve; they are not a source of etymology)."
 		],
 		"es": [
-			"Este ejemplo ilustra la transformación del término latino **`lítteram`**. (La tilde marca la vocal tónica)."
+			"Este ejemplo ilustra la transformación del término latino **`lítteram`**. (El latín no tenía tildes: aquí la tilde solo marca la vocal tónica, una convención de esta aplicación. Las reglas muestran cómo pueden evolucionar las palabras; no son una fuente de etimología)."
 		]
 	},
 	"groups": {

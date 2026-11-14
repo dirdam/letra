@@ -6,6 +6,8 @@ La escritura **no** tiene por qué representar ortografía o fonética; lo que r
 
 **LETRA** utiliza las reglas dadas/definidas y las aplica al término objetivo hasta que este aclance su forma final.
 
+**LETRA no es una herramienta de etimología.** Solo aplica las reglas que escribes, en orden, y muestra cada resultado con los pasos que lo produjeron. No conoce ninguna lengua: no busca palabras en un diccionario, no marca las formas que «existen de verdad», y lo que produce no es una fuente fiable de cómo surgió realmente una palabra. El conjunto latín → español incluido es una ilustración: con las reglas adecuadas, palabras del español actual pueden reconstruirse a partir de palabras latinas, pero las reglas son una selección simplificada y los resultados muestran lo que hacen las reglas, no lo que hizo la historia. Del mismo modo, las tildes de los ejemplos en latín no son ortografía latina (el latín no las tenía): son una convención de esta aplicación para marcar la vocal tónica. LETRA sirve para representar palabras y hacerlas evolucionar mediante reglas, sea lo que sea lo que esas palabras y reglas representen.
+
 ## Casos de uso
 
 - Convertir ortografía en pronunciación.

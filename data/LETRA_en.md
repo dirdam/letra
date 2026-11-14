@@ -6,6 +6,8 @@ The script does **not** need to represent orthography or phonetics; what it repr
 
 **LETRA** makes use of the given/defined rules and applies them to the target term until it reaches its final form.
 
+**LETRA is not an etymology tool.** It only applies the rules you write, in order, and shows every result with the steps that produced it. It knows nothing about any language: it does not look words up, it does not mark forms that "really exist", and what it produces is not a source of truth about where a word actually comes from. The bundled Latin → Spanish set is an illustration: with suitable rules, words of present-day Spanish can be reconstructed from Latin ones, but the rules are a simplified selection and the results show what the rules do, not what history did. In the same way, the accents in the Latin examples are not Latin spelling (Latin had none): they are a convention of this app to mark the stressed vowel. LETRA is for representing words and evolving them by rules, whatever those words and rules stand for.
+
 ## Use cases
 
 - Convert orthography into pronunciation.
