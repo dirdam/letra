@@ -153,8 +153,8 @@ en,status_truncated,Stopped at the time limit: some words were not processed.
 es,status_truncated,Detenido por el límite de tiempo: algunas palabras no se procesaron.
 en,empty_title,Enter a word to evolve it
 es,empty_title,Escribe una palabra para evolucionarla
-en,empty_body,"Every possible result appears here, with the rules that produced it. You can enter several words separated by spaces."
-es,empty_body,"Aquí aparece cada resultado posible, con las reglas que lo producen. Puedes escribir varias palabras separadas por espacios."
+en,empty_body,"Every possible result appears here, with the rules that produced it."
+es,empty_body,"Aquí aparece cada resultado posible, con las reglas que lo producen."
 en,empty_no_rules_title,No rules yet
 es,empty_no_rules_title,Aún no hay reglas
 en,empty_no_rules_body,"Write rules in the Editor, or pick one of the rule sets above."
@@ -346,14 +346,14 @@ es,issue_rule_error,No se pudo leer esta entrada ({detail}).
 en,howto,"## How to use
 
 1. Pick a **rule set** on the shelf: a sample, Latin → Spanish, Spanish → IPA, or your own rules.
-2. Type a **word** in the search bar of the Evolve tab, or several separated by spaces. Results update as you type.
+2. Type a **word** (or a phrase: its spaces count as part of it) in the search bar of the Evolve tab. Results update as you type.
 3. Each word gets a card with the **tree** of all its derivations. Click a final **form** to see its chain of changes below the tree.
 4. Open the **Rule book** to read the rules in the order they apply, and the **Editor** to write your own.
 5. **Export** the results (text, TSV, CSV, LaTeX) or **share** a link to the words and the rule set."
 es,howto,"## Cómo se usa
 
 1. Elige un **conjunto de reglas** en la estantería: una muestra, latín → español, español → AFI, o tus propias reglas.
-2. Escribe una **palabra** en la barra de búsqueda de la pestaña Evolucionar, o varias separadas por espacios. Los resultados se actualizan mientras escribes.
+2. Escribe una **palabra** (o una frase: sus espacios cuentan como parte de ella) en la barra de búsqueda de la pestaña Evolucionar. Los resultados se actualizan mientras escribes.
 3. Cada palabra tiene una ficha con el **árbol** de todas sus derivaciones. Haz clic en una **forma** final para ver su cadena de cambios debajo del árbol.
 4. Abre el **Libro de reglas** para leer las reglas en el orden en que se aplican, y el **Editor** para escribir las tuyas.
 5. **Exporta** los resultados (texto, TSV, CSV, LaTeX) o **comparte** un enlace a las palabras y al conjunto de reglas."
@@ -381,8 +381,8 @@ en,n_words_one,1 word
 en,n_words_other,{n} words
 es,n_words_one,1 palabra
 es,n_words_other,{n} palabras
-en,words_placeholder,"Type a word, or several separated by spaces: lítteram dóminum"
-es,words_placeholder,"Escribe una palabra, o varias separadas por espacios: lítteram dóminum"
+en,words_placeholder,"Type a word or phrase: lítteram"
+es,words_placeholder,"Escribe una palabra o frase: lítteram"
 en,tree_title,Tree of all derivations
 es,tree_title,Árbol de todas las derivaciones
 en,chain_title,Chain of changes for {form}

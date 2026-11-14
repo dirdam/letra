@@ -53,7 +53,7 @@
         if (q.has('r')) s.setId = q.get('r');
         if (q.has('w')) s.words = q.get('w');
         if (q.has('t') && ['evolve', 'rulebook', 'editor', 'about'].includes(q.get('t'))) s.tab = q.get('t');
-        s.words = String(s.words).replace(/\s+/g, ' ').trim();        // one line; spaces separate the words
+        s.words = String(s.words).replace(/\s+/g, ' ').trim();        // one line; spaces are part of the word
         if (s.setId !== 'mine' && !PRESETS.includes(s.setId)) s.setId = 'sample';
         if (s.setId === 'mine' && !s.mine.trim()) s.setId = 'sample';
     }
@@ -75,15 +75,10 @@
         try { history.replaceState(null, '', '#' + q.toString()); } catch (e) { /* ignore */ }
     }
 
-    /* Words from the search bar: separated by spaces (also commas, semicolons, line breaks); no duplicates. */
+    /* The search bar holds one word: its spaces are part of it (runs of spaces count as one), so it is never split. */
     function parseWords(text) {
-        const seen = new Set();
-        const out = [];
-        text.split(/[\s,;]+/).forEach((w) => {
-            w = w.trim();
-            if (w && !seen.has(w)) { seen.add(w); out.push(w); }
-        });
-        return out;
+        const word = text.replace(/\s+/g, ' ').trim();
+        return word ? [word] : [];
     }
 
     /* The rule set to send to the server, or null when "mine" has no rules yet. */

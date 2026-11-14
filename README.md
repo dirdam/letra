@@ -12,7 +12,7 @@ The page is available in English and Spanish.
 
 ## What you can do
 
-- **Evolve words** from one search bar: a word, or several separated by spaces; results update as you type.
+- **Evolve words** from one search bar: a word, or a phrase (its spaces are part of the word); results update as you type.
 - **Read every derivation**: each word has a card with the **tree** of all its derivations (a form
   reached by two paths is one node with two incoming edges) and, under it, the **chain** of steps of
   the form you click, with the letters that changed highlighted and `␣` (the open box) for the word boundary.
