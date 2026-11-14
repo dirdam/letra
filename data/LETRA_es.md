@@ -28,6 +28,7 @@ El conjunto reglas que se usa para tranformar la escritura. Se dará como un arc
   - `caracteres` sencillos significan exactamente esos caracteres.
   - Se pueden llamar a grupos de `groups` usando el `<nombre_de_grupo>`.
     - El número de paréntesis (`<>`) usados a ambos lados de la definición ha de ser el mismo. Si un grupo desaparece en el _lado transformado_ se reprensentará con paréntesis vacíos `<>` .
+    - Los paréntesis se emparejan por posición: el 1.º `<…>` del _lado transformado_ va con el 1.er grupo del _lado fuente_, y así sucesivamente. Un grupo se vuelve a escribir si tiene el mismo nombre (un `<nombre=>` del lado fuente se empareja con `<nombre>`); un `<>` vacío, o con otro nombre, hace que desaparezca. El texto alrededor de los grupos se escribe tal cual.
     - Si se pueden esperar múltiples grupos en la misma posición se pueden incluir todos separándolos por `|`: `<grupo_1|grupo_2>`.
     - `<nombre_de_grupo*>` se usa para representar «_una sucesión de longitud indeterminada de elementos del grupo_».
     - `<*>` no necesita definición: representa «_cualquier sucesión de uno o más caracteres, salvo el espacio_» (una palabra entera). Para conservarlo, escribe `<*>` en ambos lados; para eliminarlo, `<>`. Un término con espacios necesita uno por palabra: `<*> <*>`.

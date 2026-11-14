@@ -162,45 +162,22 @@ class Transformer():
             rules[rule] = regex_rules
 
     def replace_same(self, rule_values):
-        '''Replaces same values in rule_values with regex repetition notation.'''
+        '''Turns each replacement into a regex template: the nth `<...>` of the replacement pairs with the nth group of the
+        search; when it has the same name (the search's `=` signs aside) the match of that group is written back (`\\n`),
+        and otherwise (an empty `<>`, or another name) the group disappears. All the other text is written as it is.'''
         for search_values, change_values in rule_values.items():
+            search_groups = [g for g, _ in re.findall(r'<([^>]*)>|([^<>]+)', search_values) if g != ''] # `<>` is not a group of the search
             regex_change = ''
-            number_of_substitutions = 0
-            search_values_list = re.findall(r'<([^>]*)>|([^<>]+)', search_values) # I don't use [^<>] to avoid escaping '<>'
-            change_values_list = re.findall(r'<([^>]*)>|([^<>]+)', change_values)
-            # print(search_values_list, change_values_list)
-            if len(change_values_list) == 0: # If change_values_list is empty, make it actual list
-                change_values_list = [('', '')]
-            i = 0
-            j = 0
-            spent = False # Whether a dropped group already wrote all the remaining change_values (so they are not written again)
-            while i < len(search_values_list):
-                search_value = search_values_list[i]
-                change_value = change_values_list[j]
-                # print(search_value, change_value, i, j)
-                looped = False # Whether change_value had '' values
-                if search_value[0] == '': # If search_value is char
-                    if not spent:
-                        regex_change += change_value[1]
-                else: # If search_value is group
-                    while change_value[0] == '' and not spent: # If search_value is group and change_value is not, loop until change_value is group
-                        regex_change += change_value[1]
-                        j += 1
-                        if j == len(change_values_list): # If change_values_list is over, stop
-                            spent = True
-                            break
-                        change_value = change_values_list[j]
-                        looped = True
-                    number_of_substitutions += 1
-                    if search_value[0].replace('=', '') == change_value[0]:
-                        regex_change += f'\\{number_of_substitutions}'
-                    # else:
-                    #     regex_change += f'<{change_value[0]}>' # This added <> for empty groups but it's not necessary
-                i += 1
-                if not looped:
-                    j += 1
-                if j >= len(change_values_list):
-                    j = len(change_values_list) - 1
+            slot = 0
+            for group, plain in re.findall(r'<([^>]*)>|([^<>]+)', change_values):
+                if group != '': # a group: keep the match of the group in this position, if it is the same
+                    if slot < len(search_groups) and search_groups[slot].replace('=', '') == group:
+                        regex_change += f'\\{slot + 1}'
+                    slot += 1
+                elif plain == '': # `<>`: the group of this position disappears
+                    slot += 1
+                else:
+                    regex_change += plain
             rule_values[search_values] = regex_change
         return rule_values
 

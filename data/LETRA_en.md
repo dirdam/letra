@@ -28,6 +28,7 @@ The set of rules used to transform the script. It will be given as a _**json** f
   - Plain `characters` mean those exact characters.
   - `groups` can be called using `<group_name>`.
     - The number of brackets (`<>`) used on both sides of the definition must be the same. If a group disappears on the _transformed side_ it should still be represented by the empty brackets `<>` .
+    - The brackets pair up by position: the 1st `<…>` of the _transformed side_ goes with the 1st group of the _source side_, and so on. A group is written back when it has the same name (a `<name=>` on the source side pairs with `<name>`); an empty `<>`, or another name, makes it disappear. The text around the groups is written as it is.
     - If multiple groups can be expected in the same position, they can all be included using `|` as separator: `<group_1|group_2>`.
     - `<group_name*>` is used to represent "_a sequence of undetermined length of elements of the group_."
     - `<*>` needs no definition: it stands for "_any sequence of one or more characters, except the space_" (a whole word). To keep it, write `<*>` on both sides; to drop it, `<>`. A term with spaces needs one per word: `<*> <*>`.

@@ -112,6 +112,35 @@ def test_any_word_group_matches_one_or_more_characters_but_the_space():
     assert t.transform('yo no') == [' yo no ']            # a space is never part of <*>, so two words do not fit three
 
 
+SHAPES = [('<g>', 'a'), ('x<g>', 'xa'), ('<g>x', 'ax'), ('x<g>y', 'xay'), ('<g><g>', 'aa'), (' <g>', 'a'), ('<g> ', 'a'),
+          (' <g> ', 'a'), (' x<g>', 'xa'), ('<g>x ', 'ax'), ('x<g> ', 'xa'), (' <g>y', 'ay'), ('<g>x<g>', 'axa'), ('x<g>y<g>z', 'xayaz')]
+
+
+@pytest.mark.parametrize('pattern,word', SHAPES)
+def test_a_replacement_is_its_letters_with_each_group_kept_or_dropped(pattern, word):
+    """The nth <...> of the replacement pairs with the nth group of the pattern, whatever letters surround the groups."""
+    n = pattern.count('<')
+    start, end = pattern.startswith(' '), pattern.endswith(' ')
+    for before in ('', 'p'):
+        for between in ('', 'm'):
+            for after in ('', 'q'):
+                for keep in (True, False):
+                    slots = [('<g>' if keep else '<>') + (between if k < n - 1 else '') for k in range(n)]
+                    replacement = before + ''.join(slots) + after
+                    rules = json.dumps({'groups': {'g': ['a']}, 'rules': {'r': {pattern: replacement}}, 'order': ['r']})
+                    got = letra.Transformer(rules).transform(word)
+                    kept = ''.join(('a' if keep else '') + (between if k < n - 1 else '') for k in range(n))
+                    expected = ('' if start else ' ') + before + kept + after + ('' if end else ' ')
+                    assert got == [expected], f'{pattern!r} -> {replacement!r}'
+
+
+def test_a_group_the_replacement_does_not_name_the_same_is_dropped():
+    t = letra.Transformer('{"groups": {"c": ["p"], "v": ["a"]}, "rules": {"r": {"<c><v>": "<v><c>"}}, "order": ["r"]}')
+    assert t.transform('pa') == ['  ']                        # each <...> pairs with the pattern's group in its position: another name, so nothing is written
+    t = letra.Transformer('{"groups": {"c": ["p"], "v": ["a"]}, "rules": {"r": {"<c><v>": "<c><>"}}, "order": ["r"]}')
+    assert t.transform('pa') == [' p ']
+
+
 # ---------- comments: a // inside a "string" is not one ----------
 
 def test_a_double_slash_inside_a_string_is_kept_and_a_comment_after_it_is_dropped():
