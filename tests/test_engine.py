@@ -92,6 +92,11 @@ def test_halagueno_applies_only_one_entry_of_its_rule():
     assert g and len(g[0]['entries']) == 1 and list(original['g'].items())[g[0]['entries'][0]][0].startswith('gü')
 
 
+def test_a_dropped_group_followed_by_text_writes_that_text_once():
+    t = letra.Transformer('{"groups": {"v": ["e", "é"]}, "rules": {"r": {"<v> ": "<>ecit@ "}}, "order": ["r"]}')
+    assert t.transform('café') == [' cafecit@ ']
+
+
 # ---------- comments: a // inside a "string" is not one ----------
 
 def test_a_double_slash_inside_a_string_is_kept_and_a_comment_after_it_is_dropped():

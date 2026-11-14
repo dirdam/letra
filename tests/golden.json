@@ -717,16 +717,7 @@
    " liéteram ",
    " liétera ",
    " liétram ",
-   " liétra ",
-   " líttera  ",
-   " lítera  ",
-   " lítra  ",
-   " léttera  ",
-   " létera  ",
-   " létra  ",
-   " liéttera  ",
-   " liétera  ",
-   " liétra  "
+   " liétra "
   ],
   "transformations": [
    [
@@ -818,51 +809,6 @@
     " liétra ",
     " létra ",
     "rule_24"
-   ],
-   [
-    " líttera  ",
-    " lítteram ",
-    "rule_25"
-   ],
-   [
-    " lítera  ",
-    " líteram ",
-    "rule_25"
-   ],
-   [
-    " lítra  ",
-    " lítram ",
-    "rule_25"
-   ],
-   [
-    " léttera  ",
-    " létteram ",
-    "rule_25"
-   ],
-   [
-    " létera  ",
-    " léteram ",
-    "rule_25"
-   ],
-   [
-    " létra  ",
-    " létram ",
-    "rule_25"
-   ],
-   [
-    " liéttera  ",
-    " liétteram ",
-    "rule_25"
-   ],
-   [
-    " liétera  ",
-    " liéteram ",
-    "rule_25"
-   ],
-   [
-    " liétra  ",
-    " liétram ",
-    "rule_25"
    ]
   ]
  },
@@ -880,10 +826,6 @@
    " troféum ",
    " troféu ",
    " troféo ",
-   " trophaéu  ",
-   " trophéu  ",
-   " trofaéu  ",
-   " troféu  ",
    " trophaióm ",
    " trophaió ",
    " trophióm ",
@@ -891,11 +833,7 @@
    " trofaióm ",
    " trofaió ",
    " trofióm ",
-   " trofió ",
-   " trophaió  ",
-   " trophió  ",
-   " trofaió  ",
-   " trofió  "
+   " trofió "
   ],
   "transformations": [
    [
@@ -959,26 +897,6 @@
     "rule_9"
    ],
    [
-    " trophaéu  ",
-    " trophaéum ",
-    "rule_25"
-   ],
-   [
-    " trophéu  ",
-    " trophéum ",
-    "rule_25"
-   ],
-   [
-    " trofaéu  ",
-    " trofaéum ",
-    "rule_25"
-   ],
-   [
-    " troféu  ",
-    " troféum ",
-    "rule_25"
-   ],
-   [
     " trophaióm ",
     " trophaéum ",
     "rule_39"
@@ -1017,26 +935,6 @@
     " trofió ",
     " troféu ",
     "rule_39"
-   ],
-   [
-    " trophaió  ",
-    " trophaéu  ",
-    "rule_39"
-   ],
-   [
-    " trophió  ",
-    " trophéu  ",
-    "rule_39"
-   ],
-   [
-    " trofaió  ",
-    " trofaéu  ",
-    "rule_39"
-   ],
-   [
-    " trofió  ",
-    " troféu  ",
-    "rule_39"
    ]
   ]
  },
@@ -1053,13 +951,7 @@
    " óeram ",
    " óera ",
    " óram ",
-   " óra ",
-   " ópera  ",
-   " óbera  ",
-   " ópra  ",
-   " óbra  ",
-   " óera  ",
-   " óra  "
+   " óra "
   ],
   "transformations": [
    [
@@ -1121,36 +1013,6 @@
     " óra ",
     " óbra ",
     "rule_18"
-   ],
-   [
-    " ópera  ",
-    " óperam ",
-    "rule_25"
-   ],
-   [
-    " óbera  ",
-    " óberam ",
-    "rule_25"
-   ],
-   [
-    " ópra  ",
-    " ópram ",
-    "rule_25"
-   ],
-   [
-    " óbra  ",
-    " óbram ",
-    "rule_25"
-   ],
-   [
-    " óera  ",
-    " óeram ",
-    "rule_25"
-   ],
-   [
-    " óra  ",
-    " óram ",
-    "rule_25"
    ]
   ]
  },
@@ -1168,26 +1030,18 @@
    " duémnum ",
    " duémnu ",
    " duémno ",
-   " dóminu  ",
-   " dómnu  ",
-   " duéminu  ",
-   " duémnu  ",
    " dómenum ",
    " dómenu ",
    " dómeno ",
    " duémenum ",
    " duémenu ",
    " duémeno ",
-   " dómenu  ",
-   " duémenu  ",
    " dóñum ",
    " dóñu ",
    " dóño ",
    " duéñum ",
    " duéñu ",
    " duéño ",
-   " dóñu  ",
-   " duéñu  ",
    " dóminom ",
    " dómnom ",
    " duéminom ",
@@ -1200,8 +1054,6 @@
    " duémbrum ",
    " duémbru ",
    " duémbro ",
-   " dómbru  ",
-   " duémbru  ",
    " dómbrom ",
    " duémbrom ",
    " dúminum ",
@@ -1210,23 +1062,18 @@
    " dúmnum ",
    " dúmnu ",
    " dúmno ",
-   " dúminu  ",
-   " dúmnu  ",
    " dúmenum ",
    " dúmenu ",
    " dúmeno ",
-   " dúmenu  ",
    " dúñum ",
    " dúñu ",
    " dúño ",
-   " dúñu  ",
    " dúminom ",
    " dúmnom ",
    " dúmenom ",
    " dúmbrum ",
    " dúmbru ",
    " dúmbro ",
-   " dúmbru  ",
    " dúmbrom "
   ],
   "transformations": [
@@ -1291,26 +1138,6 @@
     "rule_22"
    ],
    [
-    " dóminu  ",
-    " dóminum ",
-    "rule_25"
-   ],
-   [
-    " dómnu  ",
-    " dómnum ",
-    "rule_25"
-   ],
-   [
-    " duéminu  ",
-    " duéminum ",
-    "rule_25"
-   ],
-   [
-    " duémnu  ",
-    " duémnum ",
-    "rule_25"
-   ],
-   [
     " dómenum ",
     " dóminum ",
     "rule_28"
@@ -1341,16 +1168,6 @@
     "rule_28"
    ],
    [
-    " dómenu  ",
-    " dóminu  ",
-    "rule_28"
-   ],
-   [
-    " duémenu  ",
-    " duéminu  ",
-    "rule_28"
-   ],
-   [
     " dóñum ",
     " dómnum ",
     "rule_31"
@@ -1378,16 +1195,6 @@
    [
     " duéño ",
     " duémno ",
-    "rule_31"
-   ],
-   [
-    " dóñu  ",
-    " dómnu  ",
-    "rule_31"
-   ],
-   [
-    " duéñu  ",
-    " duémnu  ",
     "rule_31"
    ],
    [
@@ -1451,16 +1258,6 @@
     "rule_41"
    ],
    [
-    " dómbru  ",
-    " dómnu  ",
-    "rule_41"
-   ],
-   [
-    " duémbru  ",
-    " duémnu  ",
-    "rule_41"
-   ],
-   [
     " dómbrom ",
     " dómnom ",
     "rule_41"
@@ -1501,16 +1298,6 @@
     "rule_45"
    ],
    [
-    " dúminu  ",
-    " dóminu  ",
-    "rule_45"
-   ],
-   [
-    " dúmnu  ",
-    " dómnu  ",
-    "rule_45"
-   ],
-   [
     " dúmenum ",
     " dómenum ",
     "rule_45"
@@ -1526,11 +1313,6 @@
     "rule_45"
    ],
    [
-    " dúmenu  ",
-    " dómenu  ",
-    "rule_45"
-   ],
-   [
     " dúñum ",
     " dóñum ",
     "rule_45"
@@ -1543,11 +1325,6 @@
    [
     " dúño ",
     " dóño ",
-    "rule_45"
-   ],
-   [
-    " dúñu  ",
-    " dóñu  ",
     "rule_45"
    ],
    [
@@ -1578,11 +1355,6 @@
    [
     " dúmbro ",
     " dómbro ",
-    "rule_45"
-   ],
-   [
-    " dúmbru  ",
-    " dómbru  ",
     "rule_45"
    ],
    [
@@ -1888,22 +1660,6 @@
    " diégdum ",
    " diégdu ",
    " diégdo ",
-   " dígitu  ",
-   " dígidu  ",
-   " dígtu  ",
-   " dígdu  ",
-   " díitu  ",
-   " díidu  ",
-   " dégitu  ",
-   " dégidu  ",
-   " dégtu  ",
-   " dégdu  ",
-   " déitu  ",
-   " déidu  ",
-   " diégitu  ",
-   " diégidu  ",
-   " diégtu  ",
-   " diégdu  ",
    " dígetum ",
    " dígetu ",
    " dígeto ",
@@ -1934,16 +1690,6 @@
    " diégedum ",
    " diégedu ",
    " diégedo ",
-   " dígetu  ",
-   " dígedu  ",
-   " díetu  ",
-   " díedu  ",
-   " dégetu  ",
-   " dégedu  ",
-   " déetu  ",
-   " déedu  ",
-   " diégetu  ",
-   " diégedu  ",
    " dígitom ",
    " dígidom ",
    " dígtom ",
@@ -1976,16 +1722,12 @@
    " dídum ",
    " dídu ",
    " dído ",
-   " dítu  ",
-   " dídu  ",
    " détum ",
    " détu ",
    " déto ",
    " dédum ",
    " dédu ",
    " dédo ",
-   " détu  ",
-   " dédu  ",
    " dítom ",
    " dídom ",
    " détom ",
@@ -2233,86 +1975,6 @@
     "rule_24"
    ],
    [
-    " dígitu  ",
-    " dígitum ",
-    "rule_25"
-   ],
-   [
-    " dígidu  ",
-    " dígidum ",
-    "rule_25"
-   ],
-   [
-    " dígtu  ",
-    " dígtum ",
-    "rule_25"
-   ],
-   [
-    " dígdu  ",
-    " dígdum ",
-    "rule_25"
-   ],
-   [
-    " díitu  ",
-    " díitum ",
-    "rule_25"
-   ],
-   [
-    " díidu  ",
-    " díidum ",
-    "rule_25"
-   ],
-   [
-    " dégitu  ",
-    " dégitum ",
-    "rule_25"
-   ],
-   [
-    " dégidu  ",
-    " dégidum ",
-    "rule_25"
-   ],
-   [
-    " dégtu  ",
-    " dégtum ",
-    "rule_25"
-   ],
-   [
-    " dégdu  ",
-    " dégdum ",
-    "rule_25"
-   ],
-   [
-    " déitu  ",
-    " déitum ",
-    "rule_25"
-   ],
-   [
-    " déidu  ",
-    " déidum ",
-    "rule_25"
-   ],
-   [
-    " diégitu  ",
-    " diégitum ",
-    "rule_25"
-   ],
-   [
-    " diégidu  ",
-    " diégidum ",
-    "rule_25"
-   ],
-   [
-    " diégtu  ",
-    " diégtum ",
-    "rule_25"
-   ],
-   [
-    " diégdu  ",
-    " diégdum ",
-    "rule_25"
-   ],
-   [
     " dígetum ",
     " dígitum ",
     "rule_28"
@@ -2460,56 +2122,6 @@
    [
     " diégedo ",
     " diégido ",
-    "rule_28"
-   ],
-   [
-    " dígetu  ",
-    " dígitu  ",
-    "rule_28"
-   ],
-   [
-    " dígedu  ",
-    " dígidu  ",
-    "rule_28"
-   ],
-   [
-    " díetu  ",
-    " díitu  ",
-    "rule_28"
-   ],
-   [
-    " díedu  ",
-    " díidu  ",
-    "rule_28"
-   ],
-   [
-    " dégetu  ",
-    " dégitu  ",
-    "rule_28"
-   ],
-   [
-    " dégedu  ",
-    " dégidu  ",
-    "rule_28"
-   ],
-   [
-    " déetu  ",
-    " déitu  ",
-    "rule_28"
-   ],
-   [
-    " déedu  ",
-    " déidu  ",
-    "rule_28"
-   ],
-   [
-    " diégetu  ",
-    " diégitu  ",
-    "rule_28"
-   ],
-   [
-    " diégedu  ",
-    " diégidu  ",
     "rule_28"
    ],
    [
@@ -2673,16 +2285,6 @@
     "rule_39"
    ],
    [
-    " dítu  ",
-    " díitu  ",
-    "rule_39"
-   ],
-   [
-    " dídu  ",
-    " díidu  ",
-    "rule_39"
-   ],
-   [
     " détum ",
     " déetum ",
     "rule_39"
@@ -2710,16 +2312,6 @@
    [
     " dédo ",
     " déedo ",
-    "rule_39"
-   ],
-   [
-    " détu  ",
-    " déetu  ",
-    "rule_39"
-   ],
-   [
-    " dédu  ",
-    " déedu  ",
     "rule_39"
    ],
    [

@@ -172,18 +172,21 @@ class Transformer():
                 change_values_list = [('', '')]
             i = 0
             j = 0
+            spent = False # Whether a dropped group already wrote all the remaining change_values (so they are not written again)
             while i < len(search_values_list):
                 search_value = search_values_list[i]
                 change_value = change_values_list[j]
                 # print(search_value, change_value, i, j)
                 looped = False # Whether change_value had '' values
                 if search_value[0] == '': # If search_value is char
-                    regex_change += change_value[1]
+                    if not spent:
+                        regex_change += change_value[1]
                 else: # If search_value is group
-                    while change_value[0] == '': # If search_value is group and change_value is not, loop until change_value is group
+                    while change_value[0] == '' and not spent: # If search_value is group and change_value is not, loop until change_value is group
                         regex_change += change_value[1]
                         j += 1
                         if j == len(change_values_list): # If change_values_list is over, stop
+                            spent = True
                             break
                         change_value = change_values_list[j]
                         looped = True
