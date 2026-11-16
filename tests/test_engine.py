@@ -232,3 +232,28 @@ def test_only_identity_rules_split_a_step_where_another_alternative_changes_the_
     t = letra.Transformer(rules)
     t.transform('a')
     assert [(e['rule'], e['from'] == e['to']) for e in t.edges] == [('nothing', True), ('r', False)]          # `other` changes nothing but is no identity rule: no branch
+
+
+# ---------- `=`: the same element again, each `=` one repetition more ----------
+
+def _same(pattern, replacement, words):
+    t = letra.Transformer('{"groups": {"c": ["b", "d"], "v": ["a", "e"]}, "rules": {"r": {"%s": "%s"}}, "order": ["r"]}' % (pattern, replacement))
+    return [[x.strip() for x in t.transform(w)] for w in words]
+
+
+def test_equals_signs_count_the_repetitions_of_the_same_element():
+    words = ['xbbc', 'xbbbc', 'xbbbbc', 'xbdbc']
+    assert _same('x<c=>', 'x<c>', words) == [['xbc'], ['xbbc'], ['xbbbc'], ['xbdbc']]         # twice: bb becomes b
+    assert _same('x<c==>', 'x<c>', words) == [['xbbc'], ['xbc'], ['xbbc'], ['xbdbc']]         # three times: bbb becomes b
+    assert _same('x<c===>', 'x<c>', words) == [['xbbc'], ['xbbbc'], ['xbc'], ['xbdbc']]       # four times: bbbb becomes b
+
+
+def test_the_repeated_element_is_the_groups_own_even_after_other_groups():
+    # before, the number of `=` named a capture of the whole pattern, so this repeated the first group
+    assert _same('<v><c=>', '<v><c>', ['abb', 'abd', 'aabb']) == [['ab'], ['abd'], ['aab']]
+    assert _same('<v>x<c==>', '<v>x<c>', ['axbbb', 'axbb']) == [['axb'], ['axbb']]
+
+
+def test_a_following_digit_is_not_part_of_the_repetition():
+    t = letra.Transformer('{"groups": {"c": ["b"]}, "rules": {"r": {"<c=>1": "<c>"}}, "order": ["r"]}')
+    assert t.transform('bb1') == [' b ']

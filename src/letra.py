@@ -181,6 +181,19 @@ class Transformer():
             rule_values[search_values] = regex_change
         return rule_values
 
+    @staticmethod
+    def count_captures(regex):
+        '''How many capturing groups a regex has so far (escaped parentheses and `(?:` do not count).'''
+        count, i = 0, 0
+        while i < len(regex):
+            if regex[i] == '\\':
+                i += 2
+                continue
+            if regex[i] == '(' and not regex.startswith('(?', i):
+                count += 1
+            i += 1
+        return count
+
     def convert_to_regex(self, key, groups):
         '''Converts a key to regex.'''
         key_parts = re.findall(r'<([^<>]+)>|([^<>]+)', key) # Group 1: group; Group 2: char
@@ -196,8 +209,13 @@ class Transformer():
                     base = groups[group_name] if group_name else ANY_CHAR # `<*>`: no name, any characters but the space
                     if '*' in group_key: # One capture around the whole run, so that `\1` gives back all of it and not just its last element
                         piece = '((?:' + base[1:-1] + ')+)'
+                    elif '=' in group_key and len(groups_keys) == 1:
+                        # The same element again: each `=` is one more repetition, so `<g=>` is the element twice and `<g==>` three
+                        # times. The element is this group's own capture, the one after those that came before it in the key.
+                        own = self.count_captures(result) + 1
+                        piece = base + fr"\{own}{{{group_key.count('=')}}}"
                     else:
-                        symbol = fr"\{group_key.count('=')}" if '=' in group_key else '' # Replace adequate symbol
+                        symbol = fr"\{group_key.count('=')}" if '=' in group_key else '' # (inside alternatives: as it always was)
                         piece = base.replace(')', f'){symbol}')
                     result += piece.replace('(', '(?:' if len(groups_keys) > 1 else '(') + '|' # Add group
                 result = result[:-1]
