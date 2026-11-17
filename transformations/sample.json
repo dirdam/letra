@@ -16,9 +16,6 @@
 		"double_cons": ["<cons>", "!l", "!n", "!r"] // <cons> without l, n, r
 	},
 	"rules": {
-		"identity": {
-			"": "" // identity
-		},
 		"remove_m": {
 			"m ": " " // remove final m
 		},
@@ -40,7 +37,7 @@
 		"simplify_double", 
 		"remove_unstressed", 
 		"vowel_shift", 
-		"identity|diphthong" // only one of two will apply
+		"iden|diphthong" // only one of two will apply
 	],
 	"samples": ["lítteram"]
 }
