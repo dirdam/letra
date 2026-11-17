@@ -240,7 +240,7 @@ en,ed_howto,"A rules file is **JSON that also allows `//` comments**. It has thr
 - **`rules`**: each rule has a name and `""search"": ""replacement""` pairs, applied one after another in the order they are written.
     - Plain characters stand for themselves; `<name>` stands for any member of that group.
     - Both sides must have the same number of `<>`. Where a group disappears, leave an empty `<>`.
-    - `<g1|g2>`: either group. `<g*>`: any run of its members. `<g=>`: the same member twice (`<g==>` three times).
+    - `<g1|g2>`: either group. `<g*>`: any run of its members. `<g=>`: the same member twice (`<g==>` three times); on the replacement side, `<g>` writes it back once and `<g=>` twice.
     - `<*>`: a whole word (one or more characters, never a space), with no group to define. Keep it with `<*>` on both sides, drop it with `<>`.
     - A leading space is the start of the word, a trailing space is its end.
 - **`order`**: the rule names in the order they apply. `""rule_a|rule_b""` means only one of the two applies. A rule that changes nothing (its only entry is `""""`: `""""`) is the identity: as an alternative (`""rule_0|rule_a""`) it lets the tree split in Evolve (""Split on identity"").
@@ -257,7 +257,7 @@ es,ed_howto,"Un archivo de reglas es **JSON que además admite comentarios `//`*
 - **`rules`**: cada regla tiene un nombre y pares `""buscar"": ""reemplazo""`, que se aplican uno tras otro, en el orden en que están escritos.
     - Los caracteres normales se representan a sí mismos; `<nombre>` representa cualquier miembro de ese grupo.
     - Ambos lados deben tener el mismo número de `<>`. Donde un grupo desaparece, deja un `<>` vacío.
-    - `<g1|g2>`: cualquiera de los dos grupos. `<g*>`: una secuencia de miembros. `<g=>`: el mismo miembro dos veces (`<g==>` tres veces).
+    - `<g1|g2>`: cualquiera de los dos grupos. `<g*>`: una secuencia de miembros. `<g=>`: el mismo miembro dos veces (`<g==>` tres veces); en el reemplazo, `<g>` lo escribe una vez y `<g=>` dos.
     - `<*>`: una palabra entera (uno o más caracteres, nunca un espacio), sin definir ningún grupo. Consérvala con `<*>` en ambos lados, elimínala con `<>`.
     - Un espacio al principio es el inicio de la palabra y un espacio al final es su fin.
 - **`order`**: los nombres de las reglas en el orden en que se aplican. `""regla_a|regla_b""` significa que solo se aplica una de las dos. Una regla que no cambia nada (su única entrada es `""""`: `""""`) es la identidad: como alternativa (`""regla_0|regla_a""`) permite dividir el árbol en Evolucionar (""Dividir en identidad"").
@@ -367,7 +367,7 @@ en,syntax,"## Rule syntax at a glance
 
 - `""groups""`: named sets of characters, such as `""vow"": [""a"", ""e"", ""i""]`. A group can include others with `<name>` and remove members with `!x` or `!<name>`.
 - `<vow>`: any member of the group `vow`. The same placeholder on the replacement side puts the matched member back.
-- `<vow*>`: a run of one or more members. `<cons=>`: the same member repeated, for example a doubled consonant.
+- `<vow*>`: a run of one or more members. `<cons=>`: the same member repeated, for example a doubled consonant (in the replacement, `<cons=>` writes it back twice).
 - `<vow|cons>`: a member of either group. `<>`: a group that is deleted (empty on the replacement side).
 - `<*>`: a whole word (one or more characters, no space), with no group to define.
 - A space at the start or end of a pattern is the word boundary (shown as `␣`).
@@ -379,7 +379,7 @@ es,syntax,"## La sintaxis de un vistazo
 
 - `""groups""`: conjuntos de caracteres con nombre, como `""vow"": [""a"", ""e"", ""i""]`. Un grupo puede incluir otros con `<nombre>` y quitar miembros con `!x` o `!<nombre>`.
 - `<vow>`: cualquier miembro del grupo `vow`. El mismo marcador en el reemplazo devuelve el miembro encontrado.
-- `<vow*>`: una serie de uno o más miembros. `<cons=>`: el mismo miembro repetido, por ejemplo una consonante doble.
+- `<vow*>`: una serie de uno o más miembros. `<cons=>`: el mismo miembro repetido, por ejemplo una consonante doble (en el reemplazo, `<cons=>` lo escribe dos veces).
 - `<vow|cons>`: un miembro de cualquiera de los dos grupos. `<>`: un grupo que se elimina (vacío en el reemplazo).
 - `<*>`: una palabra entera (uno o más caracteres, sin espacios), sin definir ningún grupo.
 - Un espacio al principio o al final de un patrón es el límite de palabra (se muestra como `␣`).
