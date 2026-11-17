@@ -171,8 +171,14 @@ class Transformer():
             slot = 0
             for group, plain in re.findall(r'<([^>]*)>|([^<>]+)', change_values):
                 if group != '': # a group: keep the match of the group in this position, if it is the same
-                    if slot < len(search_groups) and search_groups[slot].replace('=', '') == group:
-                        regex_change += f'\\{slot + 1}'
+                    if slot < len(search_groups):
+                        searched = search_groups[slot]
+                        name = searched.replace('=', '')
+                        if name == group:
+                            regex_change += f'\\{slot + 1}'
+                        elif '=' in searched and '|' not in searched and group.rstrip('=') == name and group != name:
+                            # `<g=>` for the element of `<g==>` written twice, `<g==>` three times...: the same element again
+                            regex_change += f'\\{slot + 1}' * (len(group) - len(name) + 1)
                     slot += 1
                 elif plain == '': # `<>`: the group of this position disappears
                     slot += 1

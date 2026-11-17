@@ -248,6 +248,15 @@ def test_equals_signs_count_the_repetitions_of_the_same_element():
     assert _same('x<c===>', 'x<c>', words) == [['xbbc'], ['xbbbc'], ['xbc'], ['xbdbc']]       # four times: bbbb becomes b
 
 
+def test_a_replacement_can_write_the_repeated_element_back_several_times():
+    # `<c=>` in the replacement is the element of the pattern's `<c==>` written twice, `<c==>` three times (and `<c>` once, as always)
+    words = ['xbbbc', 'xbbc', 'xbdbc']
+    assert _same('x<c==>', 'x<c=>', words) == [['xbbc'], ['xbbc'], ['xbdbc']]               # bbb becomes bb; bb is not three
+    assert _same('x<c==>', 'x<c==>', words) == [['xbbbc'], ['xbbc'], ['xbdbc']]             # three times again: nothing changes
+    assert _same('x<c==>', 'x<c>', words) == [['xbc'], ['xbbc'], ['xbdbc']]                 # once, as before
+    assert _same('x<c>', 'x<c=>', ['xbc']) == [['xc']]                                      # a group that does not repeat: still dropped
+
+
 def test_the_repeated_element_is_the_groups_own_even_after_other_groups():
     # before, the number of `=` named a capture of the whole pattern, so this repeated the first group
     assert _same('<v><c=>', '<v><c>', ['abb', 'abd', 'aabb']) == [['ab'], ['abd'], ['aab']]
